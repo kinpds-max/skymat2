@@ -28,9 +28,9 @@
   <rect x="5"  y="38" width="34" height="3.5" rx="1.5" fill="rgba(255,255,255,0.18)"/>
 
   <!-- 텍스트: 하늘매트 -->
-  <!-- 하늘 -->
+  <!-- 하늘 (굵게 변경) -->
   <text x="52" y="20" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
-        font-size="15" font-weight="400" letter-spacing="-0.3" fill="#1565C0">하늘</text>
+        font-size="15" font-weight="800" letter-spacing="-0.3" fill="#0D47A1">하늘</text>
   <!-- 매트 (굵게) -->
   <text x="82" y="20" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
         font-size="15" font-weight="800" letter-spacing="-0.3" fill="#0D47A1">매트</text>

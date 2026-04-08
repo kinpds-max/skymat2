@@ -575,11 +575,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ===== 8. 견적 계산기 ===== */
-  // 평형 기준 600mm 소요량 (장)
-  const baseQty = { 24: 85, 34: 115, 40: 145 };
-  // 사이즈 전환율
+  // 평형 기준 600mm '거실+복도+주방' 소요량 (장)
+  const baseQty = { 24: 88, 34: 115, 40: 135 };
+  // 사이즈 전환율 (600mm 대비 장수 배율)
   const sizeRatio = { '1.00': 1.00, '0.73': 0.73, '0.56': 0.56, '0.36': 0.36, '0.25': 0.25 };
-  // 배송비
+  // 배송비 안내 로직
   const shippingFee = qty => qty >= 70 ? '무료' : qty >= 40 ? '10만원' : '20만원';
 
   let calcState = { pyeong: null, space: 1.0, size: 1.00 };

@@ -182,6 +182,137 @@
     </div>
   </section>
 
+  <!-- ===== 무료 견적 및 상담 (위치 이동) ===== -->
+  <section class="contact" id="contact">
+    <div class="container contact-inner side-by-side">
+      <div class="contact-left">
+        <div class="contact-header">
+          <span class="section-tag light">간편 견적</span>
+          <h2>우리 집 <em>예상 견적</em> 확인</h2>
+          <ul class="contact-features-mini">
+            <li><i class="fa-solid fa-check"></i> 600~1200mm 맞춤 제작</li>
+            <li><i class="fa-solid fa-check"></i> 10개 공인 인증 제품</li>
+          </ul>
+        </div>
+
+        <!-- 견적 계산기 -->
+        <div class="calc-box">
+          <div class="calc-group" id="calcPyeong">
+            <span class="calc-label">평형</span>
+            <div class="calc-btns">
+              <button class="calc-btn active" data-val="24">24평</button>
+              <button class="calc-btn" data-val="34">34평</button>
+              <button class="calc-btn" data-val="40">40평</button>
+              <button class="calc-btn" data-val="custom">직접입력</button>
+            </div>
+            <input type="number" id="customPyeong" class="calc-input hidden" placeholder="평형 입력" />
+          </div>
+
+          <div class="calc-group" id="calcSpace">
+            <span class="calc-label">공간 범위</span>
+            <div class="calc-btns">
+              <button class="calc-btn" data-val="0.8">거실+복도</button>
+              <button class="calc-btn active" data-val="1.0">거실+복도+주방</button>
+              <button class="calc-btn" data-val="1.4">+ 방 1개</button>
+              <button class="calc-btn" data-val="1.7">+ 방 2개</button>
+              <button class="calc-btn" data-val="2.0">전체</button>
+            </div>
+          </div>
+
+          <div class="calc-group" id="calcSize">
+            <span class="calc-label">사이즈</span>
+            <div class="calc-btns">
+              <button class="calc-btn active" data-val="1.00">600mm</button>
+              <button class="calc-btn" data-val="0.73">700mm</button>
+              <button class="calc-btn" data-val="0.56">800mm</button>
+              <button class="calc-btn" data-val="0.36">1000mm</button>
+              <button class="calc-btn" data-val="0.25">1200mm</button>
+            </div>
+          </div>
+
+          <div class="calc-result">
+            <div class="res-row">
+              <span>예상 소요량</span>
+              <strong id="resultQty">약 85장</strong>
+            </div>
+            <div class="res-row">
+              <span>배송비</span>
+              <strong id="resultShipping" class="highlight">무료</strong>
+            </div>
+            <p class="res-note">※ ±10장 정도의 차이가 있을 수 있습니다.</p>
+            <p class="res-note">※ 정확한 단가·증액은 상담 시 안내드립니다.</p>
+          </div>
+
+          <a href="#contactForm" class="btn-calc-cta">이 조건으로 견적 신청하기 <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <div class="contact-card">
+          <h3>시공 상담 신청서</h3>
+          <p class="form-sub">정보를 남겨주시면 확인 후 연락드리겠습니다.</p>
+          <form id="contactForm" class="contact-form">
+            <div class="form-group">
+              <label for="cName">이름 <span>*</span></label>
+              <input type="text" id="cName" placeholder="성함을 입력해 주세요" required />
+            </div>
+            <div class="form-group">
+              <label>연락처 <span>*</span></label>
+              <div class="phone-row">
+                <input type="text" id="phone1" maxlength="3" value="010" />
+                <span>-</span>
+                <input type="text" id="phone2" maxlength="4" placeholder="0000" />
+                <span>-</span>
+                <input type="text" id="phone3" maxlength="4" placeholder="0000" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="addr1">주소 <span>*</span></label>
+              <input type="text" id="addr1" placeholder="주소를 입력해 주세요" required />
+              <input type="text" id="addr2" placeholder="상세주소를 입력해 주세요" style="margin-top: 8px" />
+            </div>
+            <div class="form-group">
+              <label for="installDate">시공희망날짜 <span>*</span></label>
+              <input type="date" id="installDate" required />
+            </div>
+            <div class="form-group">
+              <label for="areaType">평형타입 / 시공범위 <span>*</span></label>
+              <input type="text" id="areaType" placeholder="예: 34평 / 거실+방2+복도" required />
+            </div>
+            <div class="form-group">
+              <label for="sample">샘플 희망여부 (택배비용 본인부담) <span>*</span></label>
+              <select id="sample" required>
+                <option value="">(선택)</option>
+                <option value="yes">샘플 희망합니다</option>
+                <option value="no">샘플 불필요합니다</option>
+              </select>
+              <div class="form-info-box">
+                샘플은 제일 많이 나가는 600사이즈로 발송됩니다. 평면도 있으시면 남겨주세요.
+              </div>
+              <input type="text" id="sampleNote" placeholder="원하시는 매트 사이즈 (선택)" style="margin-top: 8px" />
+            </div>
+            <div class="form-group">
+              <label for="memo">남기는글 (문의사항 등) <span>*</span></label>
+              <textarea id="memo" rows="2" placeholder="추가 문의사항을 적어주세요"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">상담 신청하기</button>
+          </form>
+        </div>
+
+        <div class="contact-channels">
+          <a href="https://pf.kakao.com/_yBrxhG/chat" class="channel-btn kakao" target="_blank">
+            <i class="fa-brands fa-kakao"></i>
+            <div><strong>카카오톡 상담</strong><span>평일 09:00 ~ 18:00</span></div>
+          </a>
+          <a href="tel:18772008" class="channel-btn phone">
+            <i class="fa-solid fa-phone"></i>
+            <div><strong>전화 상담</strong><span>1877-2008</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== TPU 소재 ===== -->
   <section class="material" id="material">
     <div class="container">
@@ -630,48 +761,40 @@
 
       <!-- 평형별 소요량 -->
       <div class="qty-guide">
-        <h3 class="qty-title">평형별 예상 소요량 <small>(거실+복도+주방 기준 / 600mm 기준)</small></h3>
+        <h3 class="qty-title">평형별 예상 소요량 <small>(600mm 기준 / ±10장 차이 가능)</small></h3>
         <div class="qty-table-wrap">
           <table class="qty-table">
             <thead>
               <tr>
                 <th>평형</th>
-                <th>600mm</th>
-                <th>700mm</th>
-                <th>800mm</th>
-                <th>1000mm</th>
-                <th>1200mm</th>
+                <th>거실 + 복도</th>
+                <th>거실+복도+주방</th>
+                <th>전체</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="py-label">24평</td>
+                <td><strong>약 70장</strong></td>
                 <td>80~90장</td>
-                <td>58~66장</td>
-                <td>45~50장</td>
-                <td>29~32장</td>
-                <td>20~23장</td>
+                <td>140~150장</td>
               </tr>
               <tr>
                 <td class="py-label">34평</td>
+                <td><strong>85~95장</strong></td>
                 <td>110~120장</td>
-                <td>80~88장</td>
-                <td>62~67장</td>
-                <td>40~43장</td>
-                <td>28~30장</td>
+                <td>180~200장</td>
               </tr>
               <tr>
                 <td class="py-label">40평</td>
+                <td><strong>100~110장</strong></td>
                 <td>140~150장</td>
-                <td>102~110장</td>
-                <td>78~84장</td>
-                <td>50~54장</td>
-                <td>35~38장</td>
+                <td>220~240장</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="qty-note">※ 계산법: 예상수량 × 최종 장당 금액 &nbsp;|&nbsp; 정확한 견적은 도면 첨부 후 문의 주세요</p>
+        <p class="qty-note">※ 예상수량은 공간 구조에 따라 ±10장 정도 차이가 발생할 수 있습니다.</p>
       </div>
 
     </div>
@@ -1526,176 +1649,14 @@
     </div>
   </section>
 
-  <!-- ===== 상담 CTA ===== -->
-  <section class="contact" id="contact">
-    <div class="contact-bg"></div>
-    <div class="container contact-inner">
-      헝 <div class="contact-text">
-        <span class="section-tag light" data-i18n="contact.tag">무료 상담</span>
-        <h2 data-i18n-html="contact.h2">지금 바로 <em>무료 상담</em>을 받아보세요</h2>
-        <p data-i18n-html="contact.sub">공간의 특성과 사용자의 활동 패턴을 분석하여<br />가장 최적화된 시공 솔루션을 제안드립니다.</p>
-        <ul class="contact-features">
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="contact.f1">무료 현장 방문 견적</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="contact.f2">600~1200mm 맞춤 제작</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="contact.f3">10개 공인 인증 제품</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="contact.f4">가정·기관·복지시설 전문</span></li>
-        </ul>
 
-        <!-- 견적 계산기 -->
-        <div class="calc-box">
-          <div class="calc-header">
-            <i class="fa-solid fa-calculator"></i>
-            <h4>간편 견적 계산기</h4>
-          </div>
-
-          <div class="calc-row">
-            <label class="calc-label">평형</label>
-            <div class="calc-btns" id="calcPyeong">
-              <button class="calc-btn" data-val="24">24평</button>
-              <button class="calc-btn" data-val="34">34평</button>
-              <button class="calc-btn" data-val="40">40평</button>
-              <button class="calc-btn" data-val="custom">직접입력</button>
-            </div>
-            <input class="calc-input hidden" id="customPyeong" type="number" min="10" max="200" placeholder="평수 입력" />
-          </div>
-
-          <div class="calc-row">
-            <label class="calc-label">공간 범위</label>
-            <div class="calc-btns" id="calcSpace">
-              <button class="calc-btn active" data-val="1.0">거실+복도+주방</button>
-              <button class="calc-btn" data-val="1.4">+ 방 1개</button>
-              <button class="calc-btn" data-val="1.7">+ 방 2개</button>
-              <button class="calc-btn" data-val="2.0">전체</button>
-            </div>
-          </div>
-
-          <div class="calc-row">
-            <label class="calc-label">사이즈</label>
-            <div class="calc-btns" id="calcSize">
-              <button class="calc-btn active" data-val="1.00">600mm</button>
-              <button class="calc-btn" data-val="0.73">700mm</button>
-              <button class="calc-btn" data-val="0.56">800mm</button>
-              <button class="calc-btn" data-val="0.36">1000mm</button>
-              <button class="calc-btn" data-val="0.25">1200mm</button>
-            </div>
-          </div>
-
-          <div class="calc-result" id="calcResult">
-            <div class="calc-result-inner">
-              <div class="calc-result-row">
-                <span>예상 소요량</span>
-                <strong id="resultQty">—</strong>
-              </div>
-              <div class="calc-result-row accent">
-                <span>배송비</span>
-                <strong id="resultShipping">—</strong>
-              </div>
-              <p class="calc-result-note">※ 정확한 단가·총액은 상담 시 안내드립니다</p>
-            </div>
-          </div>
-
-          <a href="#contactForm" class="calc-submit">
-            이 조건으로 견적 신청하기 <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-      <div class="contact-form-wrap">
-        <div class="contact-card">
-          <h3>시공 상담 신청서</h3>
-          <form class="contact-form" id="contactForm">
-
-            <div class="form-group">
-              <label for="cName">이름 <span class="req">●</span></label>
-              <input type="text" id="cName" required />
-            </div>
-
-            <div class="form-group">
-              <label>연락처 <span class="req">●</span></label>
-              <div class="phone-row">
-                <input type="text" id="phone1" maxlength="3" placeholder="010" inputmode="numeric" />
-                <span class="phone-dash">-</span>
-                <input type="text" id="phone2" maxlength="4" placeholder="0000" inputmode="numeric" />
-                <span class="phone-dash">-</span>
-                <input type="text" id="phone3" maxlength="4" placeholder="0000" inputmode="numeric" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="addr1">주소 <span class="req">●</span></label>
-              <input type="text" id="addr1" placeholder="주소" required />
-              <input type="text" id="addr2" placeholder="상세주소" style="margin-top:8px" />
-            </div>
-
-            <div class="form-group">
-              <label for="installDate">시공희망날짜 <span class="req">●</span></label>
-              <input type="date" id="installDate" required />
-            </div>
-
-            <div class="form-group">
-              <label for="areaType">평형타입 / 시공범위 <span class="req">●</span></label>
-              <input type="text" id="areaType" placeholder="예: 34평 / 거실+방2+복도" required />
-            </div>
-
-            <div class="form-group">
-              <label for="memo">남기는말 <small>(중문여부등 알아야할내용)</small> <span class="req">●</span></label>
-              <input type="text" id="memo" required />
-            </div>
-
-            <div class="form-group">
-              <label>도면도 첨부</label>
-              <label for="floorFile" class="file-upload-btn">
-                <i class="fa-solid fa-upload"></i> 파일 올리기
-              </label>
-              <input type="file" id="floorFile" accept="image/*,.pdf" style="display:none" />
-              <span class="file-name-label" id="fileNameLabel"></span>
-            </div>
-
-            <div class="form-group">
-              <label for="sample">샘플 희망여부 <small>(희망체크하신분은 스토어신청불필요)</small> <span class="req">●</span></label>
-              <select id="sample" required>
-                <option value="">(선택)</option>
-                <option value="yes">샘플 희망합니다</option>
-                <option value="no">샘플 불필요합니다</option>
-              </select>
-            </div>
-
-            <p class="form-note">
-              샘플은 제품을 다보내드리기 어려워서 제일많이 나가는 <strong>600사이즈로 발송됩니다.</strong><br />
-              꼭받으셔야하는 매트 있으시면 남겨주세요.
-            </p>
-            <div class="form-group">
-              <input type="text" id="sampleNote" placeholder="원하시는 매트 사이즈 (선택)" />
-            </div>
-
-            <button type="submit" class="btn-submit">상담 신청하기</button>
-          </form>
-        </div>
-        <div class="contact-channels">
-          <a href="https://pf.kakao.com/_yBrxhG/chat" class="channel-btn kakao" target="_blank">
-            <i class="fa-brands fa-kakao"></i>
-            <div>
-              <strong>카카오톡 상담</strong>
-              <span>평일 09:00 ~ 18:00</span>
-            </div>
-          </a>
-          <a href="tel:18772008" class="channel-btn phone">
-            <i class="fa-solid fa-phone"></i>
-            <div>
-              <strong>전화 상담</strong>
-              <span>1877-2008</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
         <a href="#" class="logo logo-white">
-          <span class="logo-text-wrap">하늘<strong>매트</strong></span>
+          <span class="logo-text-wrap"><strong>하늘매트</strong></span>
         </a>
         <p>안전과 편안함의 설계<br />모든 공간이 안전한 하늘공간이 될 수 있도록</p>
         <p class="footer-partner">SKYMAT × SKYSPACE</p>
