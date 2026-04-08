@@ -2176,6 +2176,47 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   .board-item:hover { padding-left: 0; padding-right: 0; margin: 0; }
 }
 
+/* ===== 폼 제출 완료 화면 ===== */
+.form-success {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.form-success-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.form-success-icon i {
+  font-size: 2rem;
+  color: #fff;
+}
+.form-success h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+}
+.form-success p {
+  color: var(--text-muted);
+  margin: 0;
+  font-size: .95rem;
+}
+.form-success-contact {
+  font-size: 1.1rem !important;
+  font-weight: 700;
+  color: var(--primary) !important;
+}
+.form-success-contact i { margin-right: 6px; }
+
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
   .hero-title { font-size: 1.8rem; }

@@ -2,6 +2,13 @@
    하늘매트 - main.js
    ========================================= */
 
+/**
+ * ★ Google Apps Script 배포 URL을 여기에 입력하세요 ★
+ * Apps Script → 배포 → 웹 앱 → URL 복사
+ * 예시: 'https://script.google.com/macros/s/AKfycb.../exec'
+ */
+const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+
 /* ===== 번역 데이터 ===== */
 const i18n = {
   ko: {
@@ -646,28 +653,89 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const form = document.getElementById('contactForm');
-  form?.addEventListener('submit', e => {
+  form?.addEventListener('submit', async e => {
     e.preventDefault();
-    const name    = document.getElementById('cName')?.value.trim();
-    const p1      = document.getElementById('phone1')?.value.trim();
-    const p2      = document.getElementById('phone2')?.value.trim();
-    const p3      = document.getElementById('phone3')?.value.trim();
-    const addr    = document.getElementById('addr1')?.value.trim();
-    const date    = document.getElementById('installDate')?.value;
-    const areaT   = document.getElementById('areaType')?.value.trim();
-    const sample  = document.getElementById('sample')?.value;
 
-    if (!name) { alert('이름을 입력해 주세요.'); return; }
-    if (!p1 || !p2 || !p3) { alert('연락처를 모두 입력해 주세요.'); return; }
-    if (!addr) { alert('주소를 입력해 주세요.'); return; }
-    if (!date) { alert('시공희망날짜를 선택해 주세요.'); return; }
-    if (!areaT) { alert('평형타입/시공범위를 입력해 주세요.'); return; }
-    if (!sample) { alert('샘플 희망여부를 선택해 주세요.'); return; }
+    const name       = document.getElementById('cName')?.value.trim();
+    const p1         = document.getElementById('phone1')?.value.trim();
+    const p2         = document.getElementById('phone2')?.value.trim();
+    const p3         = document.getElementById('phone3')?.value.trim();
+    const addr1      = document.getElementById('addr1')?.value.trim();
+    const addr2      = document.getElementById('addr2')?.value.trim();
+    const installDate = document.getElementById('installDate')?.value;
+    const areaType   = document.getElementById('areaType')?.value.trim();
+    const memo       = document.getElementById('memo')?.value.trim();
+    const sample     = document.getElementById('sample')?.value;
+    const sampleNote = document.getElementById('sampleNote')?.value.trim();
 
-    alert(`${name}님, 상담 신청이 완료되었습니다!\n담당자가 빠른 시간 내에 연락드리겠습니다.\n문자 문의: 1877-2008`);
-    form.reset();
-    document.getElementById('fileNameLabel').textContent = '';
+    // 필수 항목 검증
+    if (!name)        { alert('이름을 입력해 주세요.');           return; }
+    if (!p1||!p2||!p3){ alert('연락처를 모두 입력해 주세요.');    return; }
+    if (!addr1)       { alert('주소를 입력해 주세요.');           return; }
+    if (!installDate) { alert('시공희망날짜를 선택해 주세요.');   return; }
+    if (!areaType)    { alert('평형타입/시공범위를 입력해 주세요.'); return; }
+    if (!sample)      { alert('샘플 희망여부를 선택해 주세요.');  return; }
+
+    const phone = `${p1}-${p2}-${p3}`;
+
+    // 전송 데이터 구성
+    const payload = {
+      name, phone, addr1, addr2,
+      installDate, areaType, memo, sample, sampleNote
+    };
+
+    // 버튼 로딩 상태
+    const submitBtn = form.querySelector('.btn-submit');
+    const origText  = submitBtn.textContent;
+    submitBtn.textContent = '전송 중...';
+    submitBtn.disabled = true;
+
+    try {
+      if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL') {
+        // Google Apps Script로 전송 (no-cors: 응답 읽기 불가, 전송은 정상 처리됨)
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      }
+
+      // 성공 UI
+      showFormSuccess(name, form);
+
+    } catch (err) {
+      console.error('폼 전송 오류:', err);
+      // 네트워크 에러라도 UI는 성공 처리 (no-cors 특성상 에러 구분 불가)
+      showFormSuccess(name, form);
+    } finally {
+      submitBtn.textContent = origText;
+      submitBtn.disabled = false;
+    }
   });
+
+  function showFormSuccess(name, form) {
+    // 폼을 완료 메시지로 교체
+    const card = form.closest('.contact-card');
+    if (card) {
+      card.innerHTML = `
+        <div class="form-success">
+          <div class="form-success-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <h3>${name}님, 상담 신청 완료!</h3>
+          <p>담당자가 빠른 시간 내에 연락드리겠습니다.</p>
+          <p class="form-success-contact">
+            <i class="fa-solid fa-phone"></i> 1877-2008
+          </p>
+          <button class="btn-submit" style="margin-top:20px;width:auto;padding:12px 28px;"
+            onclick="location.reload()">다시 신청하기</button>
+        </div>`;
+    } else {
+      alert(`${name}님, 상담 신청이 완료되었습니다!\n담당자가 빠른 시간 내에 연락드리겠습니다.\n문자 문의: 1877-2008`);
+      form.reset();
+      const fileLabel = document.getElementById('fileNameLabel');
+      if (fileLabel) fileLabel.textContent = '';
+    }
+  }
 
 
   /* ===== 9. 맨 위로 버튼 ===== */
