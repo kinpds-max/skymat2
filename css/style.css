@@ -1845,6 +1845,20 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 
 /* ===== SEO 후기 게시판 ===== */
 .board { padding: 100px 0; background: #fff; }
+.board-videos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.board-video-item .yt-thumb {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,.1);
+}
+@media (max-width: 640px) {
+  .board-videos { grid-template-columns: 1fr; }
+}
 .board-list { display: flex; flex-direction: column; gap: 0; }
 .board-item {
   padding: 28px 0;
