@@ -1,8 +1,5 @@
 <!-- 
-  SKYMAT IMWEB INTEGRATED CODE V2 (Redesigned & Optimized)
-  - Layout: Calculator (Left), Space for Imweb Form (Right)
-  - Discount Policy Updated
-  - Logo Styles Updated
+  SKYMAT IMWEB INTEGRATED CODE V3
 -->
 
 <style>
@@ -4945,16 +4942,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // 배송비 안내 로직
   const shippingFee = qty => qty >= 70 ? '무료' : qty >= 40 ? '10만원' : '20만원';
 
-  let calcState = { pyeong: null, space: 1.0, size: 1.00 };
+  let calcState = { pyeong: 24, space: 1.0, size: 1.00 };
 
   function calcUpdate() {
     const { pyeong, space, size } = calcState;
-    if (!pyeong) return;
+    if (!pyeong) {
+      document.getElementById('resultQty').textContent = '—';
+      document.getElementById('resultShipping').textContent = '—';
+      return;
+    }
     const base = baseQty[pyeong] || Math.round(pyeong * 3.5);
     const qty  = Math.round(base * space * size);
     document.getElementById('resultQty').textContent      = `약 ${qty}장`;
     document.getElementById('resultShipping').textContent = shippingFee(qty);
   }
+
+  // 초기화 실행
+  calcUpdate();
 
   // 평형 버튼
   document.getElementById('calcPyeong')?.querySelectorAll('.calc-btn').forEach(btn => {
