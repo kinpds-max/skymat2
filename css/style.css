@@ -2190,6 +2190,105 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   .board-item:hover { padding-left: 0; padding-right: 0; margin: 0; }
 }
 
+/* ===== 매트 관리 가이드 ===== */
+.care-guide { padding: 100px 0; background: #f8fafd; }
+.care-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+.care-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-200);
+}
+.care-warning {
+  border-top: 4px solid #F97316;
+}
+.care-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.care-card-header i {
+  font-size: 1.4rem;
+  color: var(--primary);
+}
+.care-warning .care-card-header i { color: #F97316; }
+.care-card-header h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 0;
+}
+.care-warning .care-card-header h3 { color: #F97316; }
+.care-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.care-list li {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  font-size: .95rem;
+  color: var(--gray-700);
+  line-height: 1.7;
+}
+.care-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-weight: 800;
+  font-size: .85rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.care-note {
+  font-size: .85rem;
+  color: var(--gray-500);
+  margin: 0 0 20px;
+  padding: 10px 14px;
+  background: #FFF7ED;
+  border-radius: 6px;
+  border-left: 3px solid #F97316;
+}
+.care-exclude-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.care-exclude-list li {
+  font-size: .92rem;
+  color: var(--gray-700);
+  line-height: 1.6;
+  padding-left: 16px;
+  position: relative;
+}
+.care-exclude-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #F97316;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  .care-grid { grid-template-columns: 1fr; }
+}
+
 /* ===== 폼 제출 완료 화면 ===== */
 .form-success {
   text-align: center;
