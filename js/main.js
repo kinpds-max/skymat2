@@ -797,4 +797,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   stats.forEach(el => countObserver.observe(el));
 
+  /* ===== 12. 와이퍼 (Before/After) 슬라이더 ===== */
+  document.querySelectorAll('.wiper-compare').forEach(wrap => {
+    const range   = wrap.querySelector('.wiper-range');
+    const after   = wrap.querySelector('.wiper-after');
+    const divider = wrap.querySelector('.wiper-divider');
+
+    function applyVal(val) {
+      const pct = 100 - val;
+      after.style.clipPath = `inset(0 ${pct}% 0 0)`;
+      divider.style.left   = `${val}%`;
+    }
+
+    applyVal(range.value);
+    range.addEventListener('input', () => applyVal(range.value));
+  });
+
 });

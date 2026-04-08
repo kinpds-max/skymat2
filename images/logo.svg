@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 44" fill="none">
+  <defs>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#00B0FF"/>
+    </linearGradient>
+    <linearGradient id="matGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1976D2"/>
+      <stop offset="100%" stop-color="#0D47A1"/>
+    </linearGradient>
+    <clipPath id="roundClip">
+      <rect x="0" y="0" width="44" height="44" rx="10" ry="10"/>
+    </clipPath>
+  </defs>
+
+  <!-- 아이콘 배경 (라운드 사각형) -->
+  <rect x="0" y="0" width="44" height="44" rx="10" fill="url(#skyGrad)"/>
+
+  <!-- 구름 (하늘) -->
+  <circle cx="14" cy="14" r="5.5" fill="rgba(255,255,255,0.95)"/>
+  <circle cx="20" cy="11" r="7"   fill="rgba(255,255,255,0.95)"/>
+  <circle cx="28" cy="13" r="5"   fill="rgba(255,255,255,0.95)"/>
+  <rect x="10" y="13" width="23" height="7" fill="rgba(255,255,255,0.95)" rx="1"/>
+
+  <!-- 매트 레이어 (바닥) -->
+  <rect x="5"  y="28" width="34" height="3.5" rx="1.5" fill="rgba(255,255,255,0.55)"/>
+  <rect x="5"  y="33" width="34" height="3.5" rx="1.5" fill="rgba(255,255,255,0.35)"/>
+  <rect x="5"  y="38" width="34" height="3.5" rx="1.5" fill="rgba(255,255,255,0.18)"/>
+
+  <!-- 텍스트: 하늘매트 -->
+  <!-- 하늘 -->
+  <text x="52" y="20" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+        font-size="15" font-weight="400" letter-spacing="-0.3" fill="#1565C0">하늘</text>
+  <!-- 매트 (굵게) -->
+  <text x="82" y="20" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+        font-size="15" font-weight="800" letter-spacing="-0.3" fill="#0D47A1">매트</text>
+
+  <!-- 영문 서브 -->
+  <text x="52" y="34" font-family="'Helvetica Neue',Arial,sans-serif"
+        font-size="8.5" font-weight="600" letter-spacing="2" fill="#1565C0" opacity="0.6">SKYMAT</text>
+
+  <!-- 아래 강조선 -->
+  <line x1="52" y1="38" x2="115" y2="38" stroke="url(#skyGrad)" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
