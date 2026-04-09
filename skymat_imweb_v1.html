@@ -1,6 +1,6 @@
 <!-- 
-  SKYMAT IMWEB INTEGRATED CODE V4
-  - 가독성 개선 및 최신 사양 반영된 버전
+  SKYMAT IMWEB INTEGRATED CODE V5
+  - 브로슈어 다운로드 및 미리보기 추가 버전
 -->
 
 <style>
@@ -2476,6 +2476,64 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   margin: 0;
   font-size: .95rem;
 }
+
+/* ===== Brochure Section ===== */
+.brochure-section {
+  padding: 80px 0;
+  background: var(--gray-50);
+}
+.brochure-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 24px;
+  padding: 48px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+  border: 1px solid var(--gray-100);
+  gap: 40px;
+}
+.brochure-info { flex: 1; }
+.brochure-info h3 { font-size: 2rem; font-weight: 800; margin: 12px 0 16px; color: var(--dark); }
+.brochure-info h3 em { font-style: normal; color: var(--primary); }
+.brochure-info p { font-size: 1rem; color: var(--gray-600); line-height: 1.7; margin-bottom: 32px; }
+
+.brochure-btns { display: flex; gap: 12px; }
+.brochure-btns .btn-primary, .brochure-btns .btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.brochure-btns .btn-primary { background: var(--primary); color: #fff; }
+.brochure-btns .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.brochure-btns .btn-outline { border: 2px solid var(--primary); color: var(--primary); }
+.brochure-btns .btn-outline:hover { background: var(--primary-bg); transform: translateY(-2px); }
+
+.brochure-preview {
+  flex-shrink: 0;
+  width: 200px;
+  height: 260px;
+  background: var(--primary-bg);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--primary-light);
+}
+.pdf-icon-box { text-align: center; color: var(--primary); }
+.pdf-icon-box i { font-size: 4rem; margin-bottom: 12px; display: block; }
+.pdf-icon-box span { font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+@media (max-width: 768px) {
+  .brochure-card { flex-direction: column; padding: 32px; text-align: center; }
+  .brochure-btns { justify-content: center; flex-direction: column; }
+  .brochure-preview { display: none; }
+}
 .form-success-contact {
   font-size: 1.1rem !important;
   font-weight: 700;
@@ -4472,6 +4530,34 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ===== 브로슈어 섹션 ===== -->
+  <section class="brochure-section" id="brochure">
+    <div class="container">
+      <div class="brochure-card">
+        <div class="brochure-info">
+          <span class="section-tag">자료실</span>
+          <h3>하늘매트 <em>공식 브로슈어</em></h3>
+          <p>하스놀과 하늘매트의 상세 제품 사양 및 기업 소개가 담긴<br />최신 공식 브로슈어를 확인해 보세요.</p>
+          <div class="brochure-btns">
+            <a href="docs/brochure.pdf" download class="btn-primary">
+              <i class="fa-solid fa-download"></i> 브로슈어 다운받기
+            </a>
+            <a href="docs/brochure.pdf" target="_blank" class="btn-outline">
+              <i class="fa-solid fa-file-pdf"></i> 온라인 미리보기
+            </a>
+          </div>
+        </div>
+        <div class="brochure-preview">
+          <!-- PDF 첫 페이지 이미지나 아이콘 영역 -->
+          <div class="pdf-icon-box">
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>PDF Brochure</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
