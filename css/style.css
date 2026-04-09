@@ -769,6 +769,18 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 }
 .space-footer strong { color: var(--primary); }
 
+.floorplan-wrap {
+  margin-top: 40px;
+  text-align: center;
+}
+.floorplan-3d {
+  max-width: 640px;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(21, 101, 192, 0.15);
+  border: 1.5px solid #E3F2FD;
+}
+
 /* ===== CERT ===== */
 .cert {
   padding: 100px 0;
@@ -1627,11 +1639,25 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   background: rgba(255,255,255,.7);
   border-radius: var(--radius);
 }
-.size-specs li { font-size: .78rem; color: var(--gray-600); display: flex; align-items: center; gap: 6px; }
-.size-specs i { color: var(--primary); font-size: .7rem; width: 12px; }
-.size-specs strong { color: var(--primary); font-weight: 700; }
+.size-specs li { 
+  font-size: .82rem; 
+  color: var(--gray-700); 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  line-height: 1.4;
+}
+.size-specs i { color: var(--primary); font-size: .85rem; width: 14px; text-align: center; }
+.size-specs strong { 
+  color: var(--primary); 
+  font-weight: 800; 
+  background: var(--primary-bg);
+  padding: 0 4px;
+  border-radius: 4px;
+}
 .size-card.premium .size-specs i, .size-card.premium .size-specs strong { color: #7C3AED; }
-.size-desc { font-size: .75rem; color: var(--gray-500); line-height: 1.6; }
+.size-card.premium .size-specs strong { background: #F5F3FF; }
+.size-desc { font-size: .82rem; color: var(--gray-500); line-height: 1.6; margin-top: 8px; }
 
 /* 소요량 전환율 바 */
 .conversion-wrap {

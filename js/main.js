@@ -25,11 +25,11 @@ const i18n = {
     'hero.badge3': 'KACI 친환경 인증',
     'hero.eyebrow': '안전과 편안함의 설계',
     'hero.title': '모든 공간이<br /><em>안전한 하늘공간이</em><br />될 수 있도록',
-    'hero.sub': '하스놀의 안심 철학과 하늘매트의 기술력이 만나<br />더불어 사는 행복한 사회를 위한 <strong>가장 완벽한 바닥 솔루션</strong>을 완성합니다.',
+    'hero.sub': '하늘매트의 시공인프라와 하스놀의 안심철학 제조기술이 만나서 완성합니다.',
     'hero.cta1': '카카오톡 상담',
     'hero.cta2': '제품 보러가기',
     'tag.home': '가정집', 'tag.daycare': '어린이집', 'tag.care': '요양시설',
-    'tag.hospital': '병원', 'tag.pet': '애견센터',
+    'tag.hospital': '병원', 'tag.pet': '애견센터', 'tag.hotel': '호텔',
     'stat.sgs': 'SGS 충격흡수율',
     'stat.cert': '공인 인증 보유',
     'stat.yearUnit': '년',
@@ -111,7 +111,7 @@ const i18n = {
     'hero.sub': 'HASNOL的安心理念与HAUL MAT的技术相结合，<br />打造<strong>最完善的地板解决方案</strong>。',
     'hero.cta1': 'KakaoTalk咨询', 'hero.cta2': '查看产品',
     'tag.home': '住宅', 'tag.daycare': '幼儿园', 'tag.care': '养老设施',
-    'tag.hospital': '医院', 'tag.pet': '宠物中心',
+    'tag.hospital': '医院', 'tag.pet': '宠物中心', 'tag.hotel': '酒店',
     'stat.sgs': 'SGS冲击吸收率', 'stat.cert': '官方认证', 'stat.yearUnit': '年',
     'stat.brand': '连续品牌大奖', 'stat.radon': '零氡检出',
     'trust.1': '无化学成分 — 纯净安全', 'trust.2': '环保无交联工艺制造',
@@ -157,7 +157,7 @@ const i18n = {
     'hero.sub': 'HASNOLの安心哲学とHAUL MATの技術力が出会い、<br /><strong>最高の床ソリューション</strong>を完成させます。',
     'hero.cta1': 'KakaoTalk相談', 'hero.cta2': '製品を見る',
     'tag.home': '住宅', 'tag.daycare': '保育園', 'tag.care': '介護施設',
-    'tag.hospital': '病院', 'tag.pet': 'ペットセンター',
+    'tag.hospital': '病院', 'tag.pet': 'ペットセンター', 'tag.hotel': 'ホテル',
     'stat.sgs': 'SGS衝撃吸収率', 'stat.cert': '公認認証数', 'stat.yearUnit': '年',
     'stat.brand': '連続ブランド大賞', 'stat.radon': 'ラドン不検出',
     'trust.1': '化学成分なし — 清潔・安全', 'trust.2': '環境に優しい無架橋製法',
@@ -203,7 +203,7 @@ const i18n = {
     'hero.sub': 'Triết lý an tâm của HASNOL kết hợp công nghệ HAUL MAT,<br />tạo ra <strong>giải pháp sàn hoàn hảo nhất</strong>.',
     'hero.cta1': 'Tư vấn KakaoTalk', 'hero.cta2': 'Xem sản phẩm',
     'tag.home': 'Nhà ở', 'tag.daycare': 'Nhà trẻ', 'tag.care': 'Cơ sở dưỡng lão',
-    'tag.hospital': 'Bệnh viện', 'tag.pet': 'Trung tâm thú cưng',
+    'tag.hospital': 'Bệnh viện', 'tag.pet': 'Trung tâm thú cưng', 'tag.hotel': 'Khách sạn',
     'stat.sgs': 'Hấp thụ xung động SGS', 'stat.cert': 'Chứng nhận chính thức', 'stat.yearUnit': 'năm',
     'stat.brand': 'Giải thương hiệu liên tiếp', 'stat.radon': 'Không có radon',
     'trust.1': 'Không hóa chất — Sạch & An toàn', 'trust.2': 'Sản xuất không liên kết ngang thân thiện môi trường',
@@ -258,7 +258,7 @@ const i18n = {
     'hero.cta1': 'KakaoTalk Consult',
     'hero.cta2': 'View Products',
     'tag.home': 'Home', 'tag.daycare': 'Daycare', 'tag.care': 'Care Facility',
-    'tag.hospital': 'Hospital', 'tag.pet': 'Pet Center',
+    'tag.hospital': 'Hospital', 'tag.pet': 'Pet Center', 'tag.hotel': 'Hotel',
     'stat.sgs': 'SGS Shock Absorption',
     'stat.cert': 'Official Certifications',
     'stat.yearUnit': 'yr',
@@ -586,15 +586,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function calcUpdate() {
     const { pyeong, space, size } = calcState;
+    const qtyEl = document.getElementById('resultQty');
     if (!pyeong) {
-      document.getElementById('resultQty').textContent = '—';
-      document.getElementById('resultShipping').textContent = '—';
+      if (qtyEl) qtyEl.textContent = '—';
       return;
     }
     const base = baseQty[pyeong] || Math.round(pyeong * 3.5);
     const qty  = Math.round(base * space * size);
-    document.getElementById('resultQty').textContent      = `약 ${qty}장`;
-    document.getElementById('resultShipping').textContent = shippingFee(qty);
+    if (qtyEl) qtyEl.textContent = `약 ${qty}장`;
+
+    // 견적 요약 → 폼 숨김 필드 & 요약 박스에 자동 반영
+    const spaceLabel = document.querySelector('#calcSpace .calc-btn.active')?.textContent?.trim() || '';
+    const sizeLabel  = document.querySelector('#calcSize .calc-btn.active')?.textContent?.trim() || '';
+    const summaryText = `[견적계산기] ${pyeong}평 / ${spaceLabel} / ${sizeLabel} → 예상 약 ${qty}장`;
+    const hiddenEl   = document.getElementById('calcResult');
+    if (hiddenEl) hiddenEl.value = summaryText;
+    const summaryTextEl = document.getElementById('calcSummaryText');
+    if (summaryTextEl) summaryTextEl.textContent = summaryText;
   }
 
   // 초기화 실행
