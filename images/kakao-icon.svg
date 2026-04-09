@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+  <!-- Yellow circle background -->
+  <circle cx="26" cy="26" r="26" fill="#FEE500"/>
+  <!-- KakaoTalk speech bubble (dark oval) -->
+  <ellipse cx="26" cy="24" rx="16" ry="13" fill="#3C1E1E"/>
+  <!-- Tail of speech bubble -->
+  <path d="M20,35 L24,28 L28,28 L23,36 Z" fill="#3C1E1E"/>
+  <!-- Left chat bubble (white) -->
+  <ellipse cx="20" cy="22" rx="4.5" ry="3.5" fill="white"/>
+  <!-- Right chat bubble (white) -->
+  <ellipse cx="32" cy="22" rx="3.5" ry="3" fill="white"/>
+  <!-- Center small bubble (white) -->
+  <ellipse cx="26" cy="26" rx="3" ry="2.5" fill="white" opacity="0.85"/>
+</svg>

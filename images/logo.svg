@@ -29,16 +29,17 @@
 
   <!-- 텍스트: 하늘매트 -->
   <!-- 하늘 (굵게 변경) -->
-  <text x="52" y="20" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+  <text x="58" y="20" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
         font-size="15" font-weight="800" letter-spacing="-0.3" fill="#0D47A1">하늘</text>
   <!-- 매트 (굵게) -->
-  <text x="82" y="20" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+  <text x="88" y="20" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
         font-size="15" font-weight="800" letter-spacing="-0.3" fill="#0D47A1">매트</text>
 
-  <!-- 영문 서브 -->
-  <text x="52" y="34" font-family="'Helvetica Neue',Arial,sans-serif"
-        font-size="8.5" font-weight="600" letter-spacing="2" fill="#1565C0" opacity="0.6">SKYMAT</text>
+  <!-- 영문 서브 (중앙 정렬) -->
+  <text x="83" y="34" font-family="'Helvetica Neue',Arial,sans-serif"
+        font-size="8.5" font-weight="600" letter-spacing="2" fill="#1565C0" opacity="0.6"
+        text-anchor="middle">SKYMAT</text>
 
   <!-- 아래 강조선 -->
-  <line x1="52" y1="38" x2="115" y2="38" stroke="url(#skyGrad)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="58" y1="38" x2="121" y2="38" stroke="url(#skyGrad)" stroke-width="1.5" stroke-linecap="round"/>
 </svg>

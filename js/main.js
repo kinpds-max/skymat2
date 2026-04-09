@@ -25,11 +25,11 @@ const i18n = {
     'hero.badge3': 'KACI 친환경 인증',
     'hero.eyebrow': '안전과 편안함의 설계',
     'hero.title': '모든 공간이<br /><em>안전한 하늘공간이</em><br />될 수 있도록',
-    'hero.sub': '하늘매트의 시공인프라와 하스놀의 안심철학 제조기술이 만나서 완성합니다.',
+    'hero.sub': '하늘매트의 실력과 시공전문성 하스놀 주식회사의 안심철학 제조기술이 만나서 완성합니다.',
     'hero.cta1': '카카오톡 상담',
     'hero.cta2': '제품 보러가기',
     'tag.home': '가정집', 'tag.daycare': '어린이집', 'tag.care': '요양시설',
-    'tag.hospital': '병원', 'tag.pet': '애견센터', 'tag.hotel': '호텔',
+    'tag.hospital': '병원', 'tag.pet': '애견센터', 'tag.hotel': '호텔', 'tag.church': '교회',
     'stat.sgs': 'SGS 충격흡수율',
     'stat.cert': '공인 인증 보유',
     'stat.yearUnit': '년',
@@ -111,7 +111,7 @@ const i18n = {
     'hero.sub': 'HASNOL的安心理念与HAUL MAT的技术相结合，<br />打造<strong>最完善的地板解决方案</strong>。',
     'hero.cta1': 'KakaoTalk咨询', 'hero.cta2': '查看产品',
     'tag.home': '住宅', 'tag.daycare': '幼儿园', 'tag.care': '养老设施',
-    'tag.hospital': '医院', 'tag.pet': '宠物中心', 'tag.hotel': '酒店',
+    'tag.hospital': '医院', 'tag.pet': '宠物中心', 'tag.hotel': '酒店', 'tag.church': '教会',
     'stat.sgs': 'SGS冲击吸收率', 'stat.cert': '官方认证', 'stat.yearUnit': '年',
     'stat.brand': '连续品牌大奖', 'stat.radon': '零氡检出',
     'trust.1': '无化学成分 — 纯净安全', 'trust.2': '环保无交联工艺制造',
@@ -157,7 +157,7 @@ const i18n = {
     'hero.sub': 'HASNOLの安心哲学とHAUL MATの技術力が出会い、<br /><strong>最高の床ソリューション</strong>を完成させます。',
     'hero.cta1': 'KakaoTalk相談', 'hero.cta2': '製品を見る',
     'tag.home': '住宅', 'tag.daycare': '保育園', 'tag.care': '介護施設',
-    'tag.hospital': '病院', 'tag.pet': 'ペットセンター', 'tag.hotel': 'ホテル',
+    'tag.hospital': '病院', 'tag.pet': 'ペットセンター', 'tag.hotel': 'ホテル', 'tag.church': '教会',
     'stat.sgs': 'SGS衝撃吸収率', 'stat.cert': '公認認証数', 'stat.yearUnit': '年',
     'stat.brand': '連続ブランド大賞', 'stat.radon': 'ラドン不検出',
     'trust.1': '化学成分なし — 清潔・安全', 'trust.2': '環境に優しい無架橋製法',
@@ -203,7 +203,7 @@ const i18n = {
     'hero.sub': 'Triết lý an tâm của HASNOL kết hợp công nghệ HAUL MAT,<br />tạo ra <strong>giải pháp sàn hoàn hảo nhất</strong>.',
     'hero.cta1': 'Tư vấn KakaoTalk', 'hero.cta2': 'Xem sản phẩm',
     'tag.home': 'Nhà ở', 'tag.daycare': 'Nhà trẻ', 'tag.care': 'Cơ sở dưỡng lão',
-    'tag.hospital': 'Bệnh viện', 'tag.pet': 'Trung tâm thú cưng', 'tag.hotel': 'Khách sạn',
+    'tag.hospital': 'Bệnh viện', 'tag.pet': 'Trung tâm thú cưng', 'tag.hotel': 'Khách sạn', 'tag.church': 'Nhà thờ',
     'stat.sgs': 'Hấp thụ xung động SGS', 'stat.cert': 'Chứng nhận chính thức', 'stat.yearUnit': 'năm',
     'stat.brand': 'Giải thương hiệu liên tiếp', 'stat.radon': 'Không có radon',
     'trust.1': 'Không hóa chất — Sạch & An toàn', 'trust.2': 'Sản xuất không liên kết ngang thân thiện môi trường',
@@ -258,7 +258,7 @@ const i18n = {
     'hero.cta1': 'KakaoTalk Consult',
     'hero.cta2': 'View Products',
     'tag.home': 'Home', 'tag.daycare': 'Daycare', 'tag.care': 'Care Facility',
-    'tag.hospital': 'Hospital', 'tag.pet': 'Pet Center', 'tag.hotel': 'Hotel',
+    'tag.hospital': 'Hospital', 'tag.pet': 'Pet Center', 'tag.hotel': 'Hotel', 'tag.church': 'Church',
     'stat.sgs': 'SGS Shock Absorption',
     'stat.cert': 'Official Certifications',
     'stat.yearUnit': 'yr',
@@ -360,6 +360,18 @@ function applyLang(lang) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  /* ===== 카드 클릭 활성화 (why / material) ===== */
+  ['why-card', 'material-card'].forEach(cls => {
+    const cards = document.querySelectorAll('.' + cls);
+    cards.forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+  });
 
   /* ===== 0. 언어 선택 드롭다운 ===== */
   const langSwitch  = document.getElementById('langSwitch');
@@ -483,85 +495,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ===== 6. 리뷰 슬라이더 ===== */
-  const track = document.getElementById('reviewTrack');
-  const dotsWrap = document.getElementById('sliderDots');
-  const cards = track ? track.querySelectorAll('.review-card') : [];
-  let current = 0;
-  let perView = getPerView();
-  let totalSlides = Math.ceil(cards.length / perView);
-  let autoInterval;
-
-  function getPerView() {
-    if (window.innerWidth < 768) return 1;
-    if (window.innerWidth < 1024) return 2;
-    return 3;
-  }
-
-  function buildDots() {
-    dotsWrap.innerHTML = '';
-    perView = getPerView();
-    totalSlides = Math.ceil(cards.length / perView);
-    for (let i = 0; i < totalSlides; i++) {
-      const dot = document.createElement('button');
-      dot.className = 'dot' + (i === current ? ' active' : '');
-      dot.setAttribute('aria-label', `슬라이드 ${i + 1}`);
-      dot.addEventListener('click', () => goTo(i));
-      dotsWrap.appendChild(dot);
-    }
-  }
-
-  function goTo(index) {
-    current = Math.max(0, Math.min(index, totalSlides - 1));
-    const cardWidth = cards[0] ? cards[0].offsetWidth + 20 : 0; // gap 20px
-    track.style.transform = `translateX(-${current * perView * cardWidth}px)`;
-    dotsWrap.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
-  }
-
-  function startAuto() {
-    autoInterval = setInterval(() => {
-      goTo(current >= totalSlides - 1 ? 0 : current + 1);
-    }, 4000);
-  }
-  function stopAuto() { clearInterval(autoInterval); }
-
-  if (track) {
-    buildDots();
-    startAuto();
-
-    document.getElementById('reviewPrev')?.addEventListener('click', () => {
-      stopAuto();
-      goTo(current <= 0 ? totalSlides - 1 : current - 1);
-      startAuto();
-    });
-    document.getElementById('reviewNext')?.addEventListener('click', () => {
-      stopAuto();
-      goTo(current >= totalSlides - 1 ? 0 : current + 1);
-      startAuto();
-    });
-
-    // 터치 스와이프
-    let startX = 0;
-    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-    track.addEventListener('touchend', e => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) {
-        stopAuto();
-        diff > 0 ? goTo(current + 1) : goTo(current - 1);
-        startAuto();
-      }
-    }, { passive: true });
-
-    window.addEventListener('resize', () => {
-      const newPer = getPerView();
-      if (newPer !== perView) {
-        perView = newPer;
-        current = 0;
-        buildDots();
-        goTo(0);
-      }
-    });
-  }
+  /* ===== 6. 리뷰 그리드 (슬라이더 제거) ===== */
+  const reviewTrack = document.getElementById('reviewTrack');
+  if (reviewTrack) reviewTrack.style.transform = 'none';
 
 
   /* ===== 7. FAQ 아코디언 ===== */
@@ -811,6 +747,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.5 });
 
   stats.forEach(el => countObserver.observe(el));
+
+  /* ===== 13. 기업 협력 문의 폼 ===== */
+  const bizForm = document.getElementById('bizForm');
+  if (bizForm) {
+    bizForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const type  = document.getElementById('bizType')?.value || '';
+      const name  = document.getElementById('bizName')?.value || '';
+      const phone = document.getElementById('bizPhone')?.value || '';
+      const email = document.getElementById('bizEmail')?.value || '';
+      const memo  = document.getElementById('bizMemo')?.value || '';
+
+      if (!type || !name || !phone || !memo) {
+        alert('문의 유형, 회사명/성함, 연락처, 문의 내용은 필수 입력 항목입니다.');
+        return;
+      }
+
+      const subject = encodeURIComponent(`[하늘매트 기업협력] ${type} 문의 - ${name}`);
+      const body = encodeURIComponent(
+        `[문의 유형] ${type}\n` +
+        `[회사명/성함] ${name}\n` +
+        `[연락처] ${phone}\n` +
+        `[이메일] ${email || '미입력'}\n\n` +
+        `[문의 내용]\n${memo}`
+      );
+
+      window.location.href = `mailto:one19119@naver.com?subject=${subject}&body=${body}`;
+
+      bizForm.innerHTML = `
+        <div style="text-align:center;padding:40px 0;">
+          <i class="fa-solid fa-circle-check" style="font-size:3rem;color:#1565C0;margin-bottom:16px;display:block;"></i>
+          <h3 style="color:#1565C0;margin-bottom:8px;">문의가 접수되었습니다</h3>
+          <p style="color:#64748B;">이메일 앱이 열렸습니다. 발송 후 영업일 1~2일 내에 연락드리겠습니다.</p>
+        </div>`;
+    });
+  }
 
   /* ===== 12. 와이퍼 (Before/After) 슬라이더 ===== */
   document.querySelectorAll('.wiper-compare').forEach(wrap => {
