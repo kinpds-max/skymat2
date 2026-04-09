@@ -39,20 +39,20 @@
     
     <div style="display: flex; flex-direction: column; gap: 40px; align-items: center; max-width: 1000px; margin: 0 auto;">
       <!-- Child Face Image (First Page) -->
-      <img src="images/KakaoTalk_20260102_094256682.png" alt="하늘매트 소개" style="width:100%; border-radius: 20px; box-shadow: var(--shadow-md);">
-      
+      <img src="images/KakaoTalk_20260102_094256682.png" alt="하늘매트 소개" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 20px; box-shadow: var(--shadow-md);">
+
       <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px; width: 100%;">
-        <img src="images/KakaoTalk_20260102_094256682_02.png" alt="특징02" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
-        <img src="images/KakaoTalk_20260102_094256682_03.png" alt="특징03" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
-        <img src="images/KakaoTalk_20260102_094256682_04.png" alt="특징04" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
-        <img src="images/KakaoTalk_20260102_094256682_05.png" alt="특징05" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
-        <img src="images/KakaoTalk_20260102_094256682_06.png" alt="특징06" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
-        <img src="images/KakaoTalk_20260102_094256682_07.png" alt="특징07" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
-        <img src="images/KakaoTalk_20260102_094256682_08.png" alt="특징08" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
-        <img src="images/KakaoTalk_20260102_094256682_09.png" alt="특징09" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
-        <img src="images/KakaoTalk_20260102_094256682_10.png" alt="특징10" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
+        <img src="images/KakaoTalk_20260102_094256682_02.png" alt="특징02" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
+        <img src="images/KakaoTalk_20260102_094256682_03.png" alt="특징03" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
+        <img src="images/KakaoTalk_20260102_094256682_04.png" alt="특징04" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
+        <img src="images/KakaoTalk_20260102_094256682_05.png" alt="특징05" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
+        <img src="images/KakaoTalk_20260102_094256682_06.png" alt="특징06" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
+        <img src="images/KakaoTalk_20260102_094256682_07.png" alt="특징07" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
+        <img src="images/KakaoTalk_20260102_094256682_08.png" alt="특징08" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
+        <img src="images/KakaoTalk_20260102_094256682_09.png" alt="특징09" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
+        <img src="images/KakaoTalk_20260102_094256682_10.png" alt="특징10" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
         <!-- Blue Conclusion Image -->
-        <img src="images/KakaoTalk_20260102_094256682_11.png" alt="특징11" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
+        <img src="images/KakaoTalk_20260102_094256682_11.png" alt="특징11" class="pamphlet-img" onclick="openLightbox(this.src, this.alt)" style="width:100%; border-radius: 15px; box-shadow: var(--shadow-sm);">
       </div>
     </div>
   </section>
@@ -798,6 +798,64 @@
       font-weight: 700;
       box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
     }
+  /* Lightbox */
+  #lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+  #lightbox.active { display: flex; }
+  #lightbox img {
+    max-width: 92vw;
+    max-height: 92vh;
+    border-radius: 12px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    cursor: default;
+  }
+  #lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 28px;
+    color: #fff;
+    font-size: 2.5rem;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+  }
+  .pamphlet-img {
+    cursor: zoom-in;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pamphlet-img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
   </style>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <span id="lightbox-close" onclick="closeLightbox()">✕</span>
+    <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+  </div>
+
+  <script>
+    function openLightbox(src, alt) {
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-img').alt = alt;
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
 </body>
 </html>
