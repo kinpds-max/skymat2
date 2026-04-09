@@ -1,6 +1,7 @@
 <!-- 
-  SKYMAT IMWEB INTEGRATED CODE V6
-  - 3D 도면 제거 및 CSS/SVG 기반 공간별 예상스케치 추가
+  SKYMAT IMWEB INTEGRATED CODE V7
+  - FAQ 가로 사이즈 확대 적용
+  - 매트 환기 텍스트 최신 내용 반영 등
 -->
 
 <style>
@@ -1364,7 +1365,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 
 /* ===== FAQ ===== */
 .faq { padding: 100px 0; background: #fff; }
-.faq-list { max-width: 760px; margin: 0 auto; }
+.faq-list { max-width: 1000px; margin: 0 auto; }
 .faq-item {
   border-bottom: 1px solid var(--gray-200);
 }
@@ -3061,7 +3062,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
           <em>안전한 하늘공간이</em><br />
           될 수 있도록
         </h1>
-        <p class="hero-sub" data-i18n="hero.sub">하늘매트의 실력과 시공전문성으로<br />하스놀 주식회사의 안심철학 제조기술이 만나서 완성합니다.</p>
+        <p class="hero-sub" data-i18n="hero.sub">하늘매트의 실력과 시공전문성<br />하스놀 주식회사의 안심철학 제조기술이 만나서 완성합니다.</p>
         <div class="hero-tags">
           <span data-i18n="tag.home">가정집</span>
           <span data-i18n="tag.daycare">어린이집</span>
@@ -4707,7 +4708,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
           <ol class="care-list">
             <li>
               <span class="care-num">01</span>
-              <div><strong>주기적인 환기:</strong> 계절별 온도 차로 인한 습기 예방을 위해 주 1~2회 매트 일부를 들어 올려 바닥을 환기시켜주세요.</div>
+              <div><strong>주기적인 환기:</strong> 계절별 온도 차로 인한 습기 예방을 위해 한달에 1-2번 (제품마다 차이있음) 매트 일부를 들어 올려 바닥을 환기시켜주세요.</div>
             </li>
             <li>
               <span class="care-num">02</span>
@@ -5179,7 +5180,7 @@ const i18n = {
     'hero.badge3': 'KACI 친환경 인증',
     'hero.eyebrow': '안전과 편안함의 설계',
     'hero.title': '모든 공간이<br /><em>안전한 하늘공간이</em><br />될 수 있도록',
-    'hero.sub': '하늘매트의 실력과 시공전문성으로 하스놀 주식회사의 안심철학 제조기술이 만나서 완성합니다.',
+    'hero.sub': '하늘매트의 실력과 시공전문성 하스놀 주식회사의 안심철학 제조기술이 만나서 완성합니다.',
     'hero.cta1': '카카오톡 상담',
     'hero.cta2': '제품 보러가기',
     'tag.home': '가정집', 'tag.daycare': '어린이집', 'tag.care': '요양시설',
@@ -5515,6 +5516,18 @@ function applyLang(lang) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ===== 카드 클릭 활성화 (why / material) ===== */
+  ['why-card', 'material-card'].forEach(cls => {
+    const cards = document.querySelectorAll('.' + cls);
+    cards.forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+  });
+
   /* ===== 0. 언어 선택 드롭다운 ===== */
   const langSwitch  = document.getElementById('langSwitch');
   const langCurrent = document.getElementById('langCurrent');
@@ -5637,85 +5650,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ===== 6. 리뷰 슬라이더 ===== */
-  const track = document.getElementById('reviewTrack');
-  const dotsWrap = document.getElementById('sliderDots');
-  const cards = track ? track.querySelectorAll('.review-card') : [];
-  let current = 0;
-  let perView = getPerView();
-  let totalSlides = Math.ceil(cards.length / perView);
-  let autoInterval;
-
-  function getPerView() {
-    if (window.innerWidth < 768) return 1;
-    if (window.innerWidth < 1024) return 2;
-    return 3;
-  }
-
-  function buildDots() {
-    dotsWrap.innerHTML = '';
-    perView = getPerView();
-    totalSlides = Math.ceil(cards.length / perView);
-    for (let i = 0; i < totalSlides; i++) {
-      const dot = document.createElement('button');
-      dot.className = 'dot' + (i === current ? ' active' : '');
-      dot.setAttribute('aria-label', `슬라이드 ${i + 1}`);
-      dot.addEventListener('click', () => goTo(i));
-      dotsWrap.appendChild(dot);
-    }
-  }
-
-  function goTo(index) {
-    current = Math.max(0, Math.min(index, totalSlides - 1));
-    const cardWidth = cards[0] ? cards[0].offsetWidth + 20 : 0; // gap 20px
-    track.style.transform = `translateX(-${current * perView * cardWidth}px)`;
-    dotsWrap.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
-  }
-
-  function startAuto() {
-    autoInterval = setInterval(() => {
-      goTo(current >= totalSlides - 1 ? 0 : current + 1);
-    }, 4000);
-  }
-  function stopAuto() { clearInterval(autoInterval); }
-
-  if (track) {
-    buildDots();
-    startAuto();
-
-    document.getElementById('reviewPrev')?.addEventListener('click', () => {
-      stopAuto();
-      goTo(current <= 0 ? totalSlides - 1 : current - 1);
-      startAuto();
-    });
-    document.getElementById('reviewNext')?.addEventListener('click', () => {
-      stopAuto();
-      goTo(current >= totalSlides - 1 ? 0 : current + 1);
-      startAuto();
-    });
-
-    // 터치 스와이프
-    let startX = 0;
-    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-    track.addEventListener('touchend', e => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) {
-        stopAuto();
-        diff > 0 ? goTo(current + 1) : goTo(current - 1);
-        startAuto();
-      }
-    }, { passive: true });
-
-    window.addEventListener('resize', () => {
-      const newPer = getPerView();
-      if (newPer !== perView) {
-        perView = newPer;
-        current = 0;
-        buildDots();
-        goTo(0);
-      }
-    });
-  }
+  /* ===== 6. 리뷰 그리드 (슬라이더 제거) ===== */
+  const reviewTrack = document.getElementById('reviewTrack');
+  if (reviewTrack) reviewTrack.style.transform = 'none';
 
 
   /* ===== 7. FAQ 아코디언 ===== */
