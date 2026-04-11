@@ -3,9 +3,26 @@
    ========================================= */
 
 /**
- * ★ Google Apps Script 배포 URL을 여기에 입력하세요 ★
+ * ★ Google Apps Script 배포 URL ★
+ * 상담 신청 시 구글 시트로 데이터를 전송합니다.
  */
-const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwuUP8_TqkJz0CrOfUJP2zV9_otBZem-SnF4rmbk--TELf9Jnl93P-sNrFvMniouiQN/exec';
+
+/**
+ * 주소 검색 (Daum Postcode API)
+ */
+function searchAddress() {
+  new daum.Postcode({
+    oncomplete: function (data) {
+      let addr = '';
+      if (data.userSelectedType === 'R') addr = data.roadAddress;
+      else addr = data.jibunAddress;
+
+      document.getElementById('addr1').value = addr;
+      document.getElementById('addr2').focus();
+    }
+  }).open();
+}
 
 /* =========================================
    ★ Google Drive 시공후기 갤러리 설정 ★
@@ -784,6 +801,34 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.disabled = true;
 
     try {
+      // 1. 구글 시트 전송 (Apps Script)
+      const googleSheetData = {
+        name,
+        phone,
+        address: `${addr1} ${addr2}`.trim(),
+        installDate,
+        areaType,
+        sample: sample === 'yes' ? '희망' : '불필요',
+        sampleNote,
+        memo,
+        calcResult: document.getElementById('calcResult')?.value || '',
+        timestamp: new Date().toLocaleString('ko-KR')
+      };
+
+      if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL') {
+        const params = new URLSearchParams();
+        for (const [key, value] of Object.entries(googleSheetData)) {
+          params.append(key, value);
+        }
+        fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: params.toString()
+        }).catch(err => console.error('Google Sheet 전송 지연:', err));
+      }
+
+      // 2. Supabase 전송
       const { error } = await supabase.from('consultations').insert([{
         name,
         phone,
