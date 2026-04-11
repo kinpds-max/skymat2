@@ -4,10 +4,138 @@
 
 /**
  * ★ Google Apps Script 배포 URL을 여기에 입력하세요 ★
- * Apps Script → 배포 → 웹 앱 → URL 복사
- * 예시: 'https://script.google.com/macros/s/AKfycb.../exec'
  */
 const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+
+/* =========================================
+   ★ Google Drive 시공후기 갤러리 설정 ★
+   계정: david@hasnol.kr
+   ========================================= */
+const GDRIVE_FOLDERS = {
+  '2025': '1sb4Od277PkYsm58brVCqwbDRwA5bIV5B',
+  '2026': '1wXiWzgoZseswMwVdOpsGLkqhMnwvmB25'
+};
+const GDRIVE_API_KEY = 'AIzaSyAH4gpo0b8we1TqPOM3wRuMq2GHHUfwyvY';   // Google Cloud API 키
+
+/* ===== Google Drive 갤러리 로드 ===== */
+let gdriveFiles = [];
+let lightboxIndex = 0;
+let currentYear = '2026';
+
+async function loadGdriveGallery(year) {
+  const grid    = document.getElementById('gdriveGrid');
+  const loading = document.getElementById('gdriveLoading');
+  const errBox  = document.getElementById('gdriveError');
+
+  if (!grid) return;
+
+  currentYear = year || '2026';
+  const folderId = GDRIVE_FOLDERS[currentYear];
+
+  // 초기화
+  grid.innerHTML = '';
+  errBox.style.display  = 'none';
+  loading.style.display = 'flex';
+
+  if (GDRIVE_API_KEY === 'YOUR_API_KEY') {
+    loading.style.display = 'none';
+    errBox.style.display  = 'flex';
+    errBox.querySelector('p').innerHTML =
+      'Google Cloud API 키를 <strong>js/main.js</strong> 상단에 입력해 주세요.';
+    return;
+  }
+
+  try {
+    const q   = encodeURIComponent(`'${folderId}' in parents and mimeType contains 'image/' and trashed = false`);
+    const url = `https://www.googleapis.com/drive/v3/files?q=${q}&key=${GDRIVE_API_KEY}&fields=files(id,name,description,createdTime)&orderBy=createdTime desc&pageSize=80`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(`HTTP ${res.status} — ${errData?.error?.message || res.statusText}`);
+    }
+    const data = await res.json();
+
+    gdriveFiles = data.files || [];
+    loading.style.display = 'none';
+
+    if (gdriveFiles.length === 0) {
+      errBox.style.display = 'flex';
+      errBox.querySelector('p').innerHTML = `${currentYear}년 시공 사진이 없습니다.<br><small>Google Drive 폴더에 사진을 업로드해 주세요.</small>`;
+      return;
+    }
+
+    gdriveFiles.forEach((file, i) => {
+      const thumb = `https://drive.google.com/thumbnail?id=${file.id}&sz=w400`;
+      const item  = document.createElement('div');
+      item.className = 'gdrive-item';
+      item.innerHTML = `
+        <img src="${thumb}" alt="${file.name}" loading="lazy" />
+        ${file.description ? `<span class="gdrive-caption">${file.description}</span>` : ''}
+      `;
+      item.addEventListener('click', () => openLightbox(i));
+      grid.appendChild(item);
+    });
+
+  } catch (err) {
+    console.error('Google Drive 갤러리 오류:', err);
+    loading.style.display = 'none';
+    errBox.style.display  = 'flex';
+    errBox.querySelector('p').innerHTML = `오류: ${err.message}<br><small>F12 → Console 탭에서 상세 내용을 확인하세요.</small>`;
+  }
+}
+
+function openLightbox(index) {
+  lightboxIndex = index;
+  const lb   = document.getElementById('gdriveLightbox');
+  const img  = document.getElementById('lightboxImg');
+  const cap  = document.getElementById('lightboxCaption');
+  const file = gdriveFiles[index];
+
+  img.src = `https://drive.google.com/thumbnail?id=${file.id}&sz=w1200`;
+  cap.textContent = file.description || file.name || '';
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('gdriveLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* 라이트박스 이벤트 */
+document.addEventListener('DOMContentLoaded', () => {
+  // 갤러리 초기 로드 (2026년)
+  loadGdriveGallery('2026');
+
+  // 연도 탭 전환
+  document.querySelectorAll('.gdrive-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.gdrive-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      loadGdriveGallery(tab.dataset.year);
+    });
+  });
+
+  document.getElementById('lightboxClose')?.addEventListener('click', closeLightbox);
+  document.getElementById('gdriveLightbox')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeLightbox();
+  });
+  document.getElementById('lightboxPrev')?.addEventListener('click', () => {
+    lightboxIndex = (lightboxIndex - 1 + gdriveFiles.length) % gdriveFiles.length;
+    openLightbox(lightboxIndex);
+  });
+  document.getElementById('lightboxNext')?.addEventListener('click', () => {
+    lightboxIndex = (lightboxIndex + 1) % gdriveFiles.length;
+    openLightbox(lightboxIndex);
+  });
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('gdriveLightbox');
+    if (!lb?.classList.contains('open')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  { lightboxIndex = (lightboxIndex - 1 + gdriveFiles.length) % gdriveFiles.length; openLightbox(lightboxIndex); }
+    if (e.key === 'ArrowRight') { lightboxIndex = (lightboxIndex + 1) % gdriveFiles.length; openLightbox(lightboxIndex); }
+  });
+});
 
 /* ===== 번역 데이터 ===== */
 const i18n = {
@@ -495,9 +623,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ===== 6. 리뷰 그리드 (슬라이더 제거) ===== */
-  const reviewTrack = document.getElementById('reviewTrack');
-  if (reviewTrack) reviewTrack.style.transform = 'none';
+  /* ===== 6. 리뷰 슬라이더 (Swiper) ===== */
+  new Swiper('.review-slider', {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: true,
+    pagination: {
+      el: '.slider-dots',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      768: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 }
+    },
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    }
+  });
 
 
   /* ===== 7. FAQ 아코디언 ===== */
@@ -629,11 +776,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const phone = `${p1}-${p2}-${p3}`;
 
-    // 전송 데이터 구성
-    const payload = {
-      name, phone, addr1, addr2,
-      installDate, areaType, memo, sample, sampleNote
-    };
 
     // 버튼 로딩 상태
     const submitBtn = form.querySelector('.btn-submit');
@@ -642,23 +784,25 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.disabled = true;
 
     try {
-      if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL') {
-        // Google Apps Script로 전송 (no-cors: 응답 읽기 불가, 전송은 정상 처리됨)
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-      }
+      const { error } = await supabase.from('consultations').insert([{
+        name,
+        phone,
+        address:        addr1,
+        address_detail: addr2 || null,
+        install_date:   installDate || null,
+        area_type:      areaType || null,
+        sample_request: sample || null,
+        sample_note:    sampleNote || null,
+        memo:           memo || null,
+        calc_result:    document.getElementById('calcResult')?.value || null
+      }]);
 
-      // 성공 UI
+      if (error) throw error;
       showFormSuccess(name, form);
 
     } catch (err) {
-      console.error('폼 전송 오류:', err);
-      // 네트워크 에러라도 UI는 성공 처리 (no-cors 특성상 에러 구분 불가)
-      showFormSuccess(name, form);
+      console.error('상담 신청 오류:', err);
+      alert('접수 중 오류가 발생했습니다. 카카오톡으로 문의해 주세요.');
     } finally {
       submitBtn.textContent = origText;
       submitBtn.disabled = false;
