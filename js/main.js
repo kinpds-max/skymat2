@@ -828,21 +828,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch(err => console.error('Google Sheet 전송 지연:', err));
       }
 
-      // 2. Supabase 전송
-      const { error } = await supabase.from('consultations').insert([{
-        name,
-        phone,
-        address:        addr1,
-        address_detail: addr2 || null,
-        install_date:   installDate || null,
-        area_type:      areaType || null,
-        sample_request: sample || null,
-        sample_note:    sampleNote || null,
-        memo:           memo || null,
-        calc_result:    document.getElementById('calcResult')?.value || null
-      }]);
-
-      if (error) throw error;
+      // 2. 폼 성공 처리
       showFormSuccess(name, form);
 
     } catch (err) {
