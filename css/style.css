@@ -564,14 +564,14 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 .material { padding: 100px 0; background: var(--gray-50); }
 .material-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
   margin-bottom: 60px;
 }
 .material-card {
   background: #fff;
   border-radius: var(--radius-lg);
-  padding: 32px 28px;
+  padding: 22px 20px;
   border: 1px solid var(--gray-200);
   transition: var(--transition);
   position: relative;
@@ -582,11 +582,9 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   border-color: var(--primary-light);
 }
 .material-card.active {
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-  border-color: transparent;
-  color: #fff;
-  grid-column: 2;
-  grid-row: 1 / 3;
+  background: #fff;
+  border-color: var(--gray-200);
+  color: inherit;
 }
 .material-badge {
   position: absolute;
@@ -600,28 +598,23 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   border-radius: 99px;
 }
 .material-icon {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   background: var(--primary-bg);
-  border-radius: 14px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
-.material-icon i { font-size: 1.4rem; color: var(--primary); }
-.active .material-icon { background: rgba(255,255,255,.2); }
-.active .material-icon i { color: #fff; }
+.material-icon i { font-size: 1.2rem; color: var(--primary); }
 .material-card h3 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   color: var(--dark);
 }
-.active h3 { color: #fff; font-size: 1.3rem; }
-.material-card p { font-size: .9rem; color: var(--gray-600); line-height: 1.7; }
-.material-card.active p { color: rgba(255,255,255,.85); }
-.material-card.active p strong { color: var(--kakao); }
+.material-card p { font-size: .82rem; color: var(--gray-600); line-height: 1.6; }
 
 /* 비교표 */
 .compare-table-wrap { max-width: 100%; margin: 0 auto; }
@@ -1179,12 +1172,13 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 }
 .gallery-social-links {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 12px;
-  max-width: 480px;
+  max-width: 860px;
   margin: 0 auto;
 }
 .social-link-card {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -1842,6 +1836,19 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 .size-card.premium .size-specs i, .size-card.premium .size-specs strong { color: #7C3AED; }
 .size-card.premium .size-specs strong { background: #F5F3FF; }
 .size-desc { font-size: .82rem; color: var(--gray-500); line-height: 1.6; margin-top: 8px; }
+.size-cert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  padding: 4px 10px;
+  background: #fff7ed;
+  border: 1px solid #fb923c;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ea580c;
+}
 
 /* 소요량 전환율 바 */
 .conversion-wrap {
@@ -2403,6 +2410,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   .hero-title { font-size: 2.6rem; }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   .material-grid { grid-template-columns: repeat(2, 1fr); }
+
   .material-card.active { grid-column: auto; grid-row: auto; }
   .cert-grid { grid-template-columns: repeat(3, 1fr); }
   .cert-card.highlight { grid-column: span 1; }
