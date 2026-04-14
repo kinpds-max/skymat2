@@ -31,13 +31,14 @@ const SUPABASE_URL = 'https://your-project.supabase.co';
 const SUPABASE_KEY = 'your-anon-key';
 
 // 샘플 데이터 (Supabase 연결 전 또는 데이터가 없을 때 표시)
+// 실제 데이터 (Naver Blog & Cafe 크롤링 데이터)
 const MOCK_DATA = [
-  { id: 1, title: '파주 푸르지오 에듀포레', category: '2026', image_url: 'images/KakaoTalk_20260408_131855011_01.png', description: '거실 및 주방 전실 시공 (화이트 스톤 600)' },
-  { id: 2, title: '운정 중흥S클래스 에듀하이', category: '2026', image_url: 'images/KakaoTalk_20260408_131855011_03.png', description: '아이방 머리쿵 방지 매트 시공' },
-  { id: 3, title: '일산 자이 3차', category: 'best', image_url: 'images/KakaoTalk_20260408_131855011_05.png', description: '복도 및 거실 프리미엄 TPU 시공' },
-  { id: 4, title: '다산 이편한세상', category: '2025', image_url: 'images/KakaoTalk_20260408_131855011_08.png', description: '거실 와이드 800 모델 시공 사례' },
-  { id: 5, title: '송도 더샵 프라임뷰', category: '2025', image_url: 'images/KakaoTalk_20260408_131855011_09.png', description: '반려동물 슬개골 보호 매트 시공' },
-  { id: 6, title: '광교 중흥S클래스', category: 'best', image_url: 'images/KakaoTalk_20260408_131855011_10.png', description: '주방 및 다용도실 화이트 에디션' }
+  { id: 1, title: '[Blog] 인천 국공립 힐스꿈 어린이집', category: 'best', image_url: 'https://mblogthumb-phinf.pstatic.net/MjAyNjAzMTdfMTQg/MDAxNzczNzA2OTM3MjUy.84k-c2_6oheGHiSZECbK9MbUfgp1WykGCQUSj0-01nEg.63Un9xQFHT64wUXlTFgBXFroL4gXsc2bP7jF_gum9LMg.JPEG/20260317092142.jpg?type=w800', description: '국공립 어린이집 600 베이지 시공사례 (2026.03.17)', link: 'https://m.blog.naver.com/one19a/224219256682' },
+  { id: 2, title: '[Blog] 왕길역 로열파크씨티 푸르지오', category: '2026', image_url: 'https://mblogthumb-phinf.pstatic.net/MjAyNjAzMTZfMjUx/MDAxNzczNjE5NjMwODI0.mRCsoDhzCRdhn7wpzg4JZiWyx0DWBEizEDkly56RFigg.WeG6RpsLbC-jgr68tQeGak-v-qOWjAfIbvhWB4Yw9jcg.JPEG/20260316090619.jpg?type=ffn300_300', description: '아파트 거실 600 화이트 시공사례 (2026.03.16)', link: 'https://m.blog.naver.com/one19a/224217886041' },
+  { id: 3, title: '[Blog] 서울 래미안라그란데 아파트', category: '2026', image_url: 'https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTRfOTkg/MDAxNzc2MTI1ODQzOTQw.iAFahWzOIJEjYplvLCVNaftAxds8Dm4OyVJ8D6TQt4gg.LUNLazh6Mv8w7ubhMuRtOWvXkTF1HGg6X-6UWGK4zbQg.JPEG/20260414091652.jpg?type=ffn300_300', description: '대단지 아파트 600 화이트 시공사례 (2026.03.12)', link: 'https://m.blog.naver.com/one19a/224213487501' },
+  { id: 4, title: '[Cafe] 김포 하늘매트 후기', category: 'best', image_url: 'https://cafeptthumb-phinf.pstatic.net/MjAyNjA0MTNfMjU2/MDAxNzc2MDc4NDIzMjA2.oJLCRpqcy8HeZ3t80uSUTcxTXHvVOrwnIbpuiH6rr7og.T7JzNL3VfgVcHS5BWq9WN65hiCkBiKrQvlzP1lIJlZwg.JPEG/IMG%EF%BC%BF9751.JPG?type=f145_145', description: '로봇청소기 구동 완벽 확인, 김포 시공 솔직 후기 (2026.04.13)', link: 'https://m.cafe.naver.com/ArticleRead.nhn?clubid=29694871&articleid=3528' },
+  { id: 5, title: '[Cafe] 100일 아기 집 필수템', category: 'all', image_url: 'https://phinf.pstatic.net/image.nmv/cafe_2026_04_10_3793/szvS6pU8OG_01.jpg?type=f100x100', description: '아이 머리쿵 방지 및 층간소음 해결 후기 (2026.04.10)', link: 'https://m.cafe.naver.com/ArticleRead.nhn?clubid=29694871&articleid=3526' },
+  { id: 6, title: '[Cafe] 영유아 2명 집 필수템', category: 'all', image_url: 'https://phinf.pstatic.net/image.nmv/cafe_2026_04_07_3434/HmCogXbPuh_01.jpg?type=f100x100', description: '활동량 많은 아이들을 위한 안심 시공 후기 (2026.04.07)', link: 'https://m.cafe.naver.com/ArticleRead.nhn?clubid=29694871&articleid=3524' }
 ];
 
 let albumData = [];
