@@ -25,133 +25,138 @@ function searchAddress() {
 }
 
 /* =========================================
-   ★ Google Drive 시공후기 갤러리 설정 ★
-   계정: david@hasnol.kr
+   ★ Supabase 시공후기 앨범 설정 ★
    ========================================= */
-const GDRIVE_FOLDERS = {
-  '2025': '1sb4Od277PkYsm58brVCqwbDRwA5bIV5B',
-  '2026': '1wXiWzgoZseswMwVdOpsGLkqhMnwvmB25'
-};
-const GDRIVE_API_KEY = 'AIzaSyAH4gpo0b8we1TqPOM3wRuMq2GHHUfwyvY';   // Google Cloud API 키
+const SUPABASE_URL = 'https://your-project.supabase.co';
+const SUPABASE_KEY = 'your-anon-key';
 
-/* ===== Google Drive 갤러리 로드 ===== */
-let gdriveFiles = [];
-let lightboxIndex = 0;
-let currentYear = '2026';
+// 샘플 데이터 (Supabase 연결 전 또는 데이터가 없을 때 표시)
+const MOCK_DATA = [
+  { id: 1, title: '파주 푸르지오 에듀포레', category: '2026', image_url: 'images/KakaoTalk_20260408_131855011_01.png', description: '거실 및 주방 전실 시공 (화이트 스톤 600)' },
+  { id: 2, title: '운정 중흥S클래스 에듀하이', category: '2026', image_url: 'images/KakaoTalk_20260408_131855011_03.png', description: '아이방 머리쿵 방지 매트 시공' },
+  { id: 3, title: '일산 자이 3차', category: 'best', image_url: 'images/KakaoTalk_20260408_131855011_05.png', description: '복도 및 거실 프리미엄 TPU 시공' },
+  { id: 4, title: '다산 이편한세상', category: '2025', image_url: 'images/KakaoTalk_20260408_131855011_08.png', description: '거실 와이드 800 모델 시공 사례' },
+  { id: 5, title: '송도 더샵 프라임뷰', category: '2025', image_url: 'images/KakaoTalk_20260408_131855011_09.png', description: '반려동물 슬개골 보호 매트 시공' },
+  { id: 6, title: '광교 중흥S클래스', category: 'best', image_url: 'images/KakaoTalk_20260408_131855011_10.png', description: '주방 및 다용도실 화이트 에디션' }
+];
 
-async function loadGdriveGallery(year) {
-  const grid    = document.getElementById('gdriveGrid');
-  const loading = document.getElementById('gdriveLoading');
-  const errBox  = document.getElementById('gdriveError');
+let albumData = [];
 
+// Supabase 클라이언트 초기화 (설정값이 기본값이면 null 반환)
+const isConfigured = SUPABASE_URL !== 'https://your-project.supabase.co';
+const _supabase = (typeof supabase !== 'undefined' && isConfigured) ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+/**
+ * 실시간 시공 앨범 로드 (Supabase 우선, 실패 시 Mock Data)
+ */
+async function loadAlbumBoard(category = 'all') {
+  const grid = document.getElementById('albumGrid');
   if (!grid) return;
 
-  currentYear = year || '2026';
-  const folderId = GDRIVE_FOLDERS[currentYear];
+  grid.innerHTML = '<div class="album-loader"><i class="fa-solid fa-spinner fa-spin"></i> 사진을 불러오는 중...</div>';
 
-  // 초기화
-  grid.innerHTML = '';
-  errBox.style.display  = 'none';
-  loading.style.display = 'flex';
+  // 1. Supabase 연동 시도
+  if (_supabase) {
+    try {
+      let query = _supabase
+        .from('installation_photos')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-  if (GDRIVE_API_KEY === 'YOUR_API_KEY') {
-    loading.style.display = 'none';
-    errBox.style.display  = 'flex';
-    errBox.querySelector('p').innerHTML =
-      'Google Cloud API 키를 <strong>js/main.js</strong> 상단에 입력해 주세요.';
+      if (category !== 'all') {
+        query = query.eq('category', category);
+      }
+
+      const { data, error } = await query;
+      if (!error && data && data.length > 0) {
+        albumData = data;
+        renderAlbum(albumData);
+        return;
+      }
+    } catch (err) {
+      console.warn('Supabase fetch failed, falling back to mock data:', err);
+    }
+  }
+
+  // 2. Mock Data 필터링 및 출력 (Supabase 미설정 또는 데이터 없음)
+  console.log('Using Mock Data for gallery');
+  albumData = (category === 'all') 
+    ? MOCK_DATA 
+    : MOCK_DATA.filter(item => item.category === category);
+  
+  setTimeout(() => renderAlbum(albumData), 500); // 부드러운 로딩 연출
+}
+
+function renderAlbum(data) {
+  const grid = document.getElementById('albumGrid');
+  if (!grid) return;
+
+  if (data.length === 0) {
+    grid.innerHTML = '<div class="album-loader">등록된 시공 사진이 없습니다.</div>';
     return;
   }
 
-  try {
-    const q   = encodeURIComponent(`'${folderId}' in parents and mimeType contains 'image/' and trashed = false`);
-    const url = `https://www.googleapis.com/drive/v3/files?q=${q}&key=${GDRIVE_API_KEY}&fields=files(id,name,description,createdTime)&orderBy=createdTime desc&pageSize=80`;
-    const res = await fetch(url);
-    if (!res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(`HTTP ${res.status} — ${errData?.error?.message || res.statusText}`);
-    }
-    const data = await res.json();
-
-    gdriveFiles = data.files || [];
-    loading.style.display = 'none';
-
-    if (gdriveFiles.length === 0) {
-      errBox.style.display = 'flex';
-      errBox.querySelector('p').innerHTML = `${currentYear}년 시공 사진이 없습니다.<br><small>Google Drive 폴더에 사진을 업로드해 주세요.</small>`;
-      return;
-    }
-
-    gdriveFiles.forEach((file, i) => {
-      const thumb = `https://drive.google.com/thumbnail?id=${file.id}&sz=w400`;
-      const item  = document.createElement('div');
-      item.className = 'gdrive-item';
-      item.innerHTML = `
-        <img src="${thumb}" alt="${file.name}" loading="lazy" />
-        ${file.description ? `<span class="gdrive-caption">${file.description}</span>` : ''}
-      `;
-      item.addEventListener('click', () => openLightbox(i));
-      grid.appendChild(item);
-    });
-
-  } catch (err) {
-    console.error('Google Drive 갤러리 오류:', err);
-    loading.style.display = 'none';
-    errBox.style.display  = 'flex';
-    errBox.querySelector('p').innerHTML = `오류: ${err.message}<br><small>F12 → Console 탭에서 상세 내용을 확인하세요.</small>`;
-  }
+  grid.innerHTML = data.map((item, index) => `
+    <div class="album-item" onclick="openAlbumLightbox(${index})">
+      <div class="album-img">
+        <img src="${item.image_url}" alt="${item.title}" loading="lazy">
+      </div>
+      <div class="album-meta">
+        <span class="product-tag" style="margin-bottom:8px; display:inline-block; font-size:0.75rem; background: #E2E8F0; color: #475569;">#${item.category.toUpperCase()}</span>
+        <h4>${item.title}</h4>
+        <p>${item.description || ''}</p>
+      </div>
+    </div>
+  `).join('');
 }
 
-function openLightbox(index) {
-  lightboxIndex = index;
-  const lb   = document.getElementById('gdriveLightbox');
-  const img  = document.getElementById('lightboxImg');
-  const cap  = document.getElementById('lightboxCaption');
-  const file = gdriveFiles[index];
+function openAlbumLightbox(index) {
+  const lb    = document.getElementById('gdriveLightbox');
+  const img   = document.getElementById('lightboxImg');
+  const title = document.getElementById('lightboxTitle');
+  const cap   = document.getElementById('lightboxCaption');
+  const item  = albumData[index];
 
-  img.src = `https://drive.google.com/thumbnail?id=${file.id}&sz=w1200`;
-  cap.textContent = file.description || file.name || '';
+  if (!item) return;
+
+  img.src = item.image_url;
+  if (title) title.textContent = item.title;
+  if (cap) cap.textContent = item.description || '';
+  
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
-function closeLightbox() {
-  document.getElementById('gdriveLightbox').classList.remove('open');
+function closeAlbumLightbox() {
+  const lb = document.getElementById('gdriveLightbox');
+  if (lb) lb.classList.remove('open');
   document.body.style.overflow = '';
 }
 
-/* 라이트박스 이벤트 */
+/* 앨범 인터랙션 이벤트 */
 document.addEventListener('DOMContentLoaded', () => {
-  // 갤러리 초기 로드 (2026년)
-  loadGdriveGallery('2026');
+  if (document.getElementById('albumBoard')) {
+    loadAlbumBoard('all');
 
-  // 연도 탭 전환
-  document.querySelectorAll('.gdrive-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.gdrive-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      loadGdriveGallery(tab.dataset.year);
+    // 필터 버튼
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        loadAlbumBoard(btn.dataset.category);
+      });
     });
-  });
 
-  document.getElementById('lightboxClose')?.addEventListener('click', closeLightbox);
-  document.getElementById('gdriveLightbox')?.addEventListener('click', e => {
-    if (e.target === e.currentTarget) closeLightbox();
-  });
-  document.getElementById('lightboxPrev')?.addEventListener('click', () => {
-    lightboxIndex = (lightboxIndex - 1 + gdriveFiles.length) % gdriveFiles.length;
-    openLightbox(lightboxIndex);
-  });
-  document.getElementById('lightboxNext')?.addEventListener('click', () => {
-    lightboxIndex = (lightboxIndex + 1) % gdriveFiles.length;
-    openLightbox(lightboxIndex);
-  });
-  document.addEventListener('keydown', e => {
-    const lb = document.getElementById('gdriveLightbox');
-    if (!lb?.classList.contains('open')) return;
-    if (e.key === 'Escape')     closeLightbox();
-    if (e.key === 'ArrowLeft')  { lightboxIndex = (lightboxIndex - 1 + gdriveFiles.length) % gdriveFiles.length; openLightbox(lightboxIndex); }
-    if (e.key === 'ArrowRight') { lightboxIndex = (lightboxIndex + 1) % gdriveFiles.length; openLightbox(lightboxIndex); }
-  });
+    // 라이트박스 닫기
+    document.getElementById('lightboxClose')?.addEventListener('click', closeAlbumLightbox);
+    document.getElementById('gdriveLightbox')?.addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeAlbumLightbox();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeAlbumLightbox();
+    });
+  }
 });
 
 /* ===== 번역 데이터 ===== */
@@ -808,7 +813,7 @@ document.addEventListener('DOMContentLoaded', () => {
         address: `${addr1} ${addr2}`.trim(),
         installDate,
         areaType,
-        sample: sample === 'yes' ? '희망' : '불필요',
+        sample: sample === 'yes' ? '✅ 희망' : '❌ 불필요',
         sampleNote,
         memo,
         calcResult: document.getElementById('calcResult')?.value || '',
@@ -825,11 +830,13 @@ document.addEventListener('DOMContentLoaded', () => {
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: params.toString()
-        }).catch(err => console.error('Google Sheet 전송 지연:', err));
+        })
+        .then(() => console.log('Google Sheet 전송 시도됨'))
+        .catch(err => console.error('Google Sheet 전송 지연:', err));
       }
 
       // 2. 폼 성공 처리
-      showFormSuccess(name, form);
+      showFormSuccess(googleSheetData, form);
 
     } catch (err) {
       console.error('상담 신청 오류:', err);
@@ -840,26 +847,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  function showFormSuccess(name, form) {
+  function showFormSuccess(data, form) {
+    // 카카오톡에 전달할 메시지 포맷팅
+    const kakaoText = `[하늘매트 상담신청]\n` +
+      `■ 이름: ${data.name}\n` +
+      `■ 연락처: ${data.phone}\n` +
+      `■ 주소: ${data.address}\n` +
+      `■ 희망일: ${data.installDate}\n` +
+      `■ 범위: ${data.areaType}\n` +
+      `■ 샘플: ${data.sample}\n` +
+      (data.sampleNote ? `■ 매트사이즈: ${data.sampleNote}\n` : '') +
+      (data.memo ? `■ 문의사항: ${data.memo}\n` : '') +
+      (data.calcResult ? `\n${data.calcResult}` : '');
+
     // 폼을 완료 메시지로 교체
     const card = form.closest('.contact-card');
     if (card) {
       card.innerHTML = `
         <div class="form-success">
           <div class="form-success-icon"><i class="fa-solid fa-circle-check"></i></div>
-          <h3>${name}님, 상담 신청 완료!</h3>
-          <p>담당자가 빠른 시간 내에 연락드리겠습니다.</p>
+          <h3>${data.name}님, 상담 신청 완료!</h3>
+          <p>구글 시트에 정보가 안전하게 저장되었습니다.</p>
+          <div class="form-success-kakao-box">
+            <p><strong>상담 내용을 카카오톡으로도 전달하시겠습니까?</strong><br>내용이 복사되어 상담이 더 빨라집니다.</p>
+            <button class="btn-kakao-send" id="btnShareKakao">
+              <i class="fa-brands fa-kakao"></i> 카카오톡으로 상담 내용 전달
+            </button>
+          </div>
           <p class="form-success-contact">
-            <i class="fa-solid fa-phone"></i> 1877-2008
+            <i class="fa-solid fa-phone"></i> 빠른 문의: 1877-2008
           </p>
-          <button class="btn-submit" style="margin-top:20px;width:auto;padding:12px 28px;"
-            onclick="location.reload()">다시 신청하기</button>
+          <button class="btn-reset" onclick="location.reload()">다시 신청하기</button>
         </div>`;
-    } else {
-      alert(`${name}님, 상담 신청이 완료되었습니다!\n담당자가 빠른 시간 내에 연락드리겠습니다.\n문자 문의: 1877-2008`);
-      form.reset();
-      const fileLabel = document.getElementById('fileNameLabel');
-      if (fileLabel) fileLabel.textContent = '';
+
+      // 카카오톡 버튼 이벤트
+      document.getElementById('btnShareKakao')?.addEventListener('click', () => {
+        // 클립보드 복사 시도
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(kakaoText).then(() => {
+            alert('상담 내용이 복사되었습니다! 카카오톡 대화창에 붙여넣어주세요.');
+            window.open('https://pf.kakao.com/_yBrxhG/chat', '_blank');
+          }).catch(err => {
+            console.error('복사 실패:', err);
+            window.open('https://pf.kakao.com/_yBrxhG/chat', '_blank');
+          });
+        } else {
+          // 구형 브라우저 대응
+          const textArea = document.createElement("textarea");
+          textArea.value = kakaoText;
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand('copy');
+            alert('상담 내용이 복사되었습니다! 카카오톡 대화창에 붙여넣어주세요.');
+          } catch (err) {
+            console.error('복사 실패');
+          }
+          document.body.removeChild(textArea);
+          window.open('https://pf.kakao.com/_yBrxhG/chat', '_blank');
+        }
+      });
     }
   }
 

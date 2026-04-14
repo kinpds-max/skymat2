@@ -16,9 +16,33 @@
   <link rel="stylesheet" href="css/style.css" />
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
+
+  <!-- ===== 리뉴얼 공지 팝업 ===== -->
+  <div id="noticeModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span>점검 및 리뉴얼 안내</span>
+      </div>
+      <div class="modal-body">
+        <h3>홈페이지 리뉴얼 진행 중</h3>
+        <p>현재 사이트 안정화 작업이 진행 중입니다.<br>일부 기능이 원활하지 않을 수 있으니 양해 부탁드립니다.</p>
+        <p class="highlight">모든 문의는 <strong>카톡</strong>으로 주시면<br>친절하게 답변드리겠습니다.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="closeToday" class="btn-today">오늘 하루 보지 않기</button>
+        <button id="closeModal" class="btn-close-notice">닫기</button>
+      </div>
+      <a href="https://pf.kakao.com/_yBrxhG/chat" target="_blank" class="modal-cta">
+        <i class="fa-comment fa-brands"></i> 카톡으로 문의하기
+      </a>
+    </div>
+  </div>
 
   <!-- ===== HEADER ===== -->
   <header id="header">
@@ -126,23 +150,49 @@
     </div>
   </section>
 
-
-  <!-- ===== 제품 라인업 브로슈어 ===== -->
-  <section class="lineup-brochure" style="padding: 60px 0; background: #f8f9fa; text-align: center;">
+  <!-- ===== 브로셔 섹션 (최상단) ===== -->
+  <section class="brochure-section" id="brochure" style="padding: 100px 0 60px; background: #f8f9fa;">
     <div class="container">
-      <img src="images/KakaoTalk_20260408_131855011_06.png" 
-           alt="하늘매트 제품 라인업 컬러 및 바닥 종류" 
-           style="max-width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);" />
+      <div class="brochure-card">
+        <div class="brochure-info">
+          <span class="section-tag">자료실</span>
+          <h3>하늘매트 <em>공식 브로셔</em></h3>
+          <p>하스놀과 하늘매트의 상세 제품 사양 및 기업 소개가 담긴<br />최신 공식 브로셔를 확인해 보세요.</p>
+          <div class="brochure-btns">
+            <a href="docs/brochure.pdf" download class="btn-primary">
+              <i class="fa-solid fa-download"></i> 브로셔 다운받기
+            </a>
+            <a href="docs/brochure.pdf" target="_blank" class="btn-outline">
+              <i class="fa-solid fa-book-open"></i> 온라인 미리보기
+            </a>
+          </div>
+        </div>
+        
+        <!-- 브로셔 본문 미리보기 (Swiper Book) -->
+        <div class="brochure-viewer">
+          <div class="swiper brochureSwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="images/KakaoTalk_20260408_131855011_06.png" alt="Page 1"></div>
+              <div class="swiper-slide"><img src="images/KakaoTalk_20260408_131855011_02.png" alt="Page 2"></div>
+              <div class="swiper-slide"><img src="images/KakaoTalk_20260408_131855011_04.png" alt="Page 3"></div>
+              <div class="swiper-slide"><img src="images/KakaoTalk_20260408_131855011_11.png" alt="Page 4"></div>
+            </div>
+            <!-- 페이징/네비게이션 -->
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+          <p class="viewer-tip"><i class="fa-solid fa-hand-pointer"></i> 좌우로 드래그하여 책처럼 넘겨보세요</p>
+        </div>
+      </div>
     </div>
   </section>
 
-
-  <!-- ===== 왜 하늘매트? ===== -->
-  <section class="why" id="why">
+  <section class="why" id="why" style="background: #fff; padding: 100px 0 60px;">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag" data-i18n="why.tag">하늘매트 이유</span>
-        <h2 data-i18n-html="why.h2">왜 <em>하늘매트</em>일까요?</h2>
+        <span class="section-tag" data-i18n="why.tag">왜 하늘매트일까요?</span>
+        <h2 data-i18n-html="why.h2">남다른 기술력의 차이,<br /><em>왜 하늘매트일까요?</em></h2>
         <p data-i18n="why.sub">소음은 비우고 안심은 채워, 모두가 행복한 공간을 디자인합니다</p>
       </div>
       <div class="why-grid">
@@ -475,10 +525,13 @@
   <!-- ===== 가격 안내 ===== -->
   <section class="pricing" id="pricing">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">LINE UP</span>
-        <h2>제품 <em>라인업</em></h2>
-        <p>공간에 맞는 사이즈를 선택하면 더 경제적으로 시공할 수 있습니다</p>
+
+      <!-- 컬러 구성 프리뷰 (이전 섹션 통합) -->
+      <div class="color-showcase" style="margin-bottom: 40px; text-align: center;">
+        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 24px; color: var(--dark);">컬러 구성</h4>
+        <img src="images/KakaoTalk_20260408_131855011_06.png" 
+             alt="하늘매트 컬러 라인업" 
+             style="max-width: 100%; border-radius: 12px; box-shadow: var(--shadow-sm);" />
       </div>
 
       <!-- 제품별 라인업 요약 (소재별 비교) -->
@@ -572,10 +625,9 @@
 
       <!-- 사이즈별 핵심 스펙 카드 -->
       <div class="size-grid">
-
         <!-- 600mm -->
         <div class="size-card recommend">
-          <span class="size-badge">추천</span>
+          <span class="size-badge best">강력추천</span>
           <div class="size-num">600</div>
           <div class="size-unit">mm</div>
           <ul class="size-specs">
@@ -591,7 +643,7 @@
         <div class="size-card recommend">
           <span class="size-badge">추천</span>
           <div class="size-num">600</div>
-          <div class="size-unit">mm 레더</div>
+          <div class="size-unit">레더</div>
           <ul class="size-specs">
             <li><i class="fa-solid fa-ruler"></i> 두께 <strong>2.2T</strong></li>
             <li><i class="fa-solid fa-grip-lines"></i> 공기라인</li>
@@ -617,9 +669,10 @@
         </div>
 
         <!-- 800mm 레더 -->
-        <div class="size-card">
+        <div class="size-card recommend">
+          <span class="size-badge">추천</span>
           <div class="size-num">800</div>
-          <div class="size-unit">mm 레더</div>
+          <div class="size-unit">레더</div>
           <ul class="size-specs">
             <li><i class="fa-solid fa-ruler"></i> 두께 <strong>2.4T</strong></li>
             <li><i class="fa-solid fa-grip-lines"></i> 공기라인</li>
@@ -629,11 +682,11 @@
           <p class="size-desc">레더 질감<br />인테리어 고급형</p>
         </div>
 
-        <!-- 1000mm -->
-        <div class="size-card premium">
-          <span class="size-badge premium-b">특별할인</span>
+        <!-- 1000mm 레더 -->
+        <div class="size-card recommend">
+          <span class="size-badge">추천</span>
           <div class="size-num">1000</div>
-          <div class="size-unit">mm</div>
+          <div class="size-unit">레더</div>
           <ul class="size-specs">
             <li><i class="fa-solid fa-ruler"></i> 두께 <strong>2.4T</strong></li>
             <li><i class="fa-solid fa-grip-dots"></i> 공기엠보</li>
@@ -643,11 +696,11 @@
           <p class="size-desc">두께 업그레이드<br />소음저감 극대화 · 시공 빠름</p>
         </div>
 
-        <!-- 1200mm -->
+        <!-- 1200mm 레더 -->
         <div class="size-card recommend">
           <span class="size-badge">추천</span>
           <div class="size-num">1200</div>
-          <div class="size-unit">mm</div>
+          <div class="size-unit">레더</div>
           <ul class="size-specs">
             <li><i class="fa-solid fa-ruler"></i> 두께 <strong>2.7T</strong></li>
             <li><i class="fa-solid fa-grip-lines"></i> 공기라인</li>
@@ -656,7 +709,6 @@
           </ul>
           <p class="size-desc">대형 공간·기관 최적<br />시공 장수 최소화</p>
         </div>
-
       </div>
 
       <!-- 소요량 전환율 비교 바 -->
@@ -1012,11 +1064,6 @@
   <!-- ===== 셀럽 추천 ===== -->
   <section class="celeb" id="celeb">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">셀럽 추천</span>
-        <h2>이유 있는 선택,<br /><em>셀럽도 선택한 하늘매트</em></h2>
-        <p>수많은 셀러브리티와 인플루언서가 직접 경험하고 추천합니다</p>
-      </div>
       <div class="celeb-img-wrap">
         <img src="images/KakaoTalk_20260408_131855011_11.png" alt="하늘매트를 추천하는 셀러브리티·인플루언서 손글씨 후기 사진 모음" />
       </div>
@@ -1087,40 +1134,47 @@
     </div>
   </section>
 
-  <!-- ===== 시공후기 사진 갤러리 (Google Drive) ===== -->
+  <!-- ===== 실시간 시공 앨범 (Supabase 연동) ===== -->
   <section class="board" id="board">
     <div class="container">
       <div class="section-header">
         <span class="section-tag">시공후기</span>
         <h2>고객님들의 <em>실제 시공사진</em></h2>
-        <p>시공 완료 후 고객님들이 직접 촬영한 현장 사진입니다</p>
+        <p>전국 주요 단지의 시공 사례를 실시간으로 확인하세요</p>
       </div>
 
-      <!-- Google Drive 사진 갤러리 -->
-      <div class="gdrive-gallery" id="gdriveGallery">
-        <!-- 연도 탭 -->
-        <div class="gdrive-tabs">
-          <button class="gdrive-tab active" data-year="2026">2026년</button>
-          <button class="gdrive-tab" data-year="2025">2025년</button>
+      <div class="album-board" id="albumBoard">
+        <!-- 필터링 탭 -->
+        <div class="album-filters">
+          <button class="filter-btn active" data-category="all">전체보기</button>
+          <button class="filter-btn" data-category="2026">2026년</button>
+          <button class="filter-btn" data-category="2025">2025년</button>
+          <button class="filter-btn" data-category="best">베스트시공</button>
         </div>
-        <div class="gdrive-loading" id="gdriveLoading">
-          <i class="fa-solid fa-spinner fa-spin"></i> 사진을 불러오는 중...
+
+        <!-- 앨범 그리드 -->
+        <div class="album-grid" id="albumGrid">
+          <!-- 스켈레톤 로딩 / 데이터 로드 영역 -->
+          <div class="album-loader">
+            <i class="fa-solid fa-spinner fa-spin"></i> 데이터를 가져오고 있습니다...
+          </div>
         </div>
-        <div class="gdrive-error" id="gdriveError" style="display:none;">
-          <i class="fa-solid fa-circle-exclamation"></i>
-          <p>사진을 불러올 수 없습니다.<br><small>Google Drive 폴더 ID 또는 API 키를 확인해 주세요.</small></p>
+
+        <!-- 더보기 버튼 -->
+        <div class="album-more">
+          <button id="loadMoreBtn" class="btn-outline-dark">시공사진 더보기 <i class="fa-solid fa-plus"></i></button>
         </div>
-        <div class="gdrive-grid" id="gdriveGrid"></div>
       </div>
 
       <!-- 라이트박스 -->
       <div class="gdrive-lightbox" id="gdriveLightbox">
         <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
-        <button class="lightbox-prev" id="lightboxPrev"><i class="fa-solid fa-chevron-left"></i></button>
-        <button class="lightbox-next" id="lightboxNext"><i class="fa-solid fa-chevron-right"></i></button>
         <div class="lightbox-img-wrap">
           <img id="lightboxImg" src="" alt="" />
-          <p class="lightbox-caption" id="lightboxCaption"></p>
+          <div class="lightbox-meta">
+            <h4 id="lightboxTitle">단지명</h4>
+            <p id="lightboxCaption">상세 설명</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1595,33 +1649,6 @@
     </div>
   </section>
 
-  <!-- ===== 브로슈어 섹션 ===== -->
-  <section class="brochure-section" id="brochure">
-    <div class="container">
-      <div class="brochure-card">
-        <div class="brochure-info">
-          <span class="section-tag">자료실</span>
-          <h3>하늘매트 <em>공식 브로슈어</em></h3>
-          <p>하스놀과 하늘매트의 상세 제품 사양 및 기업 소개가 담긴<br />최신 공식 브로슈어를 확인해 보세요.</p>
-          <div class="brochure-btns">
-            <a href="docs/brochure.pdf" download class="btn-primary">
-              <i class="fa-solid fa-download"></i> 브로슈어 다운받기
-            </a>
-            <a href="docs/brochure.pdf" target="_blank" class="btn-outline">
-              <i class="fa-solid fa-file-pdf"></i> 온라인 미리보기
-            </a>
-          </div>
-        </div>
-        <div class="brochure-preview">
-          <!-- PDF 첫 페이지 이미지나 아이콘 영역 -->
-          <div class="pdf-icon-box">
-            <i class="fa-solid fa-file-pdf"></i>
-            <span>PDF Brochure</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ===== 기업 협력 문의 ===== -->
   <section class="biz-section">
