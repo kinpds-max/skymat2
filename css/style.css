@@ -33,7 +33,7 @@
 
 /* ===== Reset & Base ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 body {
   font-family: var(--font);
   color: var(--gray-800);
@@ -2817,8 +2817,11 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 
 @media (max-width: 768px) {
   .brochure-card { flex-direction: column; padding: 32px; text-align: center; }
-  .brochure-btns { justify-content: center; flex-direction: column; }
+  .brochure-btns { justify-content: center; flex-direction: column; align-items: center; }
+  .brochure-btns .btn-primary { width: 100%; max-width: 320px; }
   .brochure-preview { display: none; }
+  .brochure-viewer { max-width: 100%; width: 100%; }
+  .brochureSwiper { height: 480px; }
 }
 .form-success-contact {
   font-size: 1.1rem !important;
@@ -2832,7 +2835,8 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   .hero-title { font-size: 1.8rem; }
   .hero-cta-group { flex-direction: column; }
   .btn-kakao, .btn-outline { width: 100%; justify-content: center; }
-  .why-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .brochureSwiper { height: 420px; }
   .cert-grid { grid-template-columns: 1fr 1fr; }
   .cert-card.highlight { grid-column: span 2; }
   .space-tabs, .gallery-tabs { flex-wrap: wrap; }
