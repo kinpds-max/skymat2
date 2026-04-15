@@ -349,7 +349,7 @@
       <div class="section-header">
         <span class="section-tag">APPLICATION</span>
         <h2 data-i18n-html="space.h2">모든 공간에는<br /><em>그에 맞는 바닥</em>이 필요합니다</h2>
-        <p data-i18n="space.sub">돌봄의 현장부터 일상의 보금자리까지, 공간의 목적을 완성하는 커스텀 바닥 솔루션</p>
+        <p data-i18n="space.sub">돌봄의 현장부터 일상의 보금자리까지<br />공간의 목적을 완성하는 커스텀 바닥 솔루션</p>
       </div>
       <div class="space-tabs">
         <button class="space-tab active" data-tab="care" data-i18n="space.tab1">돌봄 및 교육</button>
@@ -527,7 +527,7 @@
       <div class="section-header" style="margin-bottom: 56px;">
         <span class="section-tag" data-i18n="nav.product">제품 라인업</span>
         <h2 data-i18n-html="prod.h2">하늘매트 <em>제품 라인업</em></h2>
-        <p data-i18n="prod.sub">하늘매트는 하나의 기준이 아닌, 각자의 생활에 어울리는 바닥을 생각합니다</p>
+        <p data-i18n="prod.sub">하늘매트는 하나의 기준이 아닌,<br />각자의 생활에 어울리는 바닥을 생각합니다</p>
       </div>
 
       <!-- 제품 라인업 상세 이미지 추가 -->
@@ -574,18 +574,6 @@
           </div>
         </div>
 
-        <div class="product-card" data-category="leather">
-          <div class="product-card-banner"></div>
-          <div class="product-info">
-            <span class="product-category">레자PE</span>
-            <h3>레자PE 매트</h3>
-            <p>레자와 PE를 결합한 하이브리드. TPU 대비 합리적 가격의 중간 라인</p>
-            <div class="product-specs">
-              <span><i class="fa-solid fa-ruler"></i> 두께 12T</span>
-              <span><i class="fa-solid fa-maximize"></i> 1200mm</span>
-            </div>
-          </div>
-        </div>
 
         <div class="product-card" data-category="eva">
           <div class="product-card-banner"></div>
@@ -1632,13 +1620,20 @@
               <div class="form-info-box">샘플은 추천제품으로 발송됩니다. 꼭 필요하신 제품 알려주세요.</div>
               <input type="text" id="sampleNote" placeholder="원하시는 매트 사이즈 (선택)" style="margin-top:8px" />
             </div>
-            <div class="form-group">
-              <label for="memo">남기는글 (문의사항 등)</label>
-              <textarea id="memo" rows="2" placeholder="추가 문의사항을 적어주세요"></textarea>
+            <div class="form-group privacy-group">
+              <label class="checkbox-container">
+                <input type="checkbox" id="privacyConsent" required />
+                <span class="checkmark"></span>
+                <span class="privacy-text">[필수] <a href="#" onclick="alert('수집항목: 성함, 연락처, 주소\n보유기간: 상담 문의 처리 완료 시 즉시 파기\n\n거부하실 수 있으나, 거부 시 상담 신청이 제한됩니다.'); return false;">개인정보 수집 및 이용</a>에 동의합니다</span>
+              </label>
             </div>
             <!-- 숨김 필드: 견적 계산기 결과 자동 첨부 -->
             <input type="hidden" id="calcResult" name="calcResult" value="" />
             <button type="submit" class="btn-submit">상담 신청하기</button>
+            <div class="security-badge-row">
+              <span class="security-badge"><i class="fa-solid fa-lock"></i> 256-bit 보안 전송</span>
+              <span class="security-badge"><i class="fa-solid fa-user-shield"></i> 개인정보 파기 원칙</span>
+            </div>
             <p class="form-kakao-notice">※ 현재 폼 접수 시스템 준비 중입니다. 임시로 카카오톡으로 연결됩니다.</p>
             <a href="https://pf.kakao.com/_yBrxhG/chat" target="_blank" class="btn-kakao-form">
               <i class="fa-brands fa-kakao"></i> 카카오톡으로 바로 상담하기
@@ -1783,7 +1778,10 @@
     </div>
     <div class="footer-bottom">
       <div class="container">
-        <span>Copyright ⓒ SKYMAT×SKYSPACE. All rights reserved.</span>
+        <div style="display: flex; flex-direction: column;">
+          <span>Copyright ⓒ SKYMAT×SKYSPACE. All rights reserved.</span>
+          <span style="font-size: 0.72rem; color: #94a3b8; margin-top: 4px;">홈페이지 제작문의: 하맘컨텐츠 1660-1195</span>
+        </div>
         <div class="footer-links">
           <a href="#">개인정보처리방침</a>
           <a href="#">이용약관</a>
@@ -1813,6 +1811,19 @@
   <!-- Daum Postcode API -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="js/main.js"></script>
+  <!-- ===== SECURITY & ANTI-THEFT ===== -->
+  <script>
+    // 코드 보호 및 무단 복제 방지 (기초 보안)
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.onkeydown = function(e) {
+      if (e.keyCode == 123) return false; // F12
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Ctrl+Shift+C
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J
+      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U
+      if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false; // Ctrl+S
+    };
+  </script>
 </body>
 
 </html>
