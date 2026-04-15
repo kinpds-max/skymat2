@@ -2459,7 +2459,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   .section-header h2 { font-size: 1.7rem; }
 
   .why-grid { grid-template-columns: 1fr 1fr; }
-  .material-grid { grid-template-columns: 1fr; }
+  .material-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .material-card.active { grid-column: auto; }
   .tpu-examples { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .tpu-icon { width: 64px; height: 64px; }
@@ -3154,7 +3154,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
     margin: 0 -24px;
     padding: 0 24px;
   }
-  .compare-table table, .qty-table { min-width: 600px; }
+  .compare-table table, .qty-table { min-width: 100%; }
 }
 
 
