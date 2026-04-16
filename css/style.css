@@ -33,6 +33,7 @@
 
 /* ===== Reset & Base ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 body {
   font-family: var(--font);
@@ -331,15 +332,15 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   align-items: center;
   gap: 8px;
   padding: 14px 28px;
-  background: var(--kakao);
-  color: var(--kakao-text);
+  background: var(--primary); /* Changed from yellow to brand blue */
+  color: #fff;
   font-size: 1rem;
   font-weight: 700;
   border-radius: 99px;
   transition: var(--transition);
   box-shadow: var(--shadow-sm);
 }
-.btn-kakao:hover { background: #e6ce00; transform: translateY(-2px); box-shadow: var(--shadow); }
+.btn-kakao:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
 
 /* ===== HERO ===== */
 .hero {
@@ -402,35 +403,42 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   align-items: center;
   gap: 6px;
   padding: 6px 14px;
-  background: rgba(255,255,255,.15);
+  background: rgba(21, 101, 192, 0.15); /* Tinted with brand blue */
   color: #fff;
   font-size: .8rem;
   font-weight: 600;
   border-radius: 99px;
-  border: 1px solid rgba(255,255,255,.3);
+  border: 1px solid rgba(0, 212, 255, 0.2);
   backdrop-filter: blur(4px);
 }
 .hero-title {
-  font-size: 3.2rem;
+  font-size: 3.5rem;
   font-weight: 900;
   color: #fff;
-  line-height: 1.2;
-  margin-bottom: 20px;
-  letter-spacing: -.02em;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  letter-spacing: -.03em;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 .hero-title em {
   font-style: normal;
-  color: var(--kakao);
+  color: var(--primary-light);
   display: inline;
   white-space: nowrap;
+  background: linear-gradient(120deg, var(--primary-light), var(--primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 8px rgba(21, 101, 192, 0.4));
 }
 .hero-sub {
-  font-size: 1.1rem;
-  color: rgba(255,255,255,.9);
-  line-height: 1.8;
-  margin-bottom: 36px;
+  font-size: 1.2rem;
+  color: rgba(255,255,255,.95);
+  line-height: 1.6;
+  margin-bottom: 40px;
+  font-weight: 400;
 }
-.hero-sub strong { color: #fff; }
+.hero-sub strong { color: #fff; font-weight: 700; }
 .hero-cta-group {
   display: flex;
   flex-wrap: wrap;
@@ -441,8 +449,8 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   display: flex;
   align-items: center;
   gap: 0;
-  background: rgba(255,255,255,.1);
-  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(21, 101, 192, 0.1); /* Tinted with brand blue */
+  border: 1px solid rgba(0, 212, 255, 0.15);
   border-radius: var(--radius);
   padding: 20px 24px;
   backdrop-filter: blur(8px);
@@ -1764,7 +1772,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 /* ===== Floating Buttons ===== */
 .floating-btns {
   position: fixed;
-  bottom: 32px;
+  bottom: 16px; /* Lowered from 32px */
   right: 28px;
   z-index: 900;
   display: flex;
