@@ -423,20 +423,59 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   margin-bottom: 24px;
   letter-spacing: -.03em;
   text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  background: rgba(0, 176, 255, 0.1); /* Sophisticated sky blue transparency */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 30px 40px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15); /* Brighter glass for cloud feel */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 40px 60px;
   display: inline-block;
+  position: relative;
+  /* Multi-radius bubble shape for a modern organic cloud */
+  border-radius: 60px 80px 50px 90px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+/* Cloud bubbles using pseudo-elements with floating animation */
+.hero-title::before,
+.hero-title::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  backdrop-filter: inherit;
+  -webkit-backdrop-filter: inherit;
+  border-radius: 50%;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: cloudFloat 6s ease-in-out infinite;
+}
+
+.hero-title::before {
+  width: 100px;
+  height: 100px;
+  top: -30px;
+  left: 30px;
+  animation-delay: 0s;
+}
+
+.hero-title::after {
+  width: 120px;
+  height: 120px;
+  bottom: -20px;
+  right: 40px;
+  animation-delay: -3s; /* Offset for more natural movement */
+}
+
+@keyframes cloudFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(10px, -15px) scale(1.05); }
+  66% { transform: translate(-10px, 10px) scale(0.95); }
+}
+
 .hero-title em {
   font-style: normal;
-  color: #fff; /* Changed to white for better visibility */
+  color: #fff;
   display: inline;
   white-space: nowrap;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
 }
 .hero-sub {
   font-size: 1.2rem;
