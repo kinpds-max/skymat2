@@ -173,7 +173,7 @@ const i18n = {
     'nav.gallery': '시공사례',
     'nav.cta': '무료 상담',
 
-    'hero.badge1': '3년연속 소비자선정 브랜드 대상',
+    'hero.badge1': '3년연속 브랜드 대상',
     'hero.badge2': 'KC 인증',
     'hero.badge3': 'KACI 친환경 인증',
     'hero.eyebrow': '안전과 편안함의 설계',
@@ -183,6 +183,7 @@ const i18n = {
     'hero.cta2': '제품 보러가기',
     'tag.home': '가정집', 'tag.daycare': '어린이집', 'tag.care': '요양시설',
     'tag.hospital': '병원', 'tag.pet': '애견센터', 'tag.hotel': '호텔', 'tag.church': '교회',
+    'tag.pension': '펜션', 'tag.carecenter': '돌봄센터', 'tag.disabled': '장애인센터',
     'stat.sgs': 'SGS 충격흡수율',
     'stat.cert': '공인 인증 보유',
     'stat.yearUnit': '년',

@@ -2477,6 +2477,11 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 
   .why-grid { grid-template-columns: 1fr 1fr; }
   .material-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .hero-badge-row { flex-wrap: nowrap; gap: 4px; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
+  .hero-badge-row::-webkit-scrollbar { display: none; }
+  .hero-badge { font-size: 0.65rem; padding: 4px 8px; gap: 4px; white-space: nowrap; flex-shrink: 0; }
+  .hero-tags { gap: 6px; }
+  .hero-tags span { font-size: 0.72rem; padding: 4px 10px; }
   .material-card.active { grid-column: auto; }
   .tpu-examples { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .tpu-icon { width: 64px; height: 64px; }
