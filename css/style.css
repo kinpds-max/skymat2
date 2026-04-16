@@ -354,7 +354,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: #000 url('../images/KakaoTalk_20260408_131855011_01.png') center/cover no-repeat;
+  background: #000;
   overflow: hidden;
 }
 .video-bg {
