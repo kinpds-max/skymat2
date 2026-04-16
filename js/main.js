@@ -9,6 +9,20 @@
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwuUP8_TqkJz0CrOfUJP2zV9_otBZem-SnF4rmbk--TELf9Jnl93P-sNrFvMniouiQN/exec';
 
 /**
+ * 유입 경로 트래킹 (UTM & Referrer)
+ */
+function getTrackingData() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return {
+    referrer: document.referrer || 'direct',
+    utm_source: urlParams.get('utm_source') || '',
+    utm_medium: urlParams.get('utm_medium') || '',
+    utm_campaign: urlParams.get('utm_campaign') || '',
+    timestamp: new Date().toISOString()
+  };
+}
+
+/**
  * 주소 검색 (Daum Postcode API)
  */
 function searchAddress() {
@@ -832,6 +846,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // 1. 구글 시트 전송 (Apps Script)
+      const tracking = getTrackingData();
       const googleSheetData = {
         name,
         phone,
@@ -842,7 +857,11 @@ document.addEventListener('DOMContentLoaded', () => {
         sampleNote,
         memo,
         calcResult: document.getElementById('calcResult')?.value || '',
-        timestamp: new Date().toLocaleString('ko-KR')
+        referrer: tracking.referrer,
+        utm_source: tracking.utm_source,
+        utm_medium: tracking.utm_medium,
+        utm_campaign: tracking.utm_campaign,
+        timestamp: tracking.timestamp
       };
 
       if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL') {
