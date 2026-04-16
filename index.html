@@ -1,3 +1,11 @@
+<!--
+  ==========================================================================
+  ▣ 저작권 및 무단 복제 금지 공고 (Copyright Notice) ▣
+  본 소스 코드 및 디자인에 대한 모든 권리는 '하늘매트(SKYMAT)' 및 '하스놀'에 있습니다.
+  본 웹사이트의 소스 코드를 무단으로 복사, 배포, 변조하거나 상업적으로 이용하는 행위는
+  저작권법 제136조 등에 의거하여 법적 처벌을 받을 수 있음을 경고합니다.
+  ==========================================================================
+-->
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -1800,18 +1808,29 @@
   <!-- Daum Postcode API -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="js/main.js"></script>
-  <!-- ===== SECURITY & ANTI-THEFT ===== -->
+  <!-- ===== SECURITY & ANTI-THEFT (ENHANCED) ===== -->
   <script>
-    // 코드 보호 및 무단 복제 방지 (기초 보안)
+    // 1. 우클릭 및 드래그 방지
     document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('dragstart', e => e.preventDefault());
+    document.addEventListener('selectstart', e => { if(!e.target.closest('input, textarea')) e.preventDefault(); });
+
+    // 2. 개발자 도구 및 소스보기 단축키 차단
     document.onkeydown = function(e) {
-      if (e.keyCode == 123) return false; // F12
-      if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I
-      if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Ctrl+Shift+C
-      if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J
-      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U
-      if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false; // Ctrl+S
+      const forbiddenKeys = ['F12', 'I', 'J', 'C', 'U', 'S'];
+      if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && forbiddenKeys.includes(String.fromCharCode(e.keyCode))) || (e.ctrlKey && forbiddenKeys.includes(String.fromCharCode(e.keyCode)))) {
+        return false;
+      }
     };
+
+    // 3. 디버깅 방지 (Console 정지)
+    setInterval(() => {
+      (function() {
+        if (window.outerHeight - window.innerHeight > 160 || window.outerWidth - window.innerWidth > 160) {
+          document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;font-family:sans-serif;"><h1>Security Warning</h1><p>접근 권한이 없습니다. (Unauthorized Access Detected)</p></div>';
+        }
+      })();
+    }, 1000);
   </script>
 </body>
 
