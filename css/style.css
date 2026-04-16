@@ -342,7 +342,8 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--accent-dark) 100%);
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/KakaoTalk_20260408_131855011_01.png') center/cover no-repeat;
+  z-index: 0;
 }
 .hero-bg::after {
   content: '';
@@ -353,9 +354,10 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 .hero-content {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 40px;
+  display: block;
+  max-width: 800px;
+  text-align: left;
+  margin: 0 auto;
   align-items: center;
 }
 .hero-badge-row {
