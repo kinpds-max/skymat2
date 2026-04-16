@@ -1928,10 +1928,31 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   animation: barGrow 1.5s cubic-bezier(0.1, 0, 0.1, 1) forwards;
   transform-origin: left;
   min-width: 44px;
+  position: relative;
+  overflow: hidden;
+}
+/* 움직이는 광택 효과 (GIF 대체) */
+.conv-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0.3) 50%, 
+    rgba(255,255,255,0) 100%);
+  animation: shimmer 2s infinite linear;
+  animation-delay: 1.5s;
 }
 @keyframes barGrow {
   0% { transform: scaleX(0); }
   100% { transform: scaleX(1); }
+}
+@keyframes shimmer {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(200%); }
 }
 .conv-note { font-size: .82rem; color: var(--gray-500); text-align: center; }
 
