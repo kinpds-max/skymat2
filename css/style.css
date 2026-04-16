@@ -2486,8 +2486,8 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   .cert-grid { grid-template-columns: repeat(2, 1fr); }
   .cert-card.highlight { grid-column: span 2; }
   .product-grid { grid-template-columns: repeat(2, 1fr); }
-  .process-steps { flex-direction: column; align-items: center; gap: 32px; }
-  .process-arrow { transform: rotate(90deg); padding: 0; }
+  .process-steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; text-align: center; }
+  .process-arrow { display: none; }
   .gallery-grid { grid-template-columns: 1fr; }
   .gallery-item.large { grid-column: auto; }
   .contact-inner.side-by-side { flex-direction: column; gap: 40px; }
