@@ -1070,4 +1070,43 @@ document.addEventListener('DOMContentLoaded', () => {
     range.addEventListener('input', () => applyVal(range.value));
   });
 
+  /* ===== 14. 팝업 공지 제어 (리뉴얼 및 가격인상) ===== */
+  const setupModal = (modalId, closeId, todayId, storageKey, delay = 1000) => {
+    const modal = document.getElementById(modalId);
+    const closeBtn = document.getElementById(closeId);
+    const todayBtn = document.getElementById(todayId);
+
+    if (!modal) return;
+
+    // 오늘 보지 않기 체크
+    const hideUntil = localStorage.getItem(storageKey);
+    const now = new Date().getTime();
+
+    if (!hideUntil || now > parseInt(hideUntil)) {
+      setTimeout(() => {
+        modal.classList.add('open');
+      }, delay);
+    }
+
+    // 닫기
+    closeBtn?.addEventListener('click', () => {
+      modal.classList.remove('open');
+    });
+
+    // 오늘 하루 보지 않기
+    todayBtn?.addEventListener('click', () => {
+      const expiry = new Date().getTime() + (24 * 60 * 60 * 1000); // 24시간
+      localStorage.setItem(storageKey, expiry.toString());
+      modal.classList.remove('open');
+    });
+
+    // 배경 클릭 시 닫기
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('open');
+    });
+  };
+
+  // 각각의 모달 초기화 (중요한 가격 공지를 먼저 표시)
+  setupModal('priceNoticeModal', 'closePriceModal', 'closePriceToday', 'hidePriceNotice', 500);
+
 });

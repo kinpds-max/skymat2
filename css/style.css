@@ -3374,21 +3374,52 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 .brochureSwiper .swiper-pagination-bullet-active { background: var(--primary); }
 
 
-/* ===== NOTICE MODAL POPUP ===== */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; }
+/* ===== PRICE NOTICE MODAL (Compact & Brand Tone) ===== */
+.modal-content.price-notice { 
+  max-width: 320px; 
+  border-top: 5px solid var(--primary); 
+  border-radius: 20px;
+}
+.modal-header.notice-header { 
+  justify-content: space-between; 
+  padding: 14px 20px; 
+  background: var(--primary-bg);
+  border-bottom: 1px solid var(--gray-200);
+}
+.notice-header i { color: var(--primary); font-size: 1rem; }
+.mini-close { 
+  font-size: 1.4rem; 
+  color: var(--gray-400); 
+  background: none;
+  border: none;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mini-close:hover { color: var(--gray-800); }
+
+.price-notice .modal-body { padding: 32px 24px; text-align: center; }
+.notice-title { color: var(--primary); font-size: 1.2rem; font-weight: 900; margin-bottom: 12px; }
+.notice-text { font-size: 0.95rem; line-height: 1.6; color: var(--gray-600); margin: 0; }
+.notice-text strong { color: var(--primary-dark); font-weight: 700; }
+
+.btn-today-mini { 
+  width: 100%; 
+  background: #f8fafc; 
+  color: var(--gray-400) !important; 
+  font-size: 0.78rem !important; 
+  padding: 12px !important; 
+  border: none;
+  border-top: 1px solid var(--gray-100);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-today-mini:hover { background: var(--gray-50); color: var(--gray-600) !important; }
+
+/* ===== MODAL BASE (Overlay & Animation) ===== */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; }
 .modal-overlay.open { display: flex; }
-.modal-content { background: #fff; width: 100%; max-width: 400px; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); position: relative; animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.modal-content { background: #fff; width: 100%; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); position: relative; animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 @keyframes modalIn { from { opacity: 0; transform: scale(0.8) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-.modal-header { background: #F8FAFC; padding: 15px 20px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; gap: 8px; font-weight: 600; color: #64748B; font-size: 0.9rem; }
-.modal-header i { color: #F59E0B; }
-.modal-body { padding: 40px 30px; text-align: center; }
-.modal-body h3 { font-size: 1.4rem; font-weight: 800; color: #1E293B; margin-bottom: 16px; }
-.modal-body p { color: #64748B; line-height: 1.6; margin-bottom: 24px; font-size: 0.95rem; }
-.modal-body .highlight { background: #EFF6FF; padding: 16px; border-radius: 12px; color: #1E40AF; font-weight: 500; }
-.modal-body .highlight strong { color: #2563EB; font-weight: 700; }
-.modal-footer { display: flex; border-top: 1px solid #E2E8F0; }
-.modal-footer button { flex: 1; padding: 16px; border: none; background: #fff; font-size: 0.9rem; font-weight: 500; color: #64748B; cursor: pointer; transition: background 0.2s; }
-.modal-footer button:hover { background: #F8FAFC; color: #1E293B; }
-.modal-footer .btn-today { border-right: 1px solid #E2E8F0; }
-.modal-cta { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #1E1E1E; padding: 18px; font-weight: 700; text-decoration: none; font-size: 1.1rem; }
-.modal-cta:hover { background: #FADA0A; }
+

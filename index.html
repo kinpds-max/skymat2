@@ -31,25 +31,21 @@
 <body>
 
 
-  <!-- ===== 리뉴얼 공지 팝업 ===== -->
-  <div id="noticeModal" class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <i class="fa-solid fa-circle-exclamation"></i>
-        <span>점검 및 리뉴얼 안내</span>
+  <!-- ===== 가격 인상 사전 안내 팝업 ===== -->
+  <div id="priceNoticeModal" class="modal-overlay">
+    <div class="modal-content price-notice">
+      <div class="modal-header notice-header">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>가격 조정 사전 안내</span>
+        <button id="closePriceModal" class="mini-close"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
-        <h3>홈페이지 리뉴얼 진행 중</h3>
-        <p>현재 사이트 안정화 작업이 진행 중입니다.<br>일부 기능이 원활하지 않을 수 있으니 양해 부탁드립니다.</p>
-        <p class="highlight">모든 문의는 <strong>카톡</strong>으로 주시면<br>친절하게 답변드리겠습니다.</p>
+        <h3 class="notice-title">하늘매트 가격인상 안내</h3>
+        <p class="notice-text">국제 원자재 폭등으로 인하여 <strong>이번 공동구매 이후</strong> 가격이 인상될 예정입니다. (5월 1일 적용)</p>
       </div>
       <div class="modal-footer">
-        <button id="closeToday" class="btn-today">오늘 하루 보지 않기</button>
-        <button id="closeModal" class="btn-close-notice">닫기</button>
+        <button id="closePriceToday" class="btn-today-mini">오늘 하루 보지 않기</button>
       </div>
-      <a href="https://pf.kakao.com/_yBrxhG/chat" target="_blank" class="modal-cta">
-        <i class="fa-comment fa-brands"></i> 카톡으로 문의하기
-      </a>
     </div>
   </div>
 
