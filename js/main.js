@@ -1109,4 +1109,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // 각각의 모달 초기화 (중요한 가격 공지를 먼저 표시)
   setupModal('priceNoticeModal', 'closePriceModal', 'closePriceToday', 'hidePriceNotice', 500);
 
+  /* ===== 15. 배경 영상 부드러운 표시 ===== */
+  const videoIframe = document.querySelector('.video-bg');
+  if (videoIframe) {
+    videoIframe.onload = function() {
+      setTimeout(() => {
+        videoIframe.classList.add('loaded');
+      }, 500); // 0.5초 여유 후 표시
+    };
+    // 브라우저 캐시 등으로 onload가 안될 경우 대비
+    setTimeout(() => {
+      if (!videoIframe.classList.contains('loaded')) {
+        videoIframe.classList.add('loaded');
+      }
+    }, 3000);
+  }
+
 });

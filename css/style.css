@@ -359,7 +359,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: #000;
+  background: var(--primary-bg); /* Use brand light blue to avoid black blink */
   overflow: hidden;
 }
 .video-bg {
@@ -370,14 +370,18 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   height: 56.25vw; /* 16:9 */
   min-height: 100vh;
   min-width: 177.77vh;
-  transform: translate(-50%, -50%) scale(1.15); /* Enlarge video to remove gaps */
+  transform: translate(-50%, -50%) scale(1.2); /* Over-scale slightly for seamless fit */
   pointer-events: none;
-  opacity: 1.0; /* Increased opacity for clarity */
+  opacity: 0; /* Initially hidden for smooth load */
+  transition: opacity 1.5s ease-in-out; /* Slow natural fade-in */
+}
+.video-bg.loaded {
+  opacity: 1;
 }
 .video-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)); /* Lightened for maximum brightness */
+  background: rgba(0,0,0,0.05); /* Minimal overlay just for subtle text contrast */
   z-index: 1;
 }
 .hero-bg::after {
@@ -425,44 +429,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   text-shadow: 0 4px 12px rgba(0,0,0,0.2);
   display: inline-block;
   position: relative;
-  padding: 40px 60px;
   z-index: 10;
-}
-
-.cloud-puffs {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  filter: blur(15px); /* Soft dreamy edge */
-}
-
-.puff {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(10px);
-  border-radius: 50%;
-  animation: puffFloat 8s ease-in-out infinite alternate;
-}
-
-.puff-1 { width: 140px; height: 140px; top: -30px; left: -20px; animation-delay: 0s; }
-.puff-2 { width: 180px; height: 180px; top: -50px; left: 40%; animation-delay: -2s; }
-.puff-3 { width: 150px; height: 150px; top: 10px; right: -30px; animation-delay: -4s; }
-.puff-4 { width: 160px; height: 160px; bottom: -40px; left: 10%; animation-delay: -1s; }
-.puff-5 { width: 190px; height: 190px; bottom: -50px; right: 20%; animation-delay: -5s; }
-
-/* Central semi-transparent base for text readability */
-.hero-title::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 60px;
-  z-index: -2;
-}
-
-@keyframes puffFloat {
-  from { transform: translate(0, 0) scale(1); opacity: 0.6; }
-  to { transform: translate(15px, -15px) scale(1.1); opacity: 0.8; }
 }
 
 .hero-title .title-text { position: relative; z-index: 10; }
@@ -472,7 +439,6 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   color: #fff;
   display: inline;
   white-space: nowrap;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
 }
 .hero-sub {
   font-size: 1.2rem;
