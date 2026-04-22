@@ -1,4 +1,4 @@
-/* =========================================
+﻿/* =========================================
    하늘매트 - style.css
    Blue tone brand identity
    ========================================= */
@@ -3401,7 +3401,54 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 .modal-content { background: #fff; width: 100%; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); position: relative; animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 @keyframes modalIn { from { opacity: 0; transform: scale(0.8) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-$css
-$css
-$css
-$css
+
+/* ===== SHORTS GRID (4 Columns layout update) ===== */
+.shorts-grid {
+  grid-template-columns: repeat(4, 1fr) !important;
+  max-width: 1200px !important;
+}
+@media (max-width: 992px) {
+  .shorts-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 768px) {
+  .shorts-grid { grid-template-columns: repeat(2, 1fr) !important; max-width: 600px !important; }
+}
+
+/* ===== BROCHURE SECTION (Centering) ===== */
+.brochure-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+}
+.brochure-info {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ===== SAMPLE BANNER (Centering Update) ===== */
+.sample-banner {
+  padding: 60px 0;
+}
+.sample-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  padding: 40px;
+}
+@media (max-width: 768px) {
+  .sample-inner {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px;
+    gap: 20px;
+  }
+}
