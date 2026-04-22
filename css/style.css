@@ -426,7 +426,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   line-height: 1.25;
   margin-bottom: 24px;
   letter-spacing: -.03em;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-shadow: 0 4px 20px rgba(0,0,0,0.3); /* Increased shadow for legibility */
   display: inline-block;
   position: relative;
   z-index: 10;
@@ -436,9 +436,10 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 
 .hero-title em {
   font-style: normal;
-  color: #fff;
+  color: #4FC3F7; /* Vibrant Sky Blue */
   display: inline;
   white-space: nowrap;
+  text-shadow: 0 0 25px rgba(79, 195, 247, 0.4), 0 4px 12px rgba(0,0,0,0.3);
 }
 .hero-sub {
   font-size: 1.2rem;
@@ -446,6 +447,10 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   line-height: 1.6;
   margin-bottom: 40px;
   font-weight: 400;
+}
+.hero-sub .brand-name {
+  color: #4FC3F7;
+  font-weight: 700;
 }
 .hero-sub strong { color: #fff; font-weight: 700; }
 .hero-cta-group {
