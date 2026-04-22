@@ -26,6 +26,23 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- 보안 설정 (Security Meta Tags) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; font-src 'self' https: data:; frame-src 'self' https://www.youtube.com https://smartstore.naver.com;">
+
+  <!-- 외부 복사 및 해킹 방지 스크립트 -->
+  <script>
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
+    document.addEventListener('keydown', function(e) {
+      if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
+        e.preventDefault();
+        return false;
+      }
+    }, false);
+  </script>
 </head>
 
 <body>
@@ -157,11 +174,11 @@
   <section class="brochure-section" id="brochure" style="padding: 100px 0 60px; background: #f8f9fa;">
     <div class="container">
       <div class="brochure-card">
-        <div class="brochure-info">
+        <div class="brochure-info" style="text-align: center; margin-bottom: 40px; width: 100%;">
           <span class="section-tag">자료실</span>
           <h3>하늘매트 <em>공식 브로셔</em></h3>
           <p>하스놀과 하늘매트의 상세 제품 사양 및<br />기업 소개가 담긴 최신 공식 브로셔를 확인해 보세요.</p>
-          <div class="brochure-btns" style="justify-content: center;">
+          <div class="brochure-btns" style="display: flex; justify-content: center; margin-top: 24px;">
             <a href="docs/brochure.pdf" download class="btn-primary" style="min-width: 200px; justify-content: center;">
               <i class="fa-solid fa-download"></i> 브로셔 다운받기
             </a>
@@ -169,7 +186,7 @@
         </div>
         
         <!-- 브로셔 본문 미리보기 (Swiper Book) -->
-        <div class="brochure-viewer">
+        <div class="brochure-viewer" style="margin: 0 auto;">
           <div class="swiper brochureSwiper">
             <div class="swiper-wrapper">
               <div class="swiper-slide"><img src="images/브로셔/1.png" alt="Brochure Page 1"></div>
@@ -794,7 +811,7 @@
     <div class="container">
       <!-- 인증 이미지 (브로슈어 슬라이드) -->
       <div class="cert-image-wrap">
-        <img src="images/KakaoTalk_20260408_131855011_10.png"
+        <img src="images/브로셔/9.png"
           alt="하늘매트 공인 인증서 전체 — ISO 9001, 소비자선정 브랜드 대상, SGS 충격흡수율 98%, KOTTI 라돈합격, KTR 난연V2, FITI KC인증, KACI 4종" />
       </div>
 
@@ -1064,7 +1081,7 @@
   <section class="celeb" id="celeb">
     <div class="container">
       <div class="celeb-img-wrap">
-        <img src="images/KakaoTalk_20260408_131855011_11.png" alt="하늘매트를 추천하는 셀러브리티·인플루언서 손글씨 후기 사진 모음" />
+        <img src="images/브로셔/10.png" alt="하늘매트를 추천하는 셀러브리티·인플루언서 손글씨 후기 사진 모음" />
       </div>
       <div class="celeb-cta">
         <p>셀러브리티·인플루언서 분들은 <strong>우대할인 대상</strong>에 해당됩니다</p>
@@ -1091,42 +1108,35 @@
         </div>
         <div class="yt-item">
           <div class="yt-thumb">
-            <iframe src="https://www.youtube.com/embed/vw59H9suieo" title="하늘매트 쇼츠 1" frameborder="0"
+            <iframe src="https://www.youtube.com/embed/nzw-XYuQLj0" title="하늘매트 영상 2" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen loading="lazy"></iframe>
           </div>
         </div>
         <div class="yt-item">
           <div class="yt-thumb">
-            <iframe src="https://www.youtube.com/embed/6JDJJ8m3o-U" title="하늘매트 쇼츠 2" frameborder="0"
+            <iframe src="https://www.youtube.com/embed/Ow8VQpd6R5k" title="하늘매트 영상 3" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen loading="lazy"></iframe>
           </div>
         </div>
         <div class="yt-item">
           <div class="yt-thumb">
-            <iframe src="https://www.youtube.com/embed/CbbJyKoyN98" title="하늘매트 쇼츠 3" frameborder="0"
+            <iframe src="https://www.youtube.com/embed/oOCgViGOfkQ" title="하늘매트 영상 4" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen loading="lazy"></iframe>
           </div>
         </div>
         <div class="yt-item">
           <div class="yt-thumb">
-            <iframe src="https://www.youtube.com/embed/X9qNkJ3UN9s" title="하늘매트 쇼츠 4" frameborder="0"
+            <iframe src="https://www.youtube.com/embed/6inIqxurjwU" title="하늘매트 영상 5" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen loading="lazy"></iframe>
           </div>
         </div>
         <div class="yt-item">
           <div class="yt-thumb">
-            <iframe src="https://www.youtube.com/embed/tnWxhI6_BN0" title="하늘매트 쇼츠 5" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-        <div class="yt-item">
-          <div class="yt-thumb">
-            <iframe src="https://www.youtube.com/embed/KhdUaxnDATA" title="하늘매트 쇼츠 6" frameborder="0"
+            <iframe src="https://www.youtube.com/embed/oSQ2vkKGLJE" title="하늘매트 영상 6" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen loading="lazy"></iframe>
           </div>
@@ -1140,37 +1150,54 @@
     </div>
   </section>
 
-  <!-- ===== 실시간 시공 앨범 (Supabase 연동) ===== -->
+
+
+  <!-- ===== 유튜브 쇼츠 시공 앨범 (자동 업데이트형) ===== -->
   <section class="board" id="board">
     <div class="container">
       <div class="section-header">
-        <h2>고객님들의 <em>실제 시공사진</em></h2>
+        <span class="section-tag">REAL-TIME SHORTS</span>
+        <h2>하늘매트 <em>실시간 시공 쇼츠</em></h2>
+        <p>현장에서 직접 전해드리는 생생한 시공 현장 라이브</p>
       </div>
 
-      <div class="album-board" id="albumBoard">
-
-
-        <!-- 앨범 그리드 -->
-        <div class="album-grid" id="albumGrid">
-          <!-- 스켈레톤 로딩 / 데이터 로드 영역 -->
-          <div class="album-loader">
-            <i class="fa-solid fa-spinner fa-spin"></i> 데이터를 가져오고 있습니다...
+      <div class="shorts-grid" id="shortsGrid">
+        <div class="shorts-item">
+          <div class="shorts-thumb">
+            <iframe src="https://www.youtube.com/embed/o7u5afbDx5Q" title="시공 쇼츠 1" frameborder="0" allowfullscreen loading="lazy"></iframe>
           </div>
         </div>
-
-
+        <div class="shorts-item">
+          <div class="shorts-thumb">
+            <iframe src="https://www.youtube.com/embed/nzw-XYuQLj0" title="시공 쇼츠 2" frameborder="0" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="shorts-item">
+          <div class="shorts-thumb">
+            <iframe src="https://www.youtube.com/embed/Ow8VQpd6R5k" title="시공 쇼츠 3" frameborder="0" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="shorts-item">
+          <div class="shorts-thumb">
+            <iframe src="https://www.youtube.com/embed/oOCgViGOfkQ" title="시공 쇼츠 4" frameborder="0" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="shorts-item">
+          <div class="shorts-thumb">
+            <iframe src="https://www.youtube.com/embed/6inIqxurjwU" title="시공 쇼츠 5" frameborder="0" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="shorts-item">
+          <div class="shorts-thumb">
+            <iframe src="https://www.youtube.com/embed/oSQ2vkKGLJE" title="시공 쇼츠 6" frameborder="0" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
       </div>
 
-      <!-- 라이트박스 -->
-      <div class="gdrive-lightbox" id="gdriveLightbox">
-        <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
-        <div class="lightbox-img-wrap">
-          <img id="lightboxImg" src="" alt="" />
-          <div class="lightbox-meta">
-            <h4 id="lightboxTitle">단지명</h4>
-            <p id="lightboxCaption">상세 설명</p>
-          </div>
-        </div>
+      <div class="board-more" style="text-align: center; margin-top: 40px;">
+        <a href="https://www.youtube.com/@skymat82/shorts" target="_blank" class="btn-product">
+          전체 시공 쇼츠 더보기 <i class="fa-solid fa-arrow-right"></i>
+        </a>
       </div>
     </div>
   </section>
@@ -1491,7 +1518,7 @@
     <div class="container">
       <div class="sample-inner">
         <div class="sample-img-wrap">
-          <img src="images/KakaoTalk_20260408_131855011_01.png" alt="하늘매트 TPU 무료배송 샘플신청" class="sample-product-img" />
+          <img src="images/KakaoTalk_20260408_131855011_01 - 복사본.png" alt="하늘매트 TPU 무료배송 샘플신청" class="sample-product-img" />
         </div>
         <div class="sample-content">
           <div class="sample-tags">
