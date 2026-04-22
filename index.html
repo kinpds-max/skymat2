@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   ==========================================================================
   ▣ 저작권 및 무단 복제 금지 공고 (Copyright Notice) ▣
   본 소스 코드 및 디자인에 대한 모든 권리는 '하늘매트(SKYMAT)' 및 '하스놀'에 있습니다.
@@ -1861,8 +1861,8 @@
           // 최신 영상 데이터를 기반으로 그리드 업데이트
           grid.innerHTML = '';
           
-          // 상단에 노출할 최신 12개 영상 (쇼츠 포함)
-          data.items.slice(0, 12).forEach((item, index) => {
+          // 상단에 노출할 최신 8개 영상 (쇼츠 포함, 1줄 4개씩 2줄)
+          data.items.slice(0, 8).forEach((item, index) => {
             const videoId = item.link.split('v=')[1];
             if (!videoId) return;
 
