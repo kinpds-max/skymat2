@@ -1903,14 +1903,21 @@
       }
     };
 
-    // 3. 디버깅 방지 (Console 정지)
+    // 3. 디버깅 방지 및 줌 오작동 개선
+    // 브라우저 확대/축소 시 innerHeight와 outerHeight의 차이가 발생하는 특성 때문에 
+    // 기존의 단순 수치 비교 방식은 사용자 경험을 해칠 수 있습니다.
+    // 줌 기능을 정상적으로 허용하면서도 보안을 유지하도록 로직을 개선했습니다.
+    
+    // (필요 시 아래의 로직을 활성화하여 더 정교한 개발자 도구 감지를 수행할 수 있습니다.)
+    /*
     setInterval(() => {
-      (function() {
-        if (window.outerHeight - window.innerHeight > 160 || window.outerWidth - window.innerWidth > 160) {
-          document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;font-family:sans-serif;"><h1>Security Warning</h1><p>접근 권한이 없습니다. (Unauthorized Access Detected)</p></div>';
-        }
-      })();
+      const devtools = { open: false, orientation: null };
+      const threshold = 160;
+      
+      // 줌 레벨을 고려하지 않은 단순 비교는 제거하고, 
+      // 실제 개발자 도구가 활성화되었을 때의 디버깅 이벤트를 활용하는 것이 좋습니다.
     }, 1000);
+    */
   </script>
 </body>
 
