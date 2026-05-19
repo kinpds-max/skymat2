@@ -1019,7 +1019,7 @@ document.addEventListener('DOMContentLoaded', () => {
   stats.forEach(el => countObserver.observe(el));
 
   /* ===== 13. 기업 협력 문의 폼 (Web3Forms 실 발송) ===== */
-  const WEB3FORMS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY'; // ← 키 발급 후 여기 교체
+  const WEB3FORMS_KEY = 'b21625a5-9b6b-4b46-8a3a-7590d1478a24';
   const bizForm = document.getElementById('bizForm');
   if (bizForm) {
     bizForm.addEventListener('submit', async function(e) {
