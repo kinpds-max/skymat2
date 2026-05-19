@@ -3403,16 +3403,61 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 @keyframes modalIn { from { opacity: 0; transform: scale(0.8) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
 
-/* ===== SHORTS GRID (4 Columns layout update) ===== */
+/* ===== SHORTS GRID (5 Columns) ===== */
 .shorts-grid {
-  grid-template-columns: repeat(4, 1fr) !important;
-  max-width: 1200px !important;
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 12px !important;
+  max-width: 100% !important;
 }
+.shorts-item {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  transition: transform 0.2s;
+}
+.shorts-item:hover { transform: translateY(-4px); }
+.shorts-thumb {
+  position: relative;
+  padding-bottom: 177.78%;
+  overflow: hidden;
+}
+.shorts-thumb a {
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.shorts-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.shorts-item:hover .shorts-thumb img { transform: scale(1.05); }
+.shorts-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  background: rgba(255,255,255,0.88);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #ff0000;
+  pointer-events: none;
+  transition: background 0.2s;
+}
+.shorts-item:hover .shorts-play-icon { background: #fff; }
 @media (max-width: 992px) {
   .shorts-grid { grid-template-columns: repeat(3, 1fr) !important; }
 }
 @media (max-width: 768px) {
-  .shorts-grid { grid-template-columns: repeat(2, 1fr) !important; max-width: 600px !important; }
+  .shorts-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 
 /* ===== BROCHURE SECTION (Centering) ===== */

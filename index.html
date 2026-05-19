@@ -940,32 +940,42 @@
       <div class="shorts-grid" id="shortsGrid">
         <div class="shorts-item">
           <div class="shorts-thumb">
-            <iframe src="https://www.youtube.com/embed/o7u5afbDx5Q" title="시공 쇼츠 1" frameborder="0" allowfullscreen loading="lazy"></iframe>
+            <a href="https://www.youtube.com/shorts/o7u5afbDx5Q" target="_blank" rel="noopener">
+              <img src="https://i.ytimg.com/vi/o7u5afbDx5Q/hqdefault.jpg" alt="시공 쇼츠 1" loading="lazy" />
+              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
+            </a>
           </div>
         </div>
         <div class="shorts-item">
           <div class="shorts-thumb">
-            <iframe src="https://www.youtube.com/embed/nzw-XYuQLj0" title="시공 쇼츠 2" frameborder="0" allowfullscreen loading="lazy"></iframe>
+            <a href="https://www.youtube.com/shorts/nzw-XYuQLj0" target="_blank" rel="noopener">
+              <img src="https://i.ytimg.com/vi/nzw-XYuQLj0/hqdefault.jpg" alt="시공 쇼츠 2" loading="lazy" />
+              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
+            </a>
           </div>
         </div>
         <div class="shorts-item">
           <div class="shorts-thumb">
-            <iframe src="https://www.youtube.com/embed/Ow8VQpd6R5k" title="시공 쇼츠 3" frameborder="0" allowfullscreen loading="lazy"></iframe>
+            <a href="https://www.youtube.com/shorts/Ow8VQpd6R5k" target="_blank" rel="noopener">
+              <img src="https://i.ytimg.com/vi/Ow8VQpd6R5k/hqdefault.jpg" alt="시공 쇼츠 3" loading="lazy" />
+              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
+            </a>
           </div>
         </div>
         <div class="shorts-item">
           <div class="shorts-thumb">
-            <iframe src="https://www.youtube.com/embed/oOCgViGOfkQ" title="시공 쇼츠 4" frameborder="0" allowfullscreen loading="lazy"></iframe>
+            <a href="https://www.youtube.com/shorts/oOCgViGOfkQ" target="_blank" rel="noopener">
+              <img src="https://i.ytimg.com/vi/oOCgViGOfkQ/hqdefault.jpg" alt="시공 쇼츠 4" loading="lazy" />
+              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
+            </a>
           </div>
         </div>
         <div class="shorts-item">
           <div class="shorts-thumb">
-            <iframe src="https://www.youtube.com/embed/6inIqxurjwU" title="시공 쇼츠 5" frameborder="0" allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-        <div class="shorts-item">
-          <div class="shorts-thumb">
-            <iframe src="https://www.youtube.com/embed/oSQ2vkKGLJE" title="시공 쇼츠 6" frameborder="0" allowfullscreen loading="lazy"></iframe>
+            <a href="https://www.youtube.com/shorts/6inIqxurjwU" target="_blank" rel="noopener">
+              <img src="https://i.ytimg.com/vi/6inIqxurjwU/hqdefault.jpg" alt="시공 쇼츠 5" loading="lazy" />
+              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
+            </a>
           </div>
         </div>
       </div>
@@ -1862,47 +1872,39 @@
   <!-- Daum Postcode API -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="js/main.js"></script>
-  <!-- ===== 유튜브 쇼츠 자동 크롤링/연동 스크립트 ===== -->
+  <!-- ===== 유튜브 쇼츠 자동 크롤링 (썸네일 방식) ===== -->
   <script>
     async function fetchLatestShorts() {
-      const channelId = 'UCJnWOugRSSv3Oqzir2FgNRA'; // 하늘매트 공식 채널 ID
-      const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
-      
+      const channelId = 'UCJnWOugRSSv3Oqzir2FgNRA';
+      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId)}&count=5`;
       const grid = document.getElementById('shortsGrid');
       if (!grid) return;
 
       try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        
-        if (data.status === 'ok' && data.items) {
-          // 최신 영상 데이터를 기반으로 그리드 업데이트
-          grid.innerHTML = '';
-          
-          // 상단에 노출할 최신 8개 영상 (쇼츠 포함, 1줄 4개씩 2줄)
-          data.items.slice(0, 8).forEach((item, index) => {
-            const videoId = item.link.split('v=')[1];
-            if (!videoId) return;
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+        if (data.status !== 'ok' || !data.items?.length) return;
 
-            const shortsItem = document.createElement('div');
-            shortsItem.className = 'shorts-item';
-            shortsItem.innerHTML = `
+        const html = data.items.slice(0, 5).map((item, i) => {
+          const raw = item.link || '';
+          const videoId = raw.includes('shorts/')
+            ? raw.split('shorts/')[1].split('?')[0]
+            : (raw.split('v=')[1] || '').split('&')[0];
+          if (!videoId) return '';
+          return `
+            <div class="shorts-item">
               <div class="shorts-thumb">
-                <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0&mute=1" 
-                  title="실시간 시공 쇼츠 ${index + 1}" 
-                  frameborder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowfullscreen 
-                  loading="lazy"></iframe>
+                <a href="https://www.youtube.com/shorts/${videoId}" target="_blank" rel="noopener">
+                  <img src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg" alt="시공 쇼츠 ${i+1}" loading="lazy" />
+                  <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
+                </a>
               </div>
-            `;
-            grid.appendChild(shortsItem);
-          });
-          console.log('실시간 시공 쇼츠 자동 업데이트 완료');
-        }
-      } catch (error) {
-        console.error('쇼츠 데이터를 가져오는 중 오류 발생:', error);
+            </div>`;
+        }).join('');
+
+        if (html) grid.innerHTML = html;
+      } catch (e) {
+        /* 실패 시 HTML 기본 5개 유지 */
       }
     }
     document.addEventListener('DOMContentLoaded', fetchLatestShorts);
