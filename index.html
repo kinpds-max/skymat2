@@ -1167,45 +1167,225 @@
       <!-- 시설 패널 -->
       <div class="gallery-panel" id="gtab-facility">
         <div class="wiper-grid">
+          <!-- 요양원 -->
           <div class="wiper-wrap">
             <div class="wiper-label-top"><span>요양원 시공</span><span class="wiper-area">시설</span></div>
-            <div class="wiper-compare" id="wiper-facility-1">
+            <div class="wiper-compare ready" id="wiper-facility-1">
               <div class="wiper-before">
-                <img src="images/gallery-facility-01-before.jpg" alt="시공 전" onerror="this.closest('.wiper-before').style.background='#dbeafe'" />
+                <!-- 요양원 Before: 낡은 갈색 타일 바닥 -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" style="position:absolute;inset:0;width:100%;height:100%">
+                  <rect width="400" height="300" fill="#e2d8c8"/>
+                  <rect width="400" height="155" fill="#ede6d6"/>
+                  <rect y="155" width="400" height="145" fill="#b8a88a"/>
+                  <line x1="0" y1="190" x2="400" y2="190" stroke="#9a8870" stroke-width="1.5"/>
+                  <line x1="0" y1="225" x2="400" y2="225" stroke="#9a8870" stroke-width="1.5"/>
+                  <line x1="0" y1="260" x2="400" y2="260" stroke="#9a8870" stroke-width="1.5"/>
+                  <line x1="60" y1="155" x2="60" y2="300" stroke="#9a8870" stroke-width="1.5"/>
+                  <line x1="120" y1="155" x2="120" y2="300" stroke="#9a8870" stroke-width="1.5"/>
+                  <line x1="180" y1="155" x2="180" y2="300" stroke="#9a8870" stroke-width="1.5"/>
+                  <line x1="240" y1="155" x2="240" y2="300" stroke="#9a8870" stroke-width="1.5"/>
+                  <line x1="300" y1="155" x2="300" y2="300" stroke="#9a8870" stroke-width="1.5"/>
+                  <line x1="360" y1="155" x2="360" y2="300" stroke="#9a8870" stroke-width="1.5"/>
+                  <!-- 병원 침대 -->
+                  <rect x="25" y="85" width="155" height="85" rx="5" fill="#c2c2c2" stroke="#aaa" stroke-width="1.5"/>
+                  <rect x="29" y="96" width="143" height="66" rx="3" fill="#dcdcdc"/>
+                  <rect x="33" y="100" width="52" height="28" rx="7" fill="#f0f0f0" stroke="#d0d0d0"/>
+                  <rect x="31" y="169" width="9" height="14" fill="#b0b0b0"/>
+                  <rect x="172" y="169" width="9" height="14" fill="#b0b0b0"/>
+                  <!-- 사이드 테이블 -->
+                  <rect x="192" y="118" width="46" height="54" rx="4" fill="#c9956a" stroke="#b07848"/>
+                  <rect x="196" y="110" width="38" height="10" rx="2" fill="#d4a87c"/>
+                  <!-- 창문 -->
+                  <rect x="275" y="22" width="100" height="88" rx="3" fill="#b8d8ee" stroke="#999" stroke-width="2"/>
+                  <line x1="325" y1="22" x2="325" y2="110" stroke="#aaa" stroke-width="1.5"/>
+                  <line x1="275" y1="66" x2="375" y2="66" stroke="#aaa" stroke-width="1.5"/>
+                  <rect x="272" y="20" width="12" height="92" rx="2" fill="#c9956a" opacity="0.7"/>
+                  <rect x="363" y="20" width="12" height="92" rx="2" fill="#c9956a" opacity="0.7"/>
+                  <!-- 낡음 표현: 얼룩 -->
+                  <ellipse cx="90" cy="210" rx="18" ry="10" fill="#a89070" opacity="0.4"/>
+                  <ellipse cx="280" cy="240" rx="14" ry="8" fill="#a89070" opacity="0.35"/>
+                </svg>
                 <span class="wiper-tag before-tag">시공 전</span>
               </div>
               <div class="wiper-after">
-                <img src="images/gallery-facility-01.jpg" alt="시공 후" onerror="this.closest('.wiper-after').style.background='#1565C0'" />
+                <!-- 요양원 After: 깨끗한 하늘매트 -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" style="position:absolute;inset:0;width:100%;height:100%">
+                  <rect width="400" height="300" fill="#eaf4ff"/>
+                  <rect width="400" height="155" fill="#f4f9ff"/>
+                  <!-- 새 매트: 밝은 블루-화이트 -->
+                  <rect y="155" width="400" height="145" fill="#d6ecf8"/>
+                  <!-- 매트 패턴 (엠보 도트) -->
+                  <pattern id="mat1" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="10" cy="10" r="2" fill="#b8d8ef" opacity="0.6"/>
+                  </pattern>
+                  <rect y="155" width="400" height="145" fill="url(#mat1)"/>
+                  <!-- 침대 (밝게) -->
+                  <rect x="25" y="85" width="155" height="85" rx="5" fill="#d8e8f4" stroke="#b0cce0" stroke-width="1.5"/>
+                  <rect x="29" y="96" width="143" height="66" rx="3" fill="#eaf4ff"/>
+                  <rect x="33" y="100" width="52" height="28" rx="7" fill="#fff" stroke="#c8e0f0"/>
+                  <rect x="31" y="169" width="9" height="14" fill="#a8c8e0"/>
+                  <rect x="172" y="169" width="9" height="14" fill="#a8c8e0"/>
+                  <!-- 사이드 테이블 -->
+                  <rect x="192" y="118" width="46" height="54" rx="4" fill="#e0f0fa" stroke="#b0d4ec"/>
+                  <rect x="196" y="110" width="38" height="10" rx="2" fill="#d0e8f8"/>
+                  <!-- 창문 (밝음) -->
+                  <rect x="275" y="22" width="100" height="88" rx="3" fill="#d0e8f8" stroke="#88bbd8" stroke-width="2"/>
+                  <line x1="325" y1="22" x2="325" y2="110" stroke="#99cce0" stroke-width="1.5"/>
+                  <line x1="275" y1="66" x2="375" y2="66" stroke="#99cce0" stroke-width="1.5"/>
+                  <rect x="272" y="20" width="12" height="92" rx="2" fill="#a8d4f0" opacity="0.7"/>
+                  <rect x="363" y="20" width="12" height="92" rx="2" fill="#a8d4f0" opacity="0.7"/>
+                  <!-- 하늘매트 로고 느낌 -->
+                  <text x="330" y="280" font-size="11" fill="#1565C0" opacity="0.5" font-family="sans-serif" font-weight="600">하늘매트</text>
+                </svg>
                 <span class="wiper-tag after-tag">시공 후</span>
               </div>
               <div class="wiper-divider"><div class="wiper-handle"><i class="fa-solid fa-arrows-left-right"></i></div></div>
               <input type="range" class="wiper-range" min="0" max="100" value="50" />
             </div>
           </div>
+
+          <!-- 병원 복도 -->
           <div class="wiper-wrap">
             <div class="wiper-label-top"><span>병원 복도 시공</span><span class="wiper-area">시설</span></div>
-            <div class="wiper-compare" id="wiper-facility-2">
+            <div class="wiper-compare ready" id="wiper-facility-2">
               <div class="wiper-before">
-                <img src="images/gallery-facility-02-before.jpg" alt="시공 전" onerror="this.closest('.wiper-before').style.background='#dbeafe'" />
+                <!-- 병원 복도 Before: 낡은 복도 -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" style="position:absolute;inset:0;width:100%;height:100%">
+                  <rect width="400" height="300" fill="#d8d0c4"/>
+                  <!-- 천장 -->
+                  <rect width="400" height="60" fill="#e8e4dc"/>
+                  <!-- 좌벽 -->
+                  <polygon points="0,0 120,60 120,240 0,300" fill="#ccc4b4"/>
+                  <!-- 우벽 -->
+                  <polygon points="400,0 280,60 280,240 400,300" fill="#d4ccc0"/>
+                  <!-- 복도 바닥 (낡은 타일) -->
+                  <polygon points="120,240 280,240 400,300 0,300" fill="#b0a490"/>
+                  <!-- 바닥 타일선 -->
+                  <line x1="120" y1="240" x2="280" y2="240" stroke="#9a8e7e" stroke-width="1"/>
+                  <line x1="80" y1="258" x2="320" y2="258" stroke="#9a8e7e" stroke-width="1"/>
+                  <line x1="40" y1="276" x2="360" y2="276" stroke="#9a8e7e" stroke-width="1"/>
+                  <line x1="0" y1="294" x2="400" y2="294" stroke="#9a8e7e" stroke-width="1"/>
+                  <!-- 복도 끝 문 -->
+                  <rect x="163" y="90" width="74" height="150" rx="2" fill="#9e9488" stroke="#888" stroke-width="2"/>
+                  <circle cx="228" cy="168" r="4" fill="#888"/>
+                  <!-- 벽 조명 -->
+                  <rect x="30" y="80" width="14" height="30" rx="2" fill="#d0c8b8"/>
+                  <rect x="356" y="80" width="14" height="30" rx="2" fill="#d0c8b8"/>
+                  <ellipse cx="37" cy="112" rx="10" ry="5" fill="#e8e090" opacity="0.6"/>
+                  <ellipse cx="363" cy="112" rx="10" ry="5" fill="#e8e090" opacity="0.6"/>
+                  <!-- 낡음: 균열 -->
+                  <path d="M60 200 Q65 210 58 220" stroke="#9a8e7e" stroke-width="1.5" fill="none" opacity="0.6"/>
+                  <path d="M340 185 Q335 198 342 208" stroke="#9a8e7e" stroke-width="1.5" fill="none" opacity="0.6"/>
+                </svg>
                 <span class="wiper-tag before-tag">시공 전</span>
               </div>
               <div class="wiper-after">
-                <img src="images/gallery-facility-02.jpg" alt="시공 후" onerror="this.closest('.wiper-after').style.background='#1565C0'" />
+                <!-- 병원 복도 After: 깨끗한 매트 -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" style="position:absolute;inset:0;width:100%;height:100%">
+                  <rect width="400" height="300" fill="#eef6ff"/>
+                  <rect width="400" height="60" fill="#f8fbff"/>
+                  <polygon points="0,0 120,60 120,240 0,300" fill="#ddeeff"/>
+                  <polygon points="400,0 280,60 280,240 400,300" fill="#e4f0fa"/>
+                  <!-- 깨끗한 매트 바닥 -->
+                  <polygon points="120,240 280,240 400,300 0,300" fill="#c8e4f4"/>
+                  <pattern id="mat2" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+                    <circle cx="8" cy="8" r="1.5" fill="#a0cce8" opacity="0.5"/>
+                  </pattern>
+                  <polygon points="120,240 280,240 400,300 0,300" fill="url(#mat2)"/>
+                  <!-- 바닥 선 (매트 조인트) -->
+                  <line x1="80" y1="258" x2="320" y2="258" stroke="#90c0e0" stroke-width="1" opacity="0.5"/>
+                  <!-- 복도 문 (깔끔) -->
+                  <rect x="163" y="90" width="74" height="150" rx="2" fill="#b8d8f0" stroke="#6699bb" stroke-width="2"/>
+                  <circle cx="228" cy="168" r="4" fill="#5599cc"/>
+                  <!-- 밝은 조명 -->
+                  <rect x="30" y="80" width="14" height="30" rx="2" fill="#d8eeff"/>
+                  <rect x="356" y="80" width="14" height="30" rx="2" fill="#d8eeff"/>
+                  <ellipse cx="37" cy="112" rx="14" ry="7" fill="#fffde0" opacity="0.9"/>
+                  <ellipse cx="363" cy="112" rx="14" ry="7" fill="#fffde0" opacity="0.9"/>
+                  <!-- 천장 조명줄 -->
+                  <rect x="180" y="0" width="40" height="8" rx="2" fill="#d8eeff"/>
+                  <ellipse cx="200" cy="8" rx="25" ry="10" fill="#fffde0" opacity="0.7"/>
+                  <text x="310" y="292" font-size="11" fill="#1565C0" opacity="0.5" font-family="sans-serif" font-weight="600">하늘매트</text>
+                </svg>
                 <span class="wiper-tag after-tag">시공 후</span>
               </div>
               <div class="wiper-divider"><div class="wiper-handle"><i class="fa-solid fa-arrows-left-right"></i></div></div>
               <input type="range" class="wiper-range" min="0" max="100" value="50" />
             </div>
           </div>
+
+          <!-- 호텔 객실 -->
           <div class="wiper-wrap">
             <div class="wiper-label-top"><span>호텔 객실 시공</span><span class="wiper-area">시설</span></div>
-            <div class="wiper-compare" id="wiper-facility-3">
+            <div class="wiper-compare ready" id="wiper-facility-3">
               <div class="wiper-before">
-                <img src="images/gallery-facility-03-before.jpg" alt="시공 전" onerror="this.closest('.wiper-before').style.background='#dbeafe'" />
+                <!-- 호텔 Before: 오래된 카펫/타일 -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" style="position:absolute;inset:0;width:100%;height:100%">
+                  <rect width="400" height="300" fill="#d4c8b4"/>
+                  <rect width="400" height="148" fill="#e0d8c8"/>
+                  <!-- 오래된 카펫 바닥 -->
+                  <rect y="148" width="400" height="152" fill="#8b7355"/>
+                  <!-- 카펫 패턴 -->
+                  <pattern id="carpet" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <rect width="24" height="24" fill="none"/>
+                    <rect x="2" y="2" width="20" height="20" fill="#7a6448" opacity="0.4"/>
+                    <circle cx="12" cy="12" r="4" fill="#9a8060" opacity="0.5"/>
+                  </pattern>
+                  <rect y="148" width="400" height="152" fill="url(#carpet)"/>
+                  <!-- 더블 침대 -->
+                  <rect x="80" y="70" width="200" height="100" rx="6" fill="#b8a898" stroke="#9a8878" stroke-width="2"/>
+                  <rect x="85" y="80" width="190" height="82" rx="4" fill="#d0c4b4"/>
+                  <!-- 베개 2개 -->
+                  <rect x="92" y="84" width="70" height="36" rx="8" fill="#f0ece4" stroke="#d8d0c4"/>
+                  <rect x="200" y="84" width="70" height="36" rx="8" fill="#f0ece4" stroke="#d8d0c4"/>
+                  <!-- 침대 헤드보드 -->
+                  <rect x="80" y="48" width="200" height="28" rx="4" fill="#8b7355" stroke="#7a6448"/>
+                  <!-- 침대 다리 -->
+                  <rect x="86" y="168" width="12" height="14" fill="#9a8878"/>
+                  <rect x="266" y="168" width="12" height="14" fill="#9a8878"/>
+                  <!-- 사이드 램프 2개 -->
+                  <rect x="34" y="108" width="40" height="52" rx="3" fill="#c4b49a" stroke="#aaa" stroke-width="1.5"/>
+                  <polygon points="44,88 64,108 34,108" fill="#e8c87a" opacity="0.8"/>
+                  <rect x="286" y="108" width="40" height="52" rx="3" fill="#c4b49a" stroke="#aaa" stroke-width="1.5"/>
+                  <polygon points="296,88 316,108 286,108" fill="#e8c87a" opacity="0.8"/>
+                  <!-- 낡은 카펫 얼룩 -->
+                  <ellipse cx="60" cy="220" rx="22" ry="12" fill="#6e5c40" opacity="0.35"/>
+                  <ellipse cx="340" cy="260" rx="18" ry="10" fill="#6e5c40" opacity="0.3"/>
+                </svg>
                 <span class="wiper-tag before-tag">시공 전</span>
               </div>
               <div class="wiper-after">
-                <img src="images/gallery-facility-03.jpg" alt="시공 후" onerror="this.closest('.wiper-after').style.background='#1565C0'" />
+                <!-- 호텔 After: 고급스러운 새 매트 -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" style="position:absolute;inset:0;width:100%;height:100%">
+                  <rect width="400" height="300" fill="#f0f6ff"/>
+                  <rect width="400" height="148" fill="#f8fbff"/>
+                  <!-- 새 매트 (프리미엄 느낌) -->
+                  <rect y="148" width="400" height="152" fill="#c8e0f4"/>
+                  <pattern id="mat3" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="10" cy="10" r="1.8" fill="#a0c8e8" opacity="0.55"/>
+                  </pattern>
+                  <rect y="148" width="400" height="152" fill="url(#mat3)"/>
+                  <!-- 침대 (고급스럽게) -->
+                  <rect x="80" y="70" width="200" height="100" rx="6" fill="#d8ecf8" stroke="#a0cce8" stroke-width="2"/>
+                  <rect x="85" y="80" width="190" height="82" rx="4" fill="#eaf5ff"/>
+                  <!-- 베개 2개 (하얀) -->
+                  <rect x="92" y="84" width="70" height="36" rx="8" fill="#fff" stroke="#c8e4f4"/>
+                  <rect x="200" y="84" width="70" height="36" rx="8" fill="#fff" stroke="#c8e4f4"/>
+                  <!-- 헤드보드 (고급) -->
+                  <rect x="80" y="48" width="200" height="28" rx="4" fill="#1565C0" opacity="0.7"/>
+                  <!-- 침대 다리 -->
+                  <rect x="86" y="168" width="12" height="14" fill="#88aac8"/>
+                  <rect x="266" y="168" width="12" height="14" fill="#88aac8"/>
+                  <!-- 사이드 램프 (모던) -->
+                  <rect x="34" y="110" width="40" height="50" rx="3" fill="#d8eef8" stroke="#a0c8e0" stroke-width="1.5"/>
+                  <polygon points="44,90 64,110 34,110" fill="#fff9d0" opacity="0.9"/>
+                  <rect x="286" y="110" width="40" height="50" rx="3" fill="#d8eef8" stroke="#a0c8e0" stroke-width="1.5"/>
+                  <polygon points="296,90 316,110 286,110" fill="#fff9d0" opacity="0.9"/>
+                  <!-- 고급 조명 효과 -->
+                  <ellipse cx="54" cy="106" rx="18" ry="10" fill="#fffde0" opacity="0.7"/>
+                  <ellipse cx="306" cy="106" rx="18" ry="10" fill="#fffde0" opacity="0.7"/>
+                  <text x="310" y="292" font-size="11" fill="#1565C0" opacity="0.5" font-family="sans-serif" font-weight="600">하늘매트</text>
+                </svg>
                 <span class="wiper-tag after-tag">시공 후</span>
               </div>
               <div class="wiper-divider"><div class="wiper-handle"><i class="fa-solid fa-arrows-left-right"></i></div></div>
@@ -1480,7 +1660,7 @@
           <ol class="care-list">
             <li>
               <span class="care-num">01</span>
-              <div><strong>주기적인 환기:</strong> 계절별 온도 차로 인한 습기 예방을 위해 한달에 1-2번 (제품마다 차이있음) 매트 일부를 들어 올려 바닥을 환기시켜주세요.</div>
+              <div><strong>필름 손상 주의:</strong> 필름 관련 뾰족한 것 주의 · 매트 필름 손상 주의 · 이염 주의</div>
             </li>
             <li>
               <span class="care-num">02</span>
