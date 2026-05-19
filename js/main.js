@@ -1018,10 +1018,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   stats.forEach(el => countObserver.observe(el));
 
-  /* ===== 13. 기업 협력 문의 폼 ===== */
+  /* ===== 13. 기업 협력 문의 폼 (Web3Forms 실 발송) ===== */
+  const WEB3FORMS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY'; // ← 키 발급 후 여기 교체
   const bizForm = document.getElementById('bizForm');
   if (bizForm) {
-    bizForm.addEventListener('submit', function(e) {
+    bizForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       const type  = document.getElementById('bizType')?.value || '';
       const name  = document.getElementById('bizName')?.value || '';
@@ -1034,23 +1035,42 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const subject = encodeURIComponent(`[하늘매트 기업협력] ${type} 문의 - ${name}`);
-      const body = encodeURIComponent(
-        `[문의 유형] ${type}\n` +
-        `[회사명/성함] ${name}\n` +
-        `[연락처] ${phone}\n` +
-        `[이메일] ${email || '미입력'}\n\n` +
-        `[문의 내용]\n${memo}`
-      );
+      const submitBtn = bizForm.querySelector('[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '전송 중...';
 
-      window.location.href = `mailto:one19119@naver.com?subject=${subject}&body=${body}`;
-
-      bizForm.innerHTML = `
-        <div style="text-align:center;padding:40px 0;">
-          <i class="fa-solid fa-circle-check" style="font-size:3rem;color:#1565C0;margin-bottom:16px;display:block;"></i>
-          <h3 style="color:#1565C0;margin-bottom:8px;">문의가 접수되었습니다</h3>
-          <p style="color:#64748B;">이메일 앱이 열렸습니다. 발송 후 영업일 1~2일 내에 연락드리겠습니다.</p>
-        </div>`;
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: `[하늘매트 기업협력] ${type} 문의 - ${name}`,
+            from_name: name,
+            replyto: email || undefined,
+            '문의 유형': type,
+            '회사명/성함': name,
+            '연락처': phone,
+            '이메일': email || '미입력',
+            '문의 내용': memo,
+          })
+        });
+        const json = await res.json();
+        if (json.success) {
+          bizForm.innerHTML = `
+            <div style="text-align:center;padding:40px 0;">
+              <i class="fa-solid fa-circle-check" style="font-size:3rem;color:#1565C0;margin-bottom:16px;display:block;"></i>
+              <h3 style="color:#1565C0;margin-bottom:8px;">문의가 접수되었습니다</h3>
+              <p style="color:#64748B;">one19119@naver.com 으로 발송되었습니다.<br>영업일 1~2일 내에 연락드리겠습니다.</p>
+            </div>`;
+        } else {
+          throw new Error(json.message);
+        }
+      } catch (err) {
+        alert('전송에 실패했습니다. 잠시 후 다시 시도하거나 카카오톡으로 문의해 주세요.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> 협력 문의 보내기';
+      }
     });
   }
 
