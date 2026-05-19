@@ -957,7 +957,7 @@
         <div class="shorts-item">
           <div class="shorts-thumb">
             <a href="https://www.youtube.com/shorts/o7u5afbDx5Q" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/o7u5afbDx5Q/oar2.jpg" alt="시공 쇼츠 1" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/o7u5afbDx5Q/hqdefault.jpg'" />
+              <img src="https://i.ytimg.com/vi/o7u5afbDx5Q/maxresdefault.jpg" alt="시공 쇼츠 1" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/o7u5afbDx5Q/hqdefault.jpg'" />
               <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
             </a>
           </div>
@@ -965,7 +965,7 @@
         <div class="shorts-item">
           <div class="shorts-thumb">
             <a href="https://www.youtube.com/shorts/nzw-XYuQLj0" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/nzw-XYuQLj0/oar2.jpg" alt="시공 쇼츠 2" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/nzw-XYuQLj0/hqdefault.jpg'" />
+              <img src="https://i.ytimg.com/vi/nzw-XYuQLj0/maxresdefault.jpg" alt="시공 쇼츠 2" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/nzw-XYuQLj0/hqdefault.jpg'" />
               <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
             </a>
           </div>
@@ -973,7 +973,7 @@
         <div class="shorts-item">
           <div class="shorts-thumb">
             <a href="https://www.youtube.com/shorts/Ow8VQpd6R5k" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/Ow8VQpd6R5k/oar2.jpg" alt="시공 쇼츠 3" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/Ow8VQpd6R5k/hqdefault.jpg'" />
+              <img src="https://i.ytimg.com/vi/Ow8VQpd6R5k/maxresdefault.jpg" alt="시공 쇼츠 3" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/Ow8VQpd6R5k/hqdefault.jpg'" />
               <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
             </a>
           </div>
@@ -981,7 +981,7 @@
         <div class="shorts-item">
           <div class="shorts-thumb">
             <a href="https://www.youtube.com/shorts/oOCgViGOfkQ" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/oOCgViGOfkQ/oar2.jpg" alt="시공 쇼츠 4" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/oOCgViGOfkQ/hqdefault.jpg'" />
+              <img src="https://i.ytimg.com/vi/oOCgViGOfkQ/maxresdefault.jpg" alt="시공 쇼츠 4" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/oOCgViGOfkQ/hqdefault.jpg'" />
               <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
             </a>
           </div>
@@ -989,7 +989,7 @@
         <div class="shorts-item">
           <div class="shorts-thumb">
             <a href="https://www.youtube.com/shorts/6inIqxurjwU" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/6inIqxurjwU/oar2.jpg" alt="시공 쇼츠 5" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/6inIqxurjwU/hqdefault.jpg'" />
+              <img src="https://i.ytimg.com/vi/6inIqxurjwU/maxresdefault.jpg" alt="시공 쇼츠 5" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/6inIqxurjwU/hqdefault.jpg'" />
               <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
             </a>
           </div>
@@ -2126,10 +2126,10 @@
           return (raw.split('v=')[1] || '').split('&')[0];
         }).filter(Boolean);
 
-        // oar2.jpg(Shorts 전용 세로 썸네일) 로드 성공 여부로 Shorts 판별
+        // oar2.jpg가 세로 비율(portrait)이면 Shorts로 판별
         const checkShorts = id => new Promise(resolve => {
           const img = new Image();
-          img.onload = () => resolve(img.naturalWidth >= 100 ? id : null);
+          img.onload = () => resolve(img.naturalHeight > img.naturalWidth ? id : null);
           img.onerror = () => resolve(null);
           img.src = `https://i.ytimg.com/vi/${id}/oar2.jpg`;
         });
@@ -2138,11 +2138,13 @@
         const shortsIds = results.filter(Boolean).slice(0, 5);
         if (!shortsIds.length) return;
 
+        // 표시는 크리에이터 설정 썸네일(maxresdefault) 사용, 없으면 hqdefault
         const html = shortsIds.map((id, i) => `
           <div class="shorts-item">
             <div class="shorts-thumb">
               <a href="https://www.youtube.com/shorts/${id}" target="_blank" rel="noopener">
-                <img src="https://i.ytimg.com/vi/${id}/oar2.jpg" alt="시공 쇼츠 ${i+1}" loading="lazy" />
+                <img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" alt="시공 쇼츠 ${i+1}" loading="lazy"
+                     onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'" />
                 <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
               </a>
             </div>
