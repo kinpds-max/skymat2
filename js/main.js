@@ -26,12 +26,14 @@ function getTrackingData() {
  * 주소 검색 (Daum Postcode API)
  */
 function searchAddress() {
+  if (typeof daum === 'undefined' || !daum.Postcode) {
+    alert('주소 검색 서비스를 불러올 수 없습니다.\n주소를 직접 입력해 주세요.');
+    document.getElementById('addr1').focus();
+    return;
+  }
   new daum.Postcode({
     oncomplete: function (data) {
-      let addr = '';
-      if (data.userSelectedType === 'R') addr = data.roadAddress;
-      else addr = data.jibunAddress;
-
+      let addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
       document.getElementById('addr1').value = addr;
       document.getElementById('addr2').focus();
     }
