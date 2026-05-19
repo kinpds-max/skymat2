@@ -2761,6 +2761,8 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   z-index: 10;
   border-radius: var(--radius-lg);
 }
+/* 실사진 있는 카드는 오버레이 숨김 */
+.wiper-compare.ready::after { display: none; }
 .wiper-range { pointer-events: none; }
 .wiper-before,
 .wiper-after {
