@@ -3227,7 +3227,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 }
 .biz-email-note strong { color: var(--primary); }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .biz-form-row { grid-template-columns: 1fr; }
   .biz-form { padding: 24px 20px; }
   .biz-types { gap: 10px; }
@@ -3497,4 +3497,186 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
     padding: 30px;
     gap: 20px;
   }
+}
+
+/* ============================================================
+   종합 모바일 최적화 (Mobile UX Enhancement)
+   ============================================================ */
+
+/* --- 태블릿 (992px) --- */
+@media (max-width: 992px) {
+  /* 와이퍼 갤러리 중간 단계: 3열 → 2열 */
+  .wiper-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* 사이즈 카드 3열 */
+  .size-grid { grid-template-columns: repeat(3, 1fr); }
+
+  /* 제품 라인업 3열 */
+  .product-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+
+/* --- 모바일 공통 (768px) --- */
+@media (max-width: 768px) {
+
+  /* 전체 섹션 패딩 균일화 */
+  section,
+  .hero, .why, .product-section, .pricing, .youtube,
+  .board, .contact, .faq-section, .cert, .gallery,
+  .care-guide, .biz-section, .brochure-section, .sample-banner {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+
+  /* 컨테이너 좌우 여백 */
+  .container { padding: 0 20px !important; }
+
+  /* 섹션 헤더 */
+  .section-header { margin-bottom: 32px !important; }
+  .section-header h2 { font-size: 1.65rem !important; line-height: 1.35; }
+  .section-header p { font-size: 0.92rem; line-height: 1.7; }
+  .section-tag { font-size: 0.72rem; padding: 4px 12px; }
+
+  /* 히어로 */
+  .hero { padding: 88px 0 52px !important; }
+  .hero-title { font-size: 2rem !important; line-height: 1.25; }
+  .hero-sub { font-size: 0.95rem; }
+  .hero-cta-group { flex-direction: column; gap: 10px; }
+  .btn-kakao, .btn-outline { width: 100% !important; justify-content: center; padding: 15px 20px; font-size: 1rem; }
+
+  /* 와이퍼 갤러리 1열 */
+  .wiper-grid { grid-template-columns: 1fr !important; }
+  .wiper-compare { aspect-ratio: 4/3; }
+
+  /* 제품 그리드 2열 */
+  .product-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .product-card { padding: 0; }
+
+  /* 사이즈 카드 2열 */
+  .size-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; }
+  .size-card { padding: 20px 14px; }
+  .size-num { font-size: 2rem; }
+
+  /* 가격 비교표 가로 스크롤 */
+  .compare-table, .qty-table-wrap, table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+    width: 100%;
+  }
+
+  /* 유튜브 그리드 1열 */
+  .yt-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  /* FAQ */
+  .faq-q { font-size: 0.95rem; padding: 18px 16px; }
+  .faq-a p { font-size: 0.9rem; line-height: 1.75; padding: 16px; }
+
+  /* 상담 폼 */
+  .contact-card { padding: 24px 20px; border-radius: 16px; }
+  .input-row { grid-template-columns: 1fr !important; gap: 12px; }
+  .btn-submit { font-size: 1rem; padding: 16px; }
+
+  /* 기업 협력 폼 */
+  .biz-section .container { padding: 0 20px; }
+  .biz-header { margin-bottom: 32px; }
+  .biz-form { border-radius: 16px; }
+  .biz-feature-cards { grid-template-columns: 1fr !important; gap: 12px; }
+
+  /* 인증 뱃지 */
+  .cert-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .cert-card { padding: 20px 14px; }
+  .cert-card.highlight { grid-column: span 2; }
+
+  /* 푸터 */
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-nav h5 { font-size: 0.85rem; margin-bottom: 10px; }
+  .footer-nav li { font-size: 0.82rem; margin-bottom: 6px; }
+  .footer-bottom .container { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-copy { font-size: 0.78rem; }
+
+  /* 신뢰 바 */
+  .trust-bar-inner { gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .trust-item { font-size: 0.8rem; }
+
+  /* 쇼츠 그리드 */
+  .shorts-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+
+  /* 공지/단종 안내 */
+  [style*="grid-column: 1 / -1"] { text-align: center; }
+}
+
+/* --- 소형 모바일 (480px) --- */
+@media (max-width: 480px) {
+
+  /* 컨테이너 */
+  .container { padding: 0 16px !important; }
+
+  /* 섹션 패딩 추가 축소 */
+  section,
+  .hero, .why, .product-section, .pricing, .youtube,
+  .board, .contact, .faq-section, .cert, .gallery,
+  .care-guide, .biz-section, .brochure-section, .sample-banner {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+
+  /* 히어로 */
+  .hero { padding: 80px 0 44px !important; }
+  .hero-title { font-size: 1.75rem !important; }
+  .hero-sub { font-size: 0.88rem; }
+  .hero-stats { flex-direction: row; flex-wrap: wrap; }
+  .stat { min-width: 50%; padding: 8px 0; }
+  .stat-num { font-size: 1.5rem; }
+  .stat-label { font-size: 0.75rem; }
+
+  /* 섹션 헤더 */
+  .section-header h2 { font-size: 1.45rem !important; }
+
+  /* 제품 그리드 1열 (소형 기기) */
+  .product-grid { grid-template-columns: 1fr !important; max-width: 340px; margin: 0 auto; }
+
+  /* 사이즈 카드 1열 */
+  .size-grid { grid-template-columns: 1fr !important; max-width: 300px; margin: 0 auto; }
+  .size-card { padding: 22px 16px; }
+
+  /* 와이퍼 */
+  .wiper-compare { aspect-ratio: 3/2; }
+
+  /* 버튼 */
+  .btn-kakao, .btn-outline, .btn-submit, .btn-biz-submit { font-size: 0.95rem; padding: 14px 16px; }
+  .btn-product { font-size: 0.88rem; padding: 12px 20px; }
+
+  /* FAQ */
+  .faq-q { font-size: 0.9rem; padding: 16px 14px; }
+
+  /* 인증 */
+  .cert-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cert-card { padding: 16px 10px; }
+  .cert-icon { font-size: 1.6rem; }
+  .cert-card h4 { font-size: 0.82rem; }
+
+  /* 쇼츠 그리드 */
+  .shorts-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+  .shorts-play-icon { width: 36px; height: 36px; font-size: 0.9rem; }
+
+  /* 푸터 */
+  .footer-inner { grid-template-columns: 1fr; gap: 20px; }
+  .footer-brand { grid-column: 1; }
+
+  /* 신뢰 바 한줄 스크롤 */
+  .trust-bar-inner { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; -ms-overflow-style: none; scrollbar-width: none; }
+  .trust-bar-inner::-webkit-scrollbar { display: none; }
+  .trust-item { flex-shrink: 0; }
+
+  /* 기업협력 */
+  .biz-types { gap: 8px; }
+  .biz-type-card { padding: 12px; font-size: 0.82rem; }
+  .biz-form { padding: 20px 16px; }
+
+  /* 상담폼 */
+  .contact-card { padding: 20px 16px; }
+
+  /* 단종 안내 버튼 텍스트 */
+  [style*="font-size: 0.85rem"] { font-size: 0.8rem !important; }
 }
