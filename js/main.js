@@ -1066,8 +1066,29 @@ document.addEventListener('DOMContentLoaded', () => {
       divider.style.left   = `${val}%`;
     }
 
+    function getPct(clientX) {
+      const rect = wrap.getBoundingClientRect();
+      return Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
+    }
+
     applyVal(range.value);
     range.addEventListener('input', () => applyVal(range.value));
+
+    /* 마우스 드래그 */
+    wrap.addEventListener('mousedown', () => {
+      const onMove = e => applyVal(getPct(e.clientX));
+      const onUp   = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+
+    /* 터치 드래그 */
+    wrap.addEventListener('touchstart', e => {
+      const onMove = t => { t.preventDefault(); applyVal(getPct(t.touches[0].clientX)); };
+      const onEnd  = () => { wrap.removeEventListener('touchmove', onMove); wrap.removeEventListener('touchend', onEnd); };
+      wrap.addEventListener('touchmove', onMove, { passive: false });
+      wrap.addEventListener('touchend', onEnd);
+    }, { passive: true });
   });
 
   /* ===== 14. 팝업 공지 제어 (리뉴얼 및 가격인상) ===== */
