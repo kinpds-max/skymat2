@@ -566,7 +566,7 @@
       <!-- 단종 안내 -->
       <div style="text-align: center; margin-bottom: 16px; padding: 10px 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; font-size: 0.85rem; color: #795548;">
         <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b; margin-right: 6px;"></i>
-        모든 제품은 공장이나 고객 수요에 따라서 생산이 중단될 수 있습니다.
+        모든 제품은 공장이나 고객 수요에 따라서 생산이 중단될 수 있으니, 시공 시 AS용 여분을 구입해두시는 것을 추천합니다.
       </div>
 
       <div class="product-grid" style="margin-bottom: 64px;">
@@ -1016,7 +1016,7 @@
       <div class="gallery-tabs">
         <button class="gtab active" data-gtab="home" data-i18n="gallery.tab1">가정집</button>
         <button class="gtab" data-gtab="kids" data-i18n="gallery.tab2">어린이집</button>
-        <button class="gtab" data-gtab="welfare" data-i18n="gallery.tab3">복지·의료</button>
+        <button class="gtab" data-gtab="welfare" data-i18n="gallery.tab3">복지</button>
         <button class="gtab" data-gtab="facility">시설</button>
       </div>
 
@@ -1131,8 +1131,9 @@
       </div>
 
       <div class="gallery-panel" id="gtab-welfare">
-        <div class="gallery-grid">
-          <div class="gallery-item large">
+        <!-- 시공사례 사진 2개 50/50 -->
+        <div class="gallery-grid two-col">
+          <div class="gallery-item">
             <div class="gallery-img-wrap">
               <img src="images/KakaoTalk_20260408_131855011_09.png" alt="한부모돌봄센터 시공사례"
                 onerror="this.style.display='none'" />
@@ -1151,14 +1152,25 @@
                   class="gallery-area">주사랑공동체</span></div>
             </div>
           </div>
-          <div class="gallery-item">
-            <div class="gallery-img-wrap">
-              <div class="gallery-placeholder">
-                <i class="fa-solid fa-image"></i>
-                <span>복지시설 시공사례</span>
-              </div>
-              <div class="gallery-overlay"><span class="gallery-label">장애인센터 시공</span><span
-                  class="gallery-area">복지시설</span></div>
+        </div>
+        <!-- 시공 영상 2개 50/50 임베드 -->
+        <div class="welfare-video-row">
+          <div class="wiper-wrap">
+            <div class="wiper-label-top"><span>한부모돌봄센터 시공</span><span class="wiper-area">한생명복지재단</span></div>
+            <div class="video-embed-wrap">
+              <iframe src="https://www.youtube.com/embed/qU_fwTb-xeg"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="wiper-wrap">
+            <div class="wiper-label-top"><span>신생아보호센터 시공</span><span class="wiper-area">주사랑공동체</span></div>
+            <div class="video-embed-wrap">
+              <iframe src="https://www.youtube.com/embed/3WTKWH5X20k"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
             </div>
           </div>
         </div>
@@ -1396,27 +1408,23 @@
           <!-- 한생명복지재단 -->
           <div class="wiper-wrap">
             <div class="wiper-label-top"><span>한부모돌봄센터 시공</span><span class="wiper-area">한생명복지재단</span></div>
-            <a href="https://youtu.be/qU_fwTb-xeg" target="_blank" rel="noopener" class="facility-video-card">
-              <img src="https://i.ytimg.com/vi/qU_fwTb-xeg/maxresdefault.jpg" alt="한생명복지재단 시공"
-                   onerror="this.src='https://i.ytimg.com/vi/qU_fwTb-xeg/hqdefault.jpg'" />
-              <div class="facility-video-play">
-                <i class="fa-brands fa-youtube"></i>
-                <span>영상 보기</span>
-              </div>
-            </a>
+            <div class="video-embed-wrap">
+              <iframe src="https://www.youtube.com/embed/qU_fwTb-xeg"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
           </div>
 
           <!-- 주사랑공동체 -->
           <div class="wiper-wrap">
             <div class="wiper-label-top"><span>신생아보호센터 시공</span><span class="wiper-area">주사랑공동체</span></div>
-            <a href="https://youtu.be/3WTKWH5X20k" target="_blank" rel="noopener" class="facility-video-card">
-              <img src="https://i.ytimg.com/vi/3WTKWH5X20k/maxresdefault.jpg" alt="주사랑공동체 시공"
-                   onerror="this.src='https://i.ytimg.com/vi/3WTKWH5X20k/hqdefault.jpg'" />
-              <div class="facility-video-play">
-                <i class="fa-brands fa-youtube"></i>
-                <span>영상 보기</span>
-              </div>
-            </a>
+            <div class="video-embed-wrap">
+              <iframe src="https://www.youtube.com/embed/3WTKWH5X20k"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
           </div>
 
         </div>
@@ -2095,11 +2103,12 @@
   <!-- Daum Postcode API -->
   <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="js/main.js"></script>
-  <!-- ===== 유튜브 쇼츠 자동 크롤링 (썸네일 방식) ===== -->
+  <!-- ===== 유튜브 쇼츠 자동 크롤링 (Shorts 전용 필터) ===== -->
   <script>
     async function fetchLatestShorts() {
       const channelId = 'UCJnWOugRSSv3Oqzir2FgNRA';
-      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId)}&count=5`;
+      // 15개 가져와서 Shorts만 필터링 후 최신 5개 표시
+      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId)}&count=15`;
       const grid = document.getElementById('shortsGrid');
       if (!grid) return;
 
@@ -2108,26 +2117,36 @@
         const data = await res.json();
         if (data.status !== 'ok' || !data.items?.length) return;
 
-        const html = data.items.slice(0, 5).map((item, i) => {
+        const videoIds = data.items.map(item => {
           const raw = item.link || '';
-          const videoId = raw.includes('shorts/')
-            ? raw.split('shorts/')[1].split('?')[0]
-            : (raw.split('v=')[1] || '').split('&')[0];
-          if (!videoId) return '';
-          return `
-            <div class="shorts-item">
-              <div class="shorts-thumb">
-                <a href="https://www.youtube.com/shorts/${videoId}" target="_blank" rel="noopener">
-                  <img src="https://i.ytimg.com/vi/${videoId}/oar2.jpg" alt="시공 쇼츠 ${i+1}" loading="lazy" onerror="this.src='https://i.ytimg.com/vi/${videoId}/hqdefault.jpg'" />
-                  <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
-                </a>
-              </div>
-            </div>`;
-        }).join('');
+          return (raw.split('v=')[1] || '').split('&')[0];
+        }).filter(Boolean);
+
+        // oar2.jpg(Shorts 전용 세로 썸네일) 로드 성공 여부로 Shorts 판별
+        const checkShorts = id => new Promise(resolve => {
+          const img = new Image();
+          img.onload = () => resolve(img.naturalWidth >= 100 ? id : null);
+          img.onerror = () => resolve(null);
+          img.src = `https://i.ytimg.com/vi/${id}/oar2.jpg`;
+        });
+
+        const results = await Promise.all(videoIds.map(checkShorts));
+        const shortsIds = results.filter(Boolean).slice(0, 5);
+        if (!shortsIds.length) return;
+
+        const html = shortsIds.map((id, i) => `
+          <div class="shorts-item">
+            <div class="shorts-thumb">
+              <a href="https://www.youtube.com/shorts/${id}" target="_blank" rel="noopener">
+                <img src="https://i.ytimg.com/vi/${id}/oar2.jpg" alt="시공 쇼츠 ${i+1}" loading="lazy" />
+                <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
+              </a>
+            </div>
+          </div>`).join('');
 
         if (html) grid.innerHTML = html;
       } catch (e) {
-        /* 실패 시 HTML 기본 5개 유지 */
+        /* 실패 시 기존 HTML 유지 */
       }
     }
     document.addEventListener('DOMContentLoaded', fetchLatestShorts);

@@ -2580,7 +2580,9 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   .process-steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; text-align: center; }
   .process-arrow { display: none; }
   .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-grid.two-col { grid-template-columns: 1fr; }
   .gallery-item.large { grid-column: auto; }
+  .welfare-video-row { grid-template-columns: 1fr; }
   .contact-inner.side-by-side { flex-direction: column; gap: 40px; }
   .contact-left, .contact-right { width: 100%; }
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -2814,6 +2816,35 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.3px;
+}
+/* ===== 영상 임베드 공통 ===== */
+.video-embed-wrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  background: #000;
+}
+.video-embed-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+/* 복지 탭 - 사진 2개 50/50 */
+.gallery-grid.two-col {
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 24px;
+}
+/* 복지 탭 - 영상 2개 50/50 */
+.welfare-video-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
 }
 .wiper-before,
 .wiper-after {
