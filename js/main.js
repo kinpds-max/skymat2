@@ -6,7 +6,7 @@
  * ★ Google Apps Script 배포 URL ★
  * 상담 신청 시 구글 시트로 데이터를 전송합니다.
  */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZu2BbakDmVC4DGpXgbv4LxmM9EXlYas91rkKRdd7aEkSX19ByZSLvbV_GlUlnnJ44/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6_EcHaBCLTFOHRlCdcA457r5kggYiZa7fc2m4tXMM-FBdCd4RAHk6I_DKylR8CLiG/exec';
 
 /**
  * 유입 경로 트래킹 (UTM & Referrer)
@@ -26,6 +26,11 @@ function getTrackingData() {
  * 주소 검색 (Daum Postcode API)
  */
 function searchAddress() {
+  if (window.location.protocol === 'file:') {
+    alert('⚠️ 로컬 파일(file://) 환경에서는 브라우저 보안 정책으로 인해 카카오 우편번호 팝업 서비스가 차단됩니다.\n\n실제 인터넷 웹 서버(http/https)에 업로드하시거나, VS Code의 Live Server 등 로컬 개발 서버 환경으로 접속하시면 주소 검색이 완벽하게 정상 작동합니다.\n\n지금은 주소 입력칸에 직접 주소를 적어 주시기 바랍니다!');
+    document.getElementById('addr1').focus();
+    return;
+  }
   if (typeof daum === 'undefined' || !daum.Postcode) {
     alert('주소 검색 서비스를 불러올 수 없습니다.\n주소를 직접 입력해 주세요.');
     document.getElementById('addr1').focus();
@@ -826,7 +831,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const p2         = document.getElementById('phone2')?.value.trim();
     const p3         = document.getElementById('phone3')?.value.trim();
     const addr1      = document.getElementById('addr1')?.value.trim();
-    const addr2      = document.getElementById('addr2')?.value.trim();
     const installDate = document.getElementById('installDate')?.value;
     const areaType   = document.getElementById('areaType')?.value.trim();
     const memo       = document.getElementById('memo')?.value.trim();
@@ -836,7 +840,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 필수 항목 검증
     if (!name)        { alert('이름을 입력해 주세요.');           return; }
     if (!p1||!p2||!p3){ alert('연락처를 모두 입력해 주세요.');    return; }
-    if (!addr1)       { alert('주소를 입력해 주세요.');           return; }
+    if (!addr1)       { alert('지역/아파트를 입력해 주세요.');     return; }
     if (!installDate) { alert('시공희망날짜를 선택해 주세요.');   return; }
     if (!areaType)    { alert('평형타입/시공범위를 입력해 주세요.'); return; }
     if (!sample)      { alert('샘플 희망여부를 선택해 주세요.');  return; }
@@ -857,7 +861,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formType: 'consult',
         name,
         phone,
-        address: `${addr1} ${addr2}`.trim(),
+        address: addr1,
         installDate,
         areaType,
         sample: sample === 'yes' ? '✅ 희망' : '❌ 불필요',
@@ -903,11 +907,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const kakaoText = `[하늘매트 상담신청]\n` +
       `■ 이름: ${data.name}\n` +
       `■ 연락처: ${data.phone}\n` +
-      `■ 주소: ${data.address}\n` +
+      `■ 지역/아파트: ${data.address}\n` +
       `■ 희망일: ${data.installDate}\n` +
       `■ 범위: ${data.areaType}\n` +
       `■ 샘플: ${data.sample}\n` +
-      (data.sampleNote ? `■ 매트사이즈: ${data.sampleNote}\n` : '') +
+      (data.sampleNote ? `■ 남기고 싶은 말: ${data.sampleNote}\n` : '') +
       (data.memo ? `■ 문의사항: ${data.memo}\n` : '') +
       (data.calcResult ? `\n${data.calcResult}` : '');
 
