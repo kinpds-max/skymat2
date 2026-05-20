@@ -94,14 +94,18 @@ function doGet(e) {
  */
 function getShortsData() {
   const cache = CacheService.getScriptCache();
-  const cached = cache.get('shorts_v1');
+  const CACHE_KEY = 'shorts_v3';
+  const cached = cache.get(CACHE_KEY);
   if (cached) {
-    return ContentService.createTextOutput(cached).setMimeType(ContentService.MimeType.JSON);
+    const parsed = JSON.parse(cached);
+    if (parsed.ids && parsed.ids.length > 0) {
+      return ContentService.createTextOutput(cached).setMimeType(ContentService.MimeType.JSON);
+    }
   }
 
   const channelId = 'UCJnWOugRSSv3Oqzir2FgNRA';
 
-  // 1차: 채널 Shorts 탭 직접 스크래핑 (/shorts/ID 패턴만 추출 = 실제 쇼츠만)
+  // 1차: 채널 Shorts 탭 직접 스크래핑
   try {
     const html = UrlFetchApp.fetch(
       'https://www.youtube.com/channel/' + channelId + '/shorts',
@@ -125,14 +129,14 @@ function getShortsData() {
 
     if (ids.length >= 3) {
       var json = JSON.stringify({ status: 'ok', ids: ids });
-      cache.put('shorts_v1', json, 3600);
+      cache.put(CACHE_KEY, json, 3600);
       return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
     }
   } catch (err) {
     console.error('Shorts 탭 스크래핑 실패:', err);
   }
 
-  // 2차 폴백: RSS + /shorts/ID HTTP 200 체크
+  // 2차 폴백: RSS 최신순 6개 (이 채널은 쇼츠 전용)
   try {
     const xml = UrlFetchApp.fetch(
       'https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId
@@ -145,29 +149,20 @@ function getShortsData() {
     const videoIds = entries
       .map(function(entry) { return entry.getChildText('videoId', ytNs); })
       .filter(Boolean)
-      .slice(0, 20);
+      .slice(0, 6);
 
-    const shortsIds = [];
-    for (var i = 0; i < videoIds.length; i++) {
-      if (shortsIds.length >= 6) break;
-      try {
-        var resp = UrlFetchApp.fetch('https://www.youtube.com/shorts/' + videoIds[i], {
-          followRedirects: false,
-          muteHttpExceptions: true
-        });
-        if (resp.getResponseCode() === 200) shortsIds.push(videoIds[i]);
-      } catch (e) {}
+    if (videoIds.length > 0) {
+      var json = JSON.stringify({ status: 'ok', ids: videoIds });
+      cache.put(CACHE_KEY, json, 3600);
+      return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
     }
-
-    var finalIds = shortsIds.length > 0 ? shortsIds : videoIds.slice(0, 6);
-    var json = JSON.stringify({ status: 'ok', ids: finalIds });
-    cache.put('shorts_v1', json, 3600);
-    return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'error', ids: [] }))
-      .setMimeType(ContentService.MimeType.JSON);
+    console.error('RSS 폴백 실패:', err);
   }
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: 'error', ids: [] }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 /**

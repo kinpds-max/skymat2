@@ -6,7 +6,7 @@
  * ★ Google Apps Script 배포 URL ★
  * 상담 신청 시 구글 시트로 데이터를 전송합니다.
  */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHDzcWpieJmGvwrTfIz74AMy0t8BJrwdOR06VbfH-OAnieI47hu3xEXvtSFc9q9Bnx/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqtn9LANMvTxSgz2Ey7zmUTwYshXk-mXG1DK6Mt1RLBs2KzmbyqaekuQ3x8SP9WdJo/exec';
 
 /**
  * 유입 경로 트래킹 (UTM & Referrer)
