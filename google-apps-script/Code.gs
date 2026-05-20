@@ -161,7 +161,7 @@ function saveToSheet(data, smsResult, formType) {
   }
 
   // 폼 유형에 따른 시트 선택
-  const sheetName = formType === 'biz' ? '기업문의' : '상담신청';
+  const sheetName = formType === 'biz' ? '제휴신청' : '상담신청';
   let sheet = ss.getSheetByName(sheetName);
 
   // 시트가 없으면 새로 생성
@@ -254,7 +254,7 @@ function updateSmsResultInSheet(receiptNo, smsResult, formType) {
     } else {
       ss = SpreadsheetApp.getActiveSpreadsheet();
     }
-    const sheetName = formType === 'biz' ? '기업문의' : '상담신청';
+    const sheetName = formType === 'biz' ? '제휴신청' : '상담신청';
     const sheet = ss.getSheetByName(sheetName);
     if (!sheet) return;
 
