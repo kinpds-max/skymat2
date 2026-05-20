@@ -2736,7 +2736,24 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   gap: 20px;
   margin-bottom: 8px;
 }
+.wiper-grid-2col {
+  grid-template-columns: repeat(2, 1fr);
+}
 .wiper-wrap { display: flex; flex-direction: column; gap: 10px; }
+.wiper-apt-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  align-self: flex-start;
+}
+.wiper-apt-tag i { font-size: 0.75rem; }
 .wiper-label-top {
   display: flex;
   justify-content: space-between;
