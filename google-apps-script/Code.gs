@@ -89,8 +89,8 @@ function doGet(e) {
 
 /**
  * YouTube 쇼츠 최신 6개 반환 (1시간 캐시)
- * - YouTube RSS → 최신 20개 영상 추출
- * - 각 영상 /shorts/ID 접근 시 200이면 Shorts, 303이면 일반영상
+ * - 채널 Shorts 탭 페이지를 스크래핑해 /shorts/ID 패턴으로 추출 (가장 정확)
+ * - 실패 시 RSS에서 /shorts/ID HTTP 200 체크로 폴백
  */
 function getShortsData() {
   const cache = CacheService.getScriptCache();
@@ -100,6 +100,39 @@ function getShortsData() {
   }
 
   const channelId = 'UCJnWOugRSSv3Oqzir2FgNRA';
+
+  // 1차: 채널 Shorts 탭 직접 스크래핑 (/shorts/ID 패턴만 추출 = 실제 쇼츠만)
+  try {
+    const html = UrlFetchApp.fetch(
+      'https://www.youtube.com/channel/' + channelId + '/shorts',
+      {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+          'Accept-Language': 'ko-KR,ko;q=0.9,en;q=0.8'
+        },
+        muteHttpExceptions: true
+      }
+    ).getContentText();
+
+    const matches = html.match(/\/shorts\/([a-zA-Z0-9_-]{11})/g) || [];
+    const ids = [];
+    const seen = {};
+    for (var i = 0; i < matches.length; i++) {
+      var id = matches[i].replace('/shorts/', '');
+      if (!seen[id]) { seen[id] = true; ids.push(id); }
+      if (ids.length >= 6) break;
+    }
+
+    if (ids.length >= 3) {
+      var json = JSON.stringify({ status: 'ok', ids: ids });
+      cache.put('shorts_v1', json, 3600);
+      return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
+    }
+  } catch (err) {
+    console.error('Shorts 탭 스크래핑 실패:', err);
+  }
+
+  // 2차 폴백: RSS + /shorts/ID HTTP 200 체크
   try {
     const xml = UrlFetchApp.fetch(
       'https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId
@@ -109,13 +142,11 @@ function getShortsData() {
     const atomNs = XmlService.getNamespace('http://www.w3.org/2005/Atom');
     const ytNs   = XmlService.getNamespace('http://www.youtube.com/xml/schemas/2015');
     const entries = doc.getRootElement().getChildren('entry', atomNs);
-
     const videoIds = entries
       .map(function(entry) { return entry.getChildText('videoId', ytNs); })
       .filter(Boolean)
       .slice(0, 20);
 
-    // 1차: /shorts/ID 접근 시 HTTP 200이면 Shorts (303 리다이렉트면 일반영상)
     const shortsIds = [];
     for (var i = 0; i < videoIds.length; i++) {
       if (shortsIds.length >= 6) break;
@@ -125,12 +156,10 @@ function getShortsData() {
           muteHttpExceptions: true
         });
         if (resp.getResponseCode() === 200) shortsIds.push(videoIds[i]);
-      } catch (err) {}
+      } catch (e) {}
     }
 
-    // 2차 fallback: 감지 실패 시(3개 미만) RSS 최신 순으로 채움
-    var finalIds = shortsIds.length >= 3 ? shortsIds : videoIds.slice(0, 6);
-
+    var finalIds = shortsIds.length > 0 ? shortsIds : videoIds.slice(0, 6);
     var json = JSON.stringify({ status: 'ok', ids: finalIds });
     cache.put('shorts_v1', json, 3600);
     return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
