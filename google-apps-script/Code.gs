@@ -68,9 +68,61 @@ function doPost(e) {
  * GET 요청 처리 - 연결 테스트용
  */
 function doGet(e) {
+  const action = e && e.parameter && e.parameter.action;
+  if (action === 'shorts') return getShortsData();
   return ContentService
     .createTextOutput(JSON.stringify({ result: 'ok', message: '하늘매트 Apps Script 정상 작동 중' }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * YouTube 쇼츠 최신 6개 반환 (1시간 캐시)
+ * - YouTube RSS → 최신 20개 영상 추출
+ * - 각 영상 /shorts/ID 접근 시 200이면 Shorts, 303이면 일반영상
+ */
+function getShortsData() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get('shorts_v1');
+  if (cached) {
+    return ContentService.createTextOutput(cached).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  const channelId = 'UCJnWOugRSSv3Oqzir2FgNRA';
+  try {
+    const xml = UrlFetchApp.fetch(
+      'https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId
+    ).getContentText();
+
+    const doc = XmlService.parse(xml);
+    const atomNs = XmlService.getNamespace('http://www.w3.org/2005/Atom');
+    const ytNs   = XmlService.getNamespace('http://www.youtube.com/xml/schemas/2015');
+    const entries = doc.getRootElement().getChildren('entry', atomNs);
+
+    const videoIds = entries
+      .map(function(entry) { return entry.getChildText('videoId', ytNs); })
+      .filter(Boolean)
+      .slice(0, 20);
+
+    const shortsIds = [];
+    for (var i = 0; i < videoIds.length; i++) {
+      if (shortsIds.length >= 6) break;
+      try {
+        var resp = UrlFetchApp.fetch('https://www.youtube.com/shorts/' + videoIds[i], {
+          followRedirects: false,
+          muteHttpExceptions: true
+        });
+        if (resp.getResponseCode() === 200) shortsIds.push(videoIds[i]);
+      } catch (err) {}
+    }
+
+    var json = JSON.stringify({ status: 'ok', ids: shortsIds });
+    cache.put('shorts_v1', json, 3600);
+    return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', ids: [] }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
 
 /**

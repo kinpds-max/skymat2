@@ -2091,39 +2091,16 @@
   <!-- Daum Postcode API -->
   <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="js/main.js"></script>
-  <!-- ===== 유튜브 쇼츠 자동 크롤링 (Shorts 전용 필터) ===== -->
+  <!-- ===== 유튜브 쇼츠 자동 크롤링 (Apps Script 프록시) ===== -->
   <script>
     async function fetchLatestShorts() {
-      const channelId = 'UCJnWOugRSSv3Oqzir2FgNRA';
-      // 15개 가져와서 Shorts만 필터링 후 최신 5개 표시
-      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId)}&count=15`;
       const grid = document.getElementById('shortsGrid');
-      if (!grid) return;
-
+      if (!grid || typeof APPS_SCRIPT_URL === 'undefined' || !APPS_SCRIPT_URL) return;
       try {
-        const res = await fetch(apiUrl);
+        const res = await fetch(APPS_SCRIPT_URL + '?action=shorts');
         const data = await res.json();
-        if (data.status !== 'ok' || !data.items?.length) return;
-
-        const videoIds = data.items.map(item => {
-          const raw = item.link || '';
-          return (raw.split('v=')[1] || '').split('&')[0];
-        }).filter(Boolean);
-
-        // oar2.jpg가 세로 비율(portrait)이면 Shorts로 판별
-        const checkShorts = id => new Promise(resolve => {
-          const img = new Image();
-          img.onload = () => resolve(img.naturalHeight > img.naturalWidth ? id : null);
-          img.onerror = () => resolve(null);
-          img.src = `https://i.ytimg.com/vi/${id}/oar2.jpg`;
-        });
-
-        const results = await Promise.all(videoIds.map(checkShorts));
-        const shortsIds = results.filter(Boolean).slice(0, 5);
-        if (!shortsIds.length) return;
-
-        // 표시는 크리에이터 설정 썸네일(maxresdefault) 사용, 없으면 hqdefault
-        const html = shortsIds.map((id, i) => `
+        if (data.status !== 'ok' || !data.ids || !data.ids.length) return;
+        const html = data.ids.map((id, i) => `
           <div class="shorts-item">
             <div class="shorts-thumb">
               <a href="https://www.youtube.com/shorts/${id}" target="_blank" rel="noopener">
@@ -2133,7 +2110,6 @@
               </a>
             </div>
           </div>`).join('');
-
         if (html) grid.innerHTML = html;
       } catch (e) {
         /* 실패 시 기존 HTML 유지 */
