@@ -2736,24 +2736,61 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   gap: 20px;
   margin-bottom: 8px;
 }
-.wiper-grid-2col {
-  grid-template-columns: repeat(2, 1fr);
-}
 .wiper-wrap { display: flex; flex-direction: column; gap: 10px; }
-.wiper-apt-tag {
-  display: inline-flex;
+.apt-badge-row {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  background: #EFF6FF;
-  border: 1px solid #BFDBFE;
-  color: var(--primary);
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: 20px;
-  align-self: flex-start;
+  gap: 14px;
+  margin-top: 18px;
+  flex-wrap: wrap;
 }
-.wiper-apt-tag i { font-size: 0.75rem; }
+.apt-badge-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #888;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.apt-badge-label i { color: var(--primary); }
+.apt-badge-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.apt-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #fff;
+  border: 1.5px solid #BFDBFE;
+  border-radius: 10px;
+  padding: 8px 14px;
+  box-shadow: 0 2px 8px rgba(21,101,192,.08);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.apt-badge:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(21,101,192,.15);
+}
+.apt-badge i {
+  font-size: 1.1rem;
+  color: var(--primary);
+  background: #EFF6FF;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.apt-badge span {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--dark);
+}
 .wiper-label-top {
   display: flex;
   justify-content: space-between;
@@ -3661,6 +3698,10 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   /* 와이퍼 갤러리 1열 */
   .wiper-grid { grid-template-columns: 1fr !important; }
   .wiper-compare { aspect-ratio: 4/3; }
+  .apt-badge-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .apt-badge-list { gap: 6px; }
+  .apt-badge { padding: 6px 11px; }
+  .apt-badge span { font-size: 0.78rem; }
 
   /* 제품 그리드 2열 */
   .product-grid { grid-template-columns: repeat(2, 1fr) !important; }
