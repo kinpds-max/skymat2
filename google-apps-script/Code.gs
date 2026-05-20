@@ -88,7 +88,7 @@ function doGet(e) {
 }
 
 /**
- * YouTube 쇼츠 최신 6개 반환 (1시간 캐시)
+ * YouTube 쇼츠 최신 12개 반환 (1시간 캐시)
  * - 채널 Shorts 탭 페이지를 스크래핑해 /shorts/ID 패턴으로 추출 (가장 정확)
  * - 실패 시 RSS에서 /shorts/ID HTTP 200 체크로 폴백
  */
@@ -124,7 +124,7 @@ function getShortsData() {
     for (var i = 0; i < matches.length; i++) {
       var id = matches[i].replace('/shorts/', '');
       if (!seen[id]) { seen[id] = true; ids.push(id); }
-      if (ids.length >= 6) break;
+      if (ids.length >= 12) break;
     }
 
     if (ids.length >= 3) {
@@ -149,7 +149,7 @@ function getShortsData() {
     const videoIds = entries
       .map(function(entry) { return entry.getChildText('videoId', ytNs); })
       .filter(Boolean)
-      .slice(0, 6);
+      .slice(0, 12);
 
     if (videoIds.length > 0) {
       var json = JSON.stringify({ status: 'ok', ids: videoIds });

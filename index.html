@@ -946,46 +946,6 @@
       </div>
 
       <div class="shorts-grid" id="shortsGrid">
-        <div class="shorts-item">
-          <div class="shorts-thumb">
-            <a href="https://www.youtube.com/shorts/sozwI0LgSiM" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/sozwI0LgSiM/maxresdefault.jpg" alt="시공 쇼츠 1" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/sozwI0LgSiM/hqdefault.jpg'" />
-              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
-            </a>
-          </div>
-        </div>
-        <div class="shorts-item">
-          <div class="shorts-thumb">
-            <a href="https://www.youtube.com/shorts/nzw-XYuQLj0" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/nzw-XYuQLj0/maxresdefault.jpg" alt="시공 쇼츠 2" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/nzw-XYuQLj0/hqdefault.jpg'" />
-              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
-            </a>
-          </div>
-        </div>
-        <div class="shorts-item">
-          <div class="shorts-thumb">
-            <a href="https://www.youtube.com/shorts/Ow8VQpd6R5k" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/Ow8VQpd6R5k/maxresdefault.jpg" alt="시공 쇼츠 3" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/Ow8VQpd6R5k/hqdefault.jpg'" />
-              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
-            </a>
-          </div>
-        </div>
-        <div class="shorts-item">
-          <div class="shorts-thumb">
-            <a href="https://www.youtube.com/shorts/oOCgViGOfkQ" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/oOCgViGOfkQ/maxresdefault.jpg" alt="시공 쇼츠 4" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/oOCgViGOfkQ/hqdefault.jpg'" />
-              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
-            </a>
-          </div>
-        </div>
-        <div class="shorts-item">
-          <div class="shorts-thumb">
-            <a href="https://www.youtube.com/shorts/6inIqxurjwU" target="_blank" rel="noopener">
-              <img src="https://i.ytimg.com/vi/6inIqxurjwU/maxresdefault.jpg" alt="시공 쇼츠 5" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/6inIqxurjwU/hqdefault.jpg'" />
-              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
-            </a>
-          </div>
-        </div>
       </div>
 
       <div class="board-more" style="text-align: center; margin-top: 40px;">
@@ -995,6 +955,20 @@
       </div>
     </div>
   </section>
+
+  <div class="shorts-modal" id="shortsModal" aria-hidden="true">
+    <div class="shorts-modal-backdrop" data-shorts-close></div>
+    <div class="shorts-modal-dialog" role="dialog" aria-modal="true" aria-label="하늘매트 쇼츠 영상">
+      <button class="shorts-modal-close" type="button" data-shorts-close aria-label="닫기">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="shorts-player">
+        <iframe id="shortsPlayer" title="하늘매트 쇼츠 영상" src="" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== 시공사례 ===== -->
   <section class="gallery" id="gallery">
@@ -2065,24 +2039,83 @@
   <script src="js/main.js"></script>
   <!-- ===== 유튜브 쇼츠 자동 크롤링 (Apps Script 프록시) ===== -->
   <script>
+    const DEFAULT_SHORTS_IDS = [
+      'JVKDjxq9Wrw',
+      'DnPiH5hCsdo',
+      '4e_Ywe8dUdQ',
+      'C9aC80jqPAE',
+      'O9Wi0v0scKU',
+      'kk7IKyzGttw',
+      'Q_HodD1cddY',
+      'CcAlJ1XJo5w',
+      'vw59H9suieo',
+      '6JDJJ8m3o-U',
+      'CbbJyKoyN98',
+      'X9qNkJ3UN9s'
+    ];
+
+    function renderShortsGrid(ids) {
+      const grid = document.getElementById('shortsGrid');
+      if (!grid) return;
+      const uniqueIds = [];
+      [...ids, ...DEFAULT_SHORTS_IDS].forEach(id => {
+        if (id && !uniqueIds.includes(id)) uniqueIds.push(id);
+      });
+      grid.innerHTML = uniqueIds.slice(0, 12).map((id, i) => `
+        <div class="shorts-item">
+          <div class="shorts-thumb">
+            <button class="shorts-video-btn" type="button" data-shorts-id="${id}" aria-label="시공 쇼츠 ${i + 1} 재생">
+              <img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" alt="시공 쇼츠 ${i + 1}" loading="lazy"
+                   onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'" />
+              <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
+            </button>
+          </div>
+        </div>`).join('');
+    }
+
+    function openShortsModal(id) {
+      const modal = document.getElementById('shortsModal');
+      const player = document.getElementById('shortsPlayer');
+      if (!modal || !player || !id) return;
+      player.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('shorts-modal-open');
+    }
+
+    function closeShortsModal() {
+      const modal = document.getElementById('shortsModal');
+      const player = document.getElementById('shortsPlayer');
+      if (!modal || !player) return;
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      player.src = '';
+      document.body.classList.remove('shorts-modal-open');
+    }
+
+    document.addEventListener('click', (event) => {
+      const playButton = event.target.closest('[data-shorts-id]');
+      if (playButton) {
+        openShortsModal(playButton.dataset.shortsId);
+        return;
+      }
+      if (event.target.closest('[data-shorts-close]')) closeShortsModal();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeShortsModal();
+    });
+
     async function fetchLatestShorts() {
       const grid = document.getElementById('shortsGrid');
-      if (!grid || typeof APPS_SCRIPT_URL === 'undefined' || !APPS_SCRIPT_URL) return;
+      if (!grid) return;
+      renderShortsGrid(DEFAULT_SHORTS_IDS);
+      if (typeof APPS_SCRIPT_URL === 'undefined' || !APPS_SCRIPT_URL) return;
       try {
-        const res = await fetch(APPS_SCRIPT_URL + '?action=shorts');
+        const res = await fetch(APPS_SCRIPT_URL + '?action=shorts&limit=12');
         const data = await res.json();
         if (data.status !== 'ok' || !data.ids || !data.ids.length) return;
-        const html = data.ids.map((id, i) => `
-          <div class="shorts-item">
-            <div class="shorts-thumb">
-              <a href="https://www.youtube.com/shorts/${id}" target="_blank" rel="noopener">
-                <img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" alt="시공 쇼츠 ${i+1}" loading="lazy"
-                     onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'" />
-                <span class="shorts-play-icon"><i class="fa-solid fa-play"></i></span>
-              </a>
-            </div>
-          </div>`).join('');
-        if (html) grid.innerHTML = html;
+        renderShortsGrid(data.ids);
       } catch (e) {
         /* 실패 시 기존 HTML 유지 */
       }

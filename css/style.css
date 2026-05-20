@@ -3554,10 +3554,10 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 @keyframes modalIn { from { opacity: 0; transform: scale(0.8) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
 
-/* ===== SHORTS GRID (5 Columns) ===== */
+/* ===== SHORTS GRID ===== */
 .shorts-grid {
   display: grid !important;
-  grid-template-columns: repeat(5, 1fr) !important;
+  grid-template-columns: repeat(6, 1fr) !important;
   gap: 12px !important;
   max-width: 100% !important;
 }
@@ -3574,10 +3574,17 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   padding-bottom: 177.78%;
   overflow: hidden;
 }
-.shorts-thumb a {
+.shorts-video-btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
   display: block;
+  padding: 0;
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
 }
 .shorts-thumb img {
   width: 100%;
@@ -3605,6 +3612,61 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   transition: background 0.2s;
 }
 .shorts-item:hover .shorts-play-icon { background: #fff; }
+.shorts-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.shorts-modal.open { display: flex; }
+.shorts-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(4px);
+}
+.shorts-modal-dialog {
+  position: relative;
+  width: min(430px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  z-index: 1;
+}
+.shorts-modal-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.24);
+  z-index: 2;
+}
+.shorts-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #000;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+}
+.shorts-player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+body.shorts-modal-open { overflow: hidden; }
 @media (max-width: 992px) {
   .shorts-grid { grid-template-columns: repeat(3, 1fr) !important; }
 }
@@ -3891,8 +3953,8 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   /* 마지막 유튜브 영상 숨기기 */
   .yt-item-last { display: none !important; }
 
-  /* 쇼츠 4개로 */
-  .shorts-item:nth-child(n+5) { display: none !important; }
+  /* 쇼츠 12개 유지 */
+  .shorts-item { display: block !important; }
 
   /* 제품/사이즈 탭바 표시 */
   .product-tabs-bar, .size-tabs-bar {
