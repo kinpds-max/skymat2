@@ -1822,6 +1822,20 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 .float-btn.phone { background: var(--primary); color: #fff; }
 .float-btn.top { background: #fff; color: var(--primary); border: 2px solid var(--gray-200); }
 .float-btn.top.hidden { opacity: 0; pointer-events: none; }
+.float-btn.estimate {
+  background: var(--primary);
+  color: #fff;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+.float-label {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1;
+}
 
 /* ===== 가격 안내 ===== */
 .pricing { padding: 100px 0; background: var(--gray-50); }
