@@ -1136,4 +1136,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3000);
   }
 
+  // 제품 탭 전환 (모바일)
+  document.querySelectorAll('.product-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.product-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.dataset.target;
+      document.querySelectorAll('.product-grid .product-card').forEach(card => {
+        card.classList.toggle('tab-active', card.dataset.category === target);
+      });
+    });
+  });
+
+  // 사이즈 탭 전환 (모바일)
+  document.querySelectorAll('.size-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.size-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const idx = parseInt(btn.dataset.sizeIdx);
+      document.querySelectorAll('.size-grid .size-card').forEach((card, i) => {
+        card.classList.toggle('tab-active', i === idx);
+      });
+    });
+  });
+
 });

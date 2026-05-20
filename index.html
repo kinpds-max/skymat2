@@ -125,9 +125,6 @@
           <a href="https://pf.kakao.com/_yBrxhG/chat" target="_blank" class="btn-kakao">
             <i class="fa-brands fa-kakao"></i> <span data-i18n="hero.cta1">카카오톡 상담</span>
           </a>
-          <a href="#contact" class="btn-outline">
-            <span data-i18n="hero.cta2">빠른상담견적</span> <i class="fa-solid fa-arrow-right"></i>
-          </a>
         </div>
         <div class="hero-stats">
           <div class="stat">
@@ -160,7 +157,7 @@
       <div class="brochure-card">
         <div class="brochure-info" style="text-align: center; margin-bottom: 40px; width: 100%;">
           <span class="section-tag">자료실</span>
-          <h3>하늘매트 <em>공식 브로셔</em></h3>
+          <h3 style="white-space:nowrap">하늘매트 <em>공식 브로셔</em></h3>
           <p>하스놀과 하늘매트의 상세 제품 사양 및<br />기업 소개가 담긴 최신 공식 브로셔를 확인해 보세요.</p>
           <div class="brochure-btns" style="display: flex; justify-content: center; margin-top: 24px;">
             <a href="docs/brochure.pdf" download class="btn-primary" style="min-width: 200px; justify-content: center;">
@@ -432,8 +429,7 @@
           </div>
         </div>
       </div>
-      <p class="space-footer">가정의 안락함부터 공공기관의 엄격한 안전 기준까지<br /><strong>하늘매트</strong>는 공간의 특성과 사용자의 활동 패턴을 분석하여 가장 최적화된
-        시공 솔루션을 제안합니다.</p>
+      <p class="space-footer">가정의 안락함부터 공공기관의 엄격한 안전 기준까지<br /><strong>하늘매트</strong>는 공간의 특성과 사용자의 활동 패턴을 분석하여<br />가장 최적화된 시공 솔루션을 제안합니다.</p>
 
       <!-- 공간별 시공 예상 스케치 -->
       <div class="space-sketches">
@@ -550,12 +546,19 @@
       <!-- 단종 안내 -->
       <div style="text-align: center; margin-bottom: 16px; padding: 10px 16px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; font-size: 0.85rem; color: #795548;">
         <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b; margin-right: 6px;"></i>
-        모든 제품은 공장이나 고객 수요에 따라서 생산이 중단될 수 있으니, 시공 시 AS용 여분을 구입해두시는 것을 추천합니다.
+        모든 제품은 공장이나 고객 수요에 따라서 생산이 중단될 수 있으니,<br />시공 시 AS용 여분을 구입해두시는 것을 추천합니다.
       </div>
 
+      <div class="product-tabs-bar">
+        <button class="product-tab-btn active" data-target="tpu">일반 TPU</button>
+        <button class="product-tab-btn" data-target="premium">프리미엄 TPU</button>
+        <button class="product-tab-btn" data-target="eva">EVA</button>
+        <button class="product-tab-btn" data-target="roll">롤매트</button>
+        <button class="product-tab-btn" data-target="leaderpe">레더PE</button>
+      </div>
       <div class="product-grid" style="margin-bottom: 64px;">
 
-        <div class="product-card" data-category="tpu">
+        <div class="product-card tab-active" data-category="tpu">
           <div class="product-card-banner"></div>
           <div class="product-info">
             <span class="product-tag best">BEST</span>
@@ -643,9 +646,17 @@
 
 
       <!-- 사이즈별 핵심 스펙 카드 -->
+      <div class="size-tabs-bar">
+        <button class="size-tab-btn active" data-size-idx="0">600mm</button>
+        <button class="size-tab-btn" data-size-idx="1">600 레더</button>
+        <button class="size-tab-btn" data-size-idx="2">800mm</button>
+        <button class="size-tab-btn" data-size-idx="3">800 레더</button>
+        <button class="size-tab-btn" data-size-idx="4">1000 레더</button>
+        <button class="size-tab-btn" data-size-idx="5">1200 레더</button>
+      </div>
       <div class="size-grid">
         <!-- 600mm -->
-        <div class="size-card recommend">
+        <div class="size-card recommend tab-active">
           <span class="size-badge best">강력추천</span>
           <div class="size-num">600</div>
           <div class="size-unit">mm</div>
@@ -834,16 +845,13 @@
           alt="하늘매트 공인 인증서 전체 — ISO 9001, 소비자선정 브랜드 대상, SGS 충격흡수율 98%, KOTTI 라돈합격, KTR 난연V2, FITI KC인증, KACI 4종" />
       </div>
 
-      <!-- 인증 배지 — 위 5개 (안전/품질) -->
-      <div class="cert-badges">
+      <!-- 인증 배지 통합 -->
+      <div class="cert-badges cert-badges-all">
+        <div class="cert-badge highlight cert-badge-featured"><i class="fa-solid fa-trophy"></i><span>3년연속 브랜드 대상</span></div>
         <div class="cert-badge"><i class="fa-solid fa-certificate"></i><span>ISO 9001</span></div>
-        <div class="cert-badge highlight"><i class="fa-solid fa-trophy"></i><span>3년연속 브랜드 대상</span></div>
         <div class="cert-badge"><i class="fa-solid fa-shield-halved"></i><span>SGS 98%</span></div>
         <div class="cert-badge"><i class="fa-solid fa-radiation"></i><span>KOTTI 라돈합격</span></div>
         <div class="cert-badge"><i class="fa-solid fa-fire-extinguisher"></i><span>KTR 난연V2</span></div>
-      </div>
-      <!-- 인증 배지 — 아래 5개 (친환경/건강) -->
-      <div class="cert-badges cert-badges-row2">
         <div class="cert-badge"><i class="fa-solid fa-microscope"></i><span>FITI KC인증</span></div>
         <div class="cert-badge"><i class="fa-solid fa-leaf"></i><span>KACI 아토피</span></div>
         <div class="cert-badge"><i class="fa-solid fa-leaf"></i><span>KACI 아토피확인</span></div>
@@ -910,7 +918,7 @@
               allowfullscreen loading="lazy"></iframe>
           </div>
         </div>
-        <div class="yt-item">
+        <div class="yt-item yt-item-last">
           <div class="yt-thumb">
             <iframe src="https://www.youtube.com/embed/oSQ2vkKGLJE" title="하늘매트 영상 6" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -994,7 +1002,7 @@
       <div class="section-header">
         <span class="section-tag">PORTFOLIO</span>
         <h2 data-i18n-html="gallery.h2">생활 속의 <em>하늘매트</em></h2>
-        <p data-i18n="gallery.sub">생활 속 오래남을 바닥을 위해, 마지막까지 선종하게 시공합니다</p>
+        <p class="gallery-sub-p" data-i18n="gallery.sub">생활 속 오래남을 바닥을 위해, 마지막까지 선종하게 시공합니다</p>
       </div>
 
       <div class="gallery-tabs">
@@ -1129,49 +1137,6 @@
       </div>
 
       <div class="gallery-panel" id="gtab-welfare">
-        <!-- 시공사례 사진 2개 50/50 -->
-        <div class="gallery-grid two-col">
-          <div class="gallery-item">
-            <div class="gallery-img-wrap">
-              <img src="images/KakaoTalk_20260408_131855011_09.png" alt="한부모돌봄센터 시공사례"
-                onerror="this.style.display='none'" />
-              <div class="gallery-placeholder"><i class="fa-solid fa-image"></i><span>복지시설 시공사례</span></div>
-              <div class="gallery-overlay"><span class="gallery-label">한부모돌봄센터</span><span
-                  class="gallery-area">한생명복지재단</span></div>
-            </div>
-          </div>
-          <div class="gallery-item">
-            <div class="gallery-img-wrap">
-              <div class="gallery-placeholder welfare-placeholder">
-                <i class="fa-solid fa-hospital"></i>
-                <span>신생아보호센터<br />주사랑공동체</span>
-              </div>
-              <div class="gallery-overlay"><span class="gallery-label">신생아보호센터</span><span
-                  class="gallery-area">주사랑공동체</span></div>
-            </div>
-          </div>
-        </div>
-        <!-- 시공 영상 2개 50/50 임베드 -->
-        <div class="welfare-video-row">
-          <div class="wiper-wrap">
-            <div class="wiper-label-top"><span>한부모돌봄센터 시공</span><span class="wiper-area">한생명복지재단</span></div>
-            <div class="video-embed-wrap">
-              <iframe src="https://www.youtube.com/embed/qU_fwTb-xeg"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-            </div>
-          </div>
-          <div class="wiper-wrap">
-            <div class="wiper-label-top"><span>신생아보호센터 시공</span><span class="wiper-area">주사랑공동체</span></div>
-            <div class="video-embed-wrap">
-              <iframe src="https://www.youtube.com/embed/3WTKWH5X20k"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- 시설 패널 -->
@@ -1403,28 +1368,6 @@
             </div>
           </div>
 
-          <!-- 한생명복지재단 -->
-          <div class="wiper-wrap">
-            <div class="wiper-label-top"><span>한부모돌봄센터 시공</span><span class="wiper-area">한생명복지재단</span></div>
-            <div class="video-embed-wrap">
-              <iframe src="https://www.youtube.com/embed/qU_fwTb-xeg"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-            </div>
-          </div>
-
-          <!-- 주사랑공동체 -->
-          <div class="wiper-wrap">
-            <div class="wiper-label-top"><span>신생아보호센터 시공</span><span class="wiper-area">주사랑공동체</span></div>
-            <div class="video-embed-wrap">
-              <iframe src="https://www.youtube.com/embed/3WTKWH5X20k"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-            </div>
-          </div>
-
         </div>
       </div>
 
@@ -1451,6 +1394,14 @@
             <i class="fa-brands fa-instagram"></i>
             <div>
               <strong>인스타그램</strong>
+              <span>@skymat82</span>
+            </div>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="https://www.youtube.com/@skymat82" target="_blank" class="social-link-card">
+            <i class="fa-brands fa-youtube"></i>
+            <div>
+              <strong>유튜브</strong>
               <span>@skymat82</span>
             </div>
             <i class="fa-solid fa-arrow-right"></i>
@@ -1506,7 +1457,7 @@
       <div class="section-header">
         <span class="section-tag">할인 혜택</span>
         <h2>다양한 <em>할인 혜택</em>을 확인하세요</h2>
-        <p>중복 적용 가능한 다양한 할인으로 더 합리적으로 시공하세요</p>
+        <p class="discount-sub-p">중복 적용 가능한 다양한 할인으로 더 합리적으로 시공하세요</p>
       </div>
 
       <div class="discount-grid">
@@ -1790,7 +1741,7 @@
           <h3 class="sample-title">하늘매트 TPU <strong>무료배송 샘플신청</strong></h3>
           <p class="sample-desc">시공 전 직접 소재와 색상을 확인해보세요.<br />3,000원 · 무료배송 · 설치비 별도</p>
           <a href="https://smartstore.naver.com/cleanonecare/products/9639437677" target="_blank" class="btn-sample">
-            <i class="fa-brands fa-neos"></i> 네이버 스마트스토어에서 샘플 신청하기 <i class="fa-solid fa-arrow-right"></i>
+            <i class="fa-brands fa-neos"></i> 스마트스토어 샘플 신청하기 <i class="fa-solid fa-arrow-right"></i>
           </a>
         </div>
       </div>
@@ -1925,7 +1876,7 @@
               <span class="security-badge"><i class="fa-solid fa-lock"></i> 256-bit 보안 전송</span>
               <span class="security-badge"><i class="fa-solid fa-user-shield"></i> 개인정보 파기 원칙</span>
             </div>
-            <p class="form-kakao-notice">※ 현재 폼 접수 시스템 준비 중입니다. 임시로 카카오톡으로 연결됩니다.</p>
+            <p class="form-kakao-notice">수치있는 평면도를 보내주시면 좀더 정확한 안내가 가능합니다</p>
             <a href="https://pf.kakao.com/_yBrxhG/chat" target="_blank" class="btn-kakao-form">
               <i class="fa-brands fa-kakao"></i> 카카오톡으로 바로 상담하기
             </a>
@@ -1943,10 +1894,15 @@
       <div class="biz-header">
         <span class="section-tag">기업 협력</span>
         <h2>하늘매트와 <em>함께 성장</em>하세요</h2>
-        <p>지사·도매·유통·시공팀·수출·기업협력 다양한 파트너십을 환영합니다</p>
+        <p>개인영업·지사·도매·시공팀·수출·기업협력<br />다양한 파트너십을 환영합니다</p>
       </div>
 
       <div class="biz-types">
+        <div class="biz-type-card">
+          <i class="fa-solid fa-user-tie"></i>
+          <strong>개인 영업</strong>
+          <span>개인 영업 및 소개 문의</span>
+        </div>
         <div class="biz-type-card">
           <i class="fa-solid fa-store"></i>
           <strong>지사 개설</strong>
@@ -1980,6 +1936,7 @@
             <label>문의 유형 <span class="req">*</span></label>
             <select id="bizType" required>
               <option value="">선택해주세요</option>
+              <option value="개인 영업">개인 영업</option>
               <option value="지사 개설">지사 개설</option>
               <option value="도매 · 유통">도매 · 유통</option>
               <option value="시공팀 모집">시공팀 모집</option>
@@ -2010,7 +1967,7 @@
         <button type="submit" class="btn-biz-submit">
           <i class="fa-solid fa-paper-plane"></i> 협력 문의 보내기
         </button>
-        <p class="biz-email-note"><i class="fa-solid fa-envelope"></i> 접수된 문의는 <strong>one19119@naver.com</strong>으로 발송됩니다</p>
+        <p class="biz-email-note" style="white-space:nowrap;font-size:0.8rem"><i class="fa-solid fa-envelope"></i> 접수된 문의는 <strong>one19119@naver.com</strong>으로 발송됩니다</p>
       </form>
     </div>
   </section>
@@ -2026,6 +1983,7 @@
         <p class="footer-partner">SKYMAT × SKYSPACE</p>
         <div class="footer-sns">
           <a href="#" aria-label="인스타그램"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://cafe.naver.com/smartkim82" target="_blank" aria-label="네이버 공식카페"><i class="fa-solid fa-mug-hot"></i></a>
           <a href="https://www.youtube.com/@skymat82" target="_blank" aria-label="유튜브"><i
               class="fa-brands fa-youtube"></i></a>
           <a href="#" aria-label="네이버 블로그"><i class="fa-solid fa-blog"></i></a>
