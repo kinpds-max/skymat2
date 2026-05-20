@@ -12,15 +12,26 @@ const NOTIFY_EMAIL = 'one19119@naver.com,paul@hasnol.kr';
 // ★ 발신자 이름 ★
 const SENDER_NAME = '하늘매트';
 
-// ★ 솔라피(SOLAPI) 설정 (이전 정보 연동 완료) ★
+// ★ 솔라피(SOLAPI) 설정 ★
 const SOLAPI_API_KEY = 'NCSEI0BPHUGSGJQE';
 const SOLAPI_API_SECRET = '636FK1NIGBC9GQKTEQGU67XG2IZP9ADK';
 
 // [중요] 발신 전화번호 (솔라피에 서류 등록 및 승인 완료된 번호)
-const SENDER_PHONE = '01075471197'; 
+const SENDER_PHONE = '01075471197';
 
-// [중요] 문자를 받을 전화번호 (상담 알림을 전송받을 대표 휴대폰 번호)
-const ADMIN_PHONE = '07080578500';  
+// ★ 카카오 알림톡 설정 ★
+// 1. 솔라피 콘솔 → 카카오 → 채널 관리 → 채널 추가 후 pfId 입력 (KA01로 시작하는 코드)
+const KAKAO_PF_ID = 'KA01PF260520090950714wD2j2i1gAhC';
+
+// 2. 알림톡 템플릿 등록·승인 후 코드 입력
+const KAKAO_TEMPLATE_CONSULT = '9KIS4On7qa';  // [하늘매트] 새 시공 상담이 접수되었습니다.
+const KAKAO_TEMPLATE_BIZ     = '4li51hK0KL';  // [하늘매트] 기업 협력 문의가 접수되었습니다.
+
+// 3. 알림 받을 010 번호 목록 (카카오톡 계정 연동된 번호)
+//    ※ 070 번호는 카카오/문자 수신 불가 — 반드시 010 번호로 입력
+const ADMIN_PHONES = [
+  '01075471197',
+];
 
 
 /**
@@ -38,18 +49,19 @@ function doPost(e) {
 
     const formType = data.formType || 'consult'; // 'consult' (고객상담) 또는 'biz' (기업협력)
 
-    // 2) 솔라피 문자 발송
-    let smsResult = '솔라피 설정 미완료';
-    if (SOLAPI_API_KEY && SOLAPI_API_KEY !== 'YOUR_SOLAPI_API_KEY') {
-      smsResult = sendNotificationSms(data, formType);
-    }
+    // ① 구글시트 저장
+    const receiptNo = saveToSheet(data, '', formType);
 
-    // 3) Google Sheets에 저장 (문자 전송 결과도 함께 기록)
-    const receiptNo = saveToSheet(data, smsResult, formType);
-
-    // 4) 이메일 알림 발송 (두 개의 메일 주소로 발송됨)
+    // ② 이메일 발송
     if (NOTIFY_EMAIL) {
       sendNotificationEmail(data, receiptNo, formType);
+    }
+
+    // ③ 카카오 알림톡 (pfId·템플릿 코드 입력 후 자동 전환) / 미설정 시 SMS
+    let smsResult = '솔라피 설정 미완료';
+    if (SOLAPI_API_KEY && SOLAPI_API_KEY !== 'YOUR_SOLAPI_API_KEY') {
+      smsResult = sendNotifications(data, formType);
+      updateSmsResultInSheet(receiptNo, smsResult, formType);
     }
 
     return ContentService
@@ -103,6 +115,7 @@ function getShortsData() {
       .filter(Boolean)
       .slice(0, 20);
 
+    // 1차: /shorts/ID 접근 시 HTTP 200이면 Shorts (303 리다이렉트면 일반영상)
     const shortsIds = [];
     for (var i = 0; i < videoIds.length; i++) {
       if (shortsIds.length >= 6) break;
@@ -115,7 +128,10 @@ function getShortsData() {
       } catch (err) {}
     }
 
-    var json = JSON.stringify({ status: 'ok', ids: shortsIds });
+    // 2차 fallback: 감지 실패 시(3개 미만) RSS 최신 순으로 채움
+    var finalIds = shortsIds.length >= 3 ? shortsIds : videoIds.slice(0, 6);
+
+    var json = JSON.stringify({ status: 'ok', ids: finalIds });
     cache.put('shorts_v1', json, 3600);
     return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
@@ -228,15 +244,111 @@ function saveToSheet(data, smsResult, formType) {
 }
 
 /**
- * 솔라피 (SOLAPI) 알림 문자 발송
+ * 시트에 발송 결과 업데이트 (저장 후 알림 결과 기록)
  */
-function sendNotificationSms(data, formType) {
+function updateSmsResultInSheet(receiptNo, smsResult, formType) {
+  try {
+    let ss;
+    if (SHEET_ID && SHEET_ID !== 'YOUR_GOOGLE_SHEET_ID') {
+      ss = SpreadsheetApp.openById(SHEET_ID);
+    } else {
+      ss = SpreadsheetApp.getActiveSpreadsheet();
+    }
+    const sheetName = formType === 'biz' ? '기업문의' : '상담신청';
+    const sheet = ss.getSheetByName(sheetName);
+    if (!sheet) return;
+
+    const data = sheet.getDataRange().getValues();
+    for (let i = data.length - 1; i >= 1; i--) {
+      if (data[i][0] === receiptNo) {
+        // 마지막 열(문자발송결과)에 업데이트
+        sheet.getRange(i + 1, data[i].length).setValue(smsResult);
+        break;
+      }
+    }
+  } catch (e) {
+    console.error('updateSmsResultInSheet 오류:', e);
+  }
+}
+
+/**
+ * 알림 발송 통합 함수
+ * 순서: ① 카카오 알림톡 시도 → 실패(검수중/오류) 시 ② SMS 자동 폴백
+ */
+function sendNotifications(data, formType) {
+  const results = [];
+  const useAlimtalk = KAKAO_PF_ID && KAKAO_TEMPLATE_CONSULT;
+
+  for (const phone of ADMIN_PHONES) {
+    if (useAlimtalk) {
+      const atResult = sendAlimtalk(data, formType, phone);
+      if (atResult.includes('실패') || atResult.includes('오류')) {
+        // 검수진행중 또는 오류 → SMS로 자동 전환
+        const smsResult = sendSms(data, formType, phone);
+        results.push('SMS:' + smsResult + ' (알림톡→SMS폴백)');
+      } else {
+        results.push('알림톡:' + atResult);
+      }
+    } else {
+      results.push(sendSms(data, formType, phone));
+    }
+  }
+  return results.join(' | ');
+}
+
+/**
+ * 솔라피 카카오 알림톡 발송
+ */
+function sendAlimtalk(data, formType, toPhone) {
   const url = 'https://api.solapi.com/messages/v4/send';
-  const authHeader = generateSolapiAuthHeader(SOLAPI_API_KEY, SOLAPI_API_SECRET);
-  
-  let textMessage = '';
+  const templateId = formType === 'biz' ? KAKAO_TEMPLATE_BIZ : KAKAO_TEMPLATE_CONSULT;
+
+  // 변수명은 솔라피에 등록한 알림톡 템플릿의 #{변수명}과 반드시 일치해야 합니다
+  let variables = {};
   if (formType === 'biz') {
-    textMessage = `[하늘매트 기업협력 문의]
+    variables = {
+      '#{문의유형}':  data.bizType || data.type || '',
+      '#{회사명}':    data.name || '',
+      '#{연락처}':    data.phone || '',
+      '#{이메일}':    data.email || '미입력',
+      '#{문의내용}':  data.memo || ''
+    };
+  } else {
+    variables = {
+      '#{이름}':      data.name || '',
+      '#{연락처}':    data.phone || '',
+      '#{주소}':      data.address || '',
+      '#{시공일}':    data.installDate || '',
+      '#{평형범위}':  data.areaType || '',
+      '#{샘플여부}':  data.sample || '',
+      '#{문의내용}':  data.memo || '없음'
+    };
+  }
+
+  const payload = {
+    message: {
+      to: toPhone,
+      from: SENDER_PHONE,
+      kakaoOptions: {
+        pfId: KAKAO_PF_ID,
+        templateId: templateId,
+        variables: variables
+      }
+    }
+  };
+
+  return _solapiRequest(url, payload, toPhone);
+}
+
+/**
+ * 솔라피 SMS 발송 (알림톡 미설정 시 폴백)
+ */
+function sendSms(data, formType, toPhone) {
+  const url = 'https://api.solapi.com/messages/v4/send';
+
+  let text = '';
+  if (formType === 'biz') {
+    text = `[하늘매트 기업협력 문의]
 새로운 비즈니스 제안이 접수되었습니다.
 
 • 유형: ${data.bizType || data.type || ''}
@@ -245,7 +357,7 @@ function sendNotificationSms(data, formType) {
 • 이메일: ${data.email || '미입력'}
 • 문의내용: ${data.memo || ''}`;
   } else {
-    textMessage = `[하늘매트 상담신청]
+    text = `[하늘매트 상담신청]
 새로운 시공 상담이 접수되었습니다.
 
 • 이름: ${data.name || ''}
@@ -259,41 +371,27 @@ function sendNotificationSms(data, formType) {
 ${data.calcResult ? '[견적 계산기 결과]\n' + data.calcResult : ''}`;
   }
 
-  const payload = {
-    message: {
-      to: ADMIN_PHONE,
-      from: SENDER_PHONE,
-      text: textMessage
-    }
-  };
+  const payload = { message: { to: toPhone, from: SENDER_PHONE, text: text } };
+  return _solapiRequest(url, payload, toPhone);
+}
 
+/**
+ * 솔라피 API 공통 요청 헬퍼
+ */
+function _solapiRequest(url, payload, toPhone) {
   const options = {
     method: 'post',
     contentType: 'application/json',
-    headers: {
-      Authorization: authHeader
-    },
+    headers: { Authorization: generateSolapiAuthHeader(SOLAPI_API_KEY, SOLAPI_API_SECRET) },
     payload: JSON.stringify(payload),
     muteHttpExceptions: true
   };
-
   try {
-    const response = UrlFetchApp.fetch(url, options);
-    const responseText = response.getContentText();
-    
-    try {
-      const res = JSON.parse(responseText);
-      if (res.errorCode) {
-        return '발송 실패: [' + res.errorCode + '] ' + res.errorMessage;
-      } else if (res.groupId || res.messageId) {
-        return '발송 성공 (그룹ID: ' + (res.groupId || res.messageId) + ')';
-      }
-      return responseText;
-    } catch (e) {
-      return responseText;
-    }
+    const res = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+    if (res.errorCode) return `[${toPhone}] 실패: ${res.errorCode} ${res.errorMessage}`;
+    return `[${toPhone}] 성공`;
   } catch (e) {
-    return '요청 에러: ' + e.toString();
+    return `[${toPhone}] 오류: ${e.toString()}`;
   }
 }
 
@@ -472,9 +570,10 @@ function row(label, value) {
 }
 
 /**
- * 권한 승인 및 문자 발송 테스트를 위한 전용 함수
+ * 알림 발송 테스트 (알림톡 or SMS)
+ * Apps Script 편집기에서 직접 실행 가능
  */
-function testSms() {
+function testNotification() {
   const testData = {
     formType: 'consult',
     name: '홍길동(테스트)',
@@ -484,15 +583,14 @@ function testSms() {
     areaType: '34평형 / 거실+복도',
     sample: '✅ 희망',
     sampleNote: '600x600 샘플',
-    memo: '솔라피 문자 테스트 발송입니다.',
+    memo: '알림톡 테스트 발송입니다.',
     calcResult: '[견적계산기] 34평형 → 예상 약 115장'
   };
-  
-  if (SOLAPI_API_KEY === 'YOUR_SOLAPI_API_KEY') {
-    Logger.log('오류: SOLAPI_API_KEY 설정을 먼저 완료해 주세요.');
-    return;
-  }
-  
-  const result = sendNotificationSms(testData, 'consult');
-  Logger.log('테스트 발송 결과: ' + result);
+
+  const mode = (KAKAO_PF_ID && KAKAO_TEMPLATE_CONSULT) ? '카카오 알림톡' : 'SMS';
+  Logger.log('발송 방식: ' + mode);
+  Logger.log('수신 번호: ' + ADMIN_PHONES.join(', '));
+
+  const result = sendNotifications(testData, 'consult');
+  Logger.log('테스트 결과: ' + result);
 }
