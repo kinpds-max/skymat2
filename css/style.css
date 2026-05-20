@@ -2107,6 +2107,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   color: var(--kakao-text);
 }
 .cert-badge.highlight i { color: var(--kakao-text); }
+.cert-badges-all .cert-badge-featured { order: -1; }
 
 /* ===== 제품 브로슈어 이미지 ===== */
 .product-brochure {
