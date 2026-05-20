@@ -854,6 +854,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // 1. 구글 시트 전송 (Apps Script)
       const tracking = getTrackingData();
       const googleSheetData = {
+        formType: 'consult',
         name,
         phone,
         address: `${addr1} ${addr2}`.trim(),
@@ -1020,8 +1021,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   stats.forEach(el => countObserver.observe(el));
 
-  /* ===== 13. 기업 협력 문의 폼 (Web3Forms 실 발송) ===== */
-  const WEB3FORMS_KEY = 'b21625a5-9b6b-4b46-8a3a-7590d1478a24';
+  /* ===== 13. 기업 협력 문의 폼 (Google Apps Script 연동) ===== */
   const bizForm = document.getElementById('bizForm');
   if (bizForm) {
     bizForm.addEventListener('submit', async function(e) {
@@ -1042,32 +1042,35 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.textContent = '전송 중...';
 
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            subject: `[하늘매트 기업협력] ${type} 문의 - ${name}`,
-            from_name: name,
-            replyto: email || undefined,
-            '문의 유형': type,
-            '회사명/성함': name,
-            '연락처': phone,
-            '이메일': email || '미입력',
-            '문의 내용': memo,
-          })
-        });
-        const json = await res.json();
-        if (json.success) {
-          bizForm.innerHTML = `
-            <div style="text-align:center;padding:40px 0;">
-              <i class="fa-solid fa-circle-check" style="font-size:3rem;color:#1565C0;margin-bottom:16px;display:block;"></i>
-              <h3 style="color:#1565C0;margin-bottom:8px;">문의가 접수되었습니다</h3>
-              <p style="color:#64748B;">one19119@naver.com 으로 발송되었습니다.<br>영업일 1~2일 내에 연락드리겠습니다.</p>
-            </div>`;
-        } else {
-          throw new Error(json.message);
+        const googleSheetData = {
+          formType: 'biz',
+          bizType: type,
+          name,
+          phone,
+          email,
+          memo,
+          timestamp: new Date().toISOString()
+        };
+
+        if (APPS_SCRIPT_URL) {
+          const params = new URLSearchParams();
+          for (const [key, value] of Object.entries(googleSheetData)) {
+            params.append(key, value);
+          }
+          await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString()
+          });
         }
+
+        bizForm.innerHTML = `
+          <div style="text-align:center;padding:40px 0;">
+            <i class="fa-solid fa-circle-check" style="font-size:3rem;color:#2E7D32;margin-bottom:16px;display:block;"></i>
+            <h3 style="color:#2E7D32;margin-bottom:8px;">문의가 접수되었습니다</h3>
+            <p style="color:#64748B;">구글 시트 저장 및 알림(이메일, 문자) 발송이 성공적으로 처리되었습니다.<br>영업일 1~2일 내에 연락드리겠습니다.</p>
+          </div>`;
       } catch (err) {
         alert('전송에 실패했습니다. 잠시 후 다시 시도하거나 카카오톡으로 문의해 주세요.');
         submitBtn.disabled = false;
@@ -1113,46 +1116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   });
 
-  /* ===== 14. 팝업 공지 제어 (리뉴얼 및 가격인상) ===== */
-  const setupModal = (modalId, closeId, todayId, storageKey, delay = 1000) => {
-    const modal = document.getElementById(modalId);
-    const closeBtn = document.getElementById(closeId);
-    const todayBtn = document.getElementById(todayId);
-
-    if (!modal) return;
-
-    // 오늘 보지 않기 체크
-    const hideUntil = localStorage.getItem(storageKey);
-    const now = new Date().getTime();
-
-    if (!hideUntil || now > parseInt(hideUntil)) {
-      setTimeout(() => {
-        modal.classList.add('open');
-      }, delay);
-    }
-
-    // 닫기
-    closeBtn?.addEventListener('click', () => {
-      modal.classList.remove('open');
-    });
-
-    // 오늘 하루 보지 않기
-    todayBtn?.addEventListener('click', () => {
-      const expiry = new Date().getTime() + (24 * 60 * 60 * 1000); // 24시간
-      localStorage.setItem(storageKey, expiry.toString());
-      modal.classList.remove('open');
-    });
-
-    // 배경 클릭 시 닫기
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.classList.remove('open');
-    });
-  };
-
-  // 각각의 모달 초기화 (중요한 가격 공지를 먼저 표시)
-  setupModal('priceNoticeModal', 'closePriceModal', 'closePriceToday', 'hidePriceNotice', 500);
-
-  /* ===== 15. 배경 영상 부드러운 표시 ===== */
+  /* ===== 14. 배경 영상 부드러운 표시 ===== */
   const videoIframe = document.querySelector('.video-bg');
   if (videoIframe) {
     videoIframe.onload = function() {
